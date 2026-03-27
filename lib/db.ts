@@ -154,3 +154,31 @@ export function generateCompareSlugs(): string[] {
   }
   return slugs.slice(0, 200);
 }
+
+// --- Metro Comparison queries ---
+
+export interface MetroComparison {
+  id: number;
+  slug: string;
+  metro_a_slug: string;
+  metro_b_slug: string;
+}
+
+export function getAllMetroComparisonSlugs(limit = 50000): MetroComparison[] {
+  return getDb().prepare('SELECT * FROM metro_comparisons ORDER BY id LIMIT ?').all(limit) as MetroComparison[];
+}
+
+export function getMetroComparisonBySlug(slug: string): { a: Metro; b: Metro } | undefined {
+  const row = getDb().prepare('SELECT metro_a_slug, metro_b_slug FROM metro_comparisons WHERE slug = ?').get(slug) as { metro_a_slug: string; metro_b_slug: string } | undefined;
+  if (!row) return undefined;
+  const a = getMetroBySlug(row.metro_a_slug);
+  const b = getMetroBySlug(row.metro_b_slug);
+  if (!a || !b) return undefined;
+  return { a, b };
+}
+
+export function countMetroComparisons(): number {
+  try {
+    return (getDb().prepare('SELECT COUNT(*) as c FROM metro_comparisons').get() as { c: number }).c;
+  } catch { return 0; }
+}
