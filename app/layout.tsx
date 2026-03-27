@@ -69,6 +69,8 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
                 <a href="https://powerbillpeek.com" className="hover:text-indigo-600">Power Bills</a>
                 <a href="https://eldercarepeek.com" className="hover:text-indigo-600">Elder Care</a>
                 <a href="https://fairrentwize.com" className="font-medium text-indigo-600">Fair Market Rents</a>
+              
+                <a href="https://sunpowerpeek.com" className="hover:text-emerald-600">Solar Power</a>
               </div>
             </div>
             <p className="mt-1">&copy; {new Date().getFullYear()} {SITE_NAME}. All rights reserved.</p>
