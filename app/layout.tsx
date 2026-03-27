@@ -6,6 +6,7 @@ const inter = Inter({ subsets: ["latin"] });
 
 const SITE_NAME = "FairRentWize";
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://fairrentwize.com";
+const GA_ID = "G-Y95BZ0SEQR";
 
 export const metadata: Metadata = {
   title: {
@@ -23,6 +24,8 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
   return (
     <html lang="en">
       <head>
+        <script async src={`https://www.googletagmanager.com/gtag/js?id=${GA_ID}`} />
+        <script dangerouslySetInnerHTML={{ __html: `window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag("js",new Date());gtag("config","${GA_ID}")` }} />
         <script
           async
           src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5724806562146685"
