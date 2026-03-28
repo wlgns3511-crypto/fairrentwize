@@ -1,6 +1,7 @@
 import { getAllMetroSlugs, getMetroBySlug, getStateByAbbr, getTopMetrosByRent } from '@/lib/db';
 import { formatCurrency, formatPercent } from '@/lib/format';
 import { breadcrumbSchema, faqSchema, generateMetroFAQs } from '@/lib/schema';
+import { AdSlot } from '@/components/AdSlot';
 import { notFound } from 'next/navigation';
 import type { Metadata } from 'next';
 
@@ -116,6 +117,8 @@ export default async function MetroPage({ params }: Props) {
           </p>
         </div>
       </section>
+
+      <AdSlot id="metro-mid" />
 
       {/* Vacancy Rate Context */}
       <section className="mb-8">
