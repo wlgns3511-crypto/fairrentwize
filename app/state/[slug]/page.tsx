@@ -37,6 +37,22 @@ export default async function StatePage({ params }: Props) {
 
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "Dataset",
+            "name": `${state.state} Fair Market Rents 2026`,
+            "description": `HUD Fair Market Rent data for ${state.state} by county and metro area. Average 1BR: ${formatCurrency(state.avg_rent_1br)}/mo, 2BR: ${formatCurrency(state.avg_rent_2br)}/mo.`,
+            "url": `https://fairrentwize.com/state/${slug}/`,
+            "license": "https://creativecommons.org/publicdomain/zero/1.0/",
+            "creator": { "@type": "Organization", "name": "DataPeek Facts", "url": "https://datapeekfacts.com" },
+            "temporalCoverage": "2024/2026",
+            "distribution": { "@type": "DataDownload", "encodingFormat": "text/html" }
+          })
+        }}
+      />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema([
         { name: 'Home', url: '/' },
         { name: state.state, url: `/state/${slug}/` },
@@ -177,15 +193,15 @@ export default async function StatePage({ params }: Props) {
         ))}
       </section>
 
-      {/* Cross-ref */}
-      <div className="bg-slate-50 rounded-lg p-4 text-sm">
-        <p className="font-medium mb-2">Related Data</p>
-        <div className="flex flex-wrap gap-4">
-          <a href="https://costbycity.com" className="text-indigo-600 hover:underline">Cost of Living Data &rarr;</a>
-          <a href="https://zippeek.com" className="text-indigo-600 hover:underline">ZIP Code Demographics &rarr;</a>
-          <a href="https://salarybycity.com" className="text-indigo-600 hover:underline">Salary Data &rarr;</a>
+      {/* Related Data Resources */}
+      <section className="mt-8 p-4 bg-slate-50 rounded-lg">
+        <h3 className="text-sm font-semibold text-slate-500 mb-2">Related Data Resources</h3>
+        <div className="flex flex-wrap gap-3 text-sm">
+          <a href="https://propertytaxpeek.com" className="text-indigo-600 hover:underline">PropertyTaxPeek - Property tax rates &rarr;</a>
+          <a href="https://costbycity.com" className="text-indigo-600 hover:underline">CostByCity - Cost of living &rarr;</a>
+          <a href="https://zippeek.com" className="text-indigo-600 hover:underline">ZipPeek - ZIP code demographics &rarr;</a>
         </div>
-      </div>
+      </section>
     </>
   );
 }
