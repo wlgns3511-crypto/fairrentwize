@@ -1,6 +1,7 @@
 import { getAllStates, getStateBySlug, getCountiesByState, getMetrosByState } from '@/lib/db';
 import { formatCurrency, formatPercent, formatNumber } from '@/lib/format';
 import { breadcrumbSchema, faqSchema, generateStateFAQs } from '@/lib/schema';
+import { AdSlot } from '@/components/AdSlot';
 import { notFound } from 'next/navigation';
 import type { Metadata } from 'next';
 
@@ -117,6 +118,8 @@ export default async function StatePage({ params }: Props) {
           </div>
         </section>
       )}
+
+      <AdSlot id="state-mid" />
 
       {/* Counties */}
       <section className="mb-8">
