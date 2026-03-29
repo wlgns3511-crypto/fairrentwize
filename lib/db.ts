@@ -170,9 +170,17 @@ export function getAllMetroComparisonSlugs(limit = 50000): MetroComparison[] {
 
 export function getMetroComparisonBySlug(slug: string): { a: Metro; b: Metro } | undefined {
   const row = getDb().prepare('SELECT metro_a_slug, metro_b_slug FROM metro_comparisons WHERE slug = ?').get(slug) as { metro_a_slug: string; metro_b_slug: string } | undefined;
-  if (!row) return undefined;
-  const a = getMetroBySlug(row.metro_a_slug);
-  const b = getMetroBySlug(row.metro_b_slug);
+  if (row) {
+    const a = getMetroBySlug(row.metro_a_slug);
+    const b = getMetroBySlug(row.metro_b_slug);
+    if (a && b) return { a, b };
+  }
+
+  // Fallback: parse slug and look up each metro dynamically
+  const parts = slug.split('-vs-');
+  if (parts.length !== 2) return undefined;
+  const a = getMetroBySlug(parts[0]);
+  const b = getMetroBySlug(parts[1]);
   if (!a || !b) return undefined;
   return { a, b };
 }
