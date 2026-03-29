@@ -1,6 +1,7 @@
 import { generateCompareSlugs, getCompareStates } from '@/lib/db';
 import { formatCurrency, formatPercent } from '@/lib/format';
 import { breadcrumbSchema, faqSchema } from '@/lib/schema';
+import { ComparisonBar } from '@/components/ComparisonBar';
 import { notFound } from 'next/navigation';
 import type { Metadata } from 'next';
 
@@ -113,6 +114,40 @@ export default async function ComparePage({ params }: Props) {
             })}
           </tbody>
         </table>
+      </div>
+
+      {/* Visual rent comparison bars */}
+      <div style={{ display: "flex", flexDirection: "column", gap: "16px", marginBottom: "32px" }}>
+        <div>
+          <h3 className="text-sm font-medium text-slate-600 mb-2">1-Bedroom Rent</h3>
+          <ComparisonBar
+            bars={[
+              { label: a.state, value: a.avg_rent_1br },
+              { label: b.state, value: b.avg_rent_1br },
+            ]}
+            format={(v) => "$" + v.toLocaleString() + "/mo"}
+          />
+        </div>
+        <div>
+          <h3 className="text-sm font-medium text-slate-600 mb-2">2-Bedroom Rent</h3>
+          <ComparisonBar
+            bars={[
+              { label: a.state, value: a.avg_rent_2br },
+              { label: b.state, value: b.avg_rent_2br },
+            ]}
+            format={(v) => "$" + v.toLocaleString() + "/mo"}
+          />
+        </div>
+        <div>
+          <h3 className="text-sm font-medium text-slate-600 mb-2">Median Income</h3>
+          <ComparisonBar
+            bars={[
+              { label: a.state, value: a.median_income },
+              { label: b.state, value: b.median_income },
+            ]}
+            format={(v) => "$" + v.toLocaleString()}
+          />
+        </div>
       </div>
 
       {/* Rent Burden Comparison */}

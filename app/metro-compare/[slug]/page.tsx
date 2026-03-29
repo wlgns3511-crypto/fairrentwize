@@ -3,6 +3,7 @@ import { notFound } from 'next/navigation';
 import { getAllMetroComparisonSlugs, getMetroComparisonBySlug } from '@/lib/db';
 import { formatCurrency } from '@/lib/format';
 import { breadcrumbSchema, faqSchema } from '@/lib/schema';
+import { ComparisonBar } from '@/components/ComparisonBar';
 
 interface Props { params: Promise<{ slug: string }> }
 
@@ -118,6 +119,22 @@ export default async function MetroComparePage({ params }: Props) {
           </table>
         </div>
       </section>
+
+      {/* Visual rent comparison */}
+      <div style={{ display: "flex", flexDirection: "column", gap: "16px", marginBottom: "32px" }}>
+        <div>
+          <h3 className="text-sm font-medium text-slate-600 mb-2">Studio Rent</h3>
+          <ComparisonBar bars={[{ label: a.metro_name, value: a.fmr_studio }, { label: b.metro_name, value: b.fmr_studio }]} format={(v) => "$" + v.toLocaleString()} />
+        </div>
+        <div>
+          <h3 className="text-sm font-medium text-slate-600 mb-2">2-Bedroom Rent</h3>
+          <ComparisonBar bars={[{ label: a.metro_name, value: a.fmr_2br }, { label: b.metro_name, value: b.fmr_2br }]} format={(v) => "$" + v.toLocaleString()} />
+        </div>
+        <div>
+          <h3 className="text-sm font-medium text-slate-600 mb-2">Median Income</h3>
+          <ComparisonBar bars={[{ label: a.metro_name, value: a.median_income }, { label: b.metro_name, value: b.median_income }]} format={(v) => "$" + v.toLocaleString()} />
+        </div>
+      </div>
 
       <div className="grid md:grid-cols-2 gap-4 mb-8">
         {[a, b].map((m) => (
