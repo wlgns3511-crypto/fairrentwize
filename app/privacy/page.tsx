@@ -25,6 +25,26 @@ export default function PrivacyPage() {
         <h2>Contact</h2>
         <p>For privacy inquiries, visit our <a href="/contact/" className="text-indigo-600 hover:underline">contact page</a>.</p>
       </div>
+
+      <div className="mt-8 pt-6 border-t border-slate-200">
+        <h2 className="text-xl font-semibold mb-3">Part of DataPeek Facts Network</h2>
+        <p>
+          FairRentWize is part of the{" "}
+          <a href="https://datapeekfacts.com" className="text-blue-600 hover:underline" target="_blank" rel="noopener noreferrer">
+            DataPeek Facts
+          </a>{" "}
+          network of free US data tools. For general inquiries about our data network, privacy practices, or partnership
+          opportunities, please contact the DataPeek Facts team at{" "}
+          <a href="mailto:datapeekfacts@gmail.com" className="text-blue-600 hover:underline">
+            datapeekfacts@gmail.com
+          </a>
+          . You can also visit the{" "}
+          <a href="https://datapeekfacts.com/privacy/" className="text-blue-600 hover:underline" target="_blank" rel="noopener noreferrer">
+            DataPeek Facts Privacy Policy
+          </a>{" "}
+          for network-wide privacy information.
+        </p>
+      </div>
     </>
   );
 }

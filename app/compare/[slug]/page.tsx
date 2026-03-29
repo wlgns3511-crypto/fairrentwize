@@ -2,6 +2,7 @@ import { generateCompareSlugs, getCompareStates } from '@/lib/db';
 import { formatCurrency, formatPercent } from '@/lib/format';
 import { breadcrumbSchema, faqSchema } from '@/lib/schema';
 import { ComparisonBar } from '@/components/ComparisonBar';
+import { FreshnessTag } from '@/components/FreshnessTag';
 import { notFound } from 'next/navigation';
 import type { Metadata } from 'next';
 
@@ -178,6 +179,8 @@ export default async function ComparePage({ params }: Props) {
           </div>
         ))}
       </section>
+
+      <FreshnessTag source="HUD Fair Market Rents" />
 
       {/* Cross-ref */}
       <div className="bg-slate-50 rounded-lg p-4 text-sm">

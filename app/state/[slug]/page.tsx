@@ -3,6 +3,7 @@ import { formatCurrency, formatPercent, formatNumber } from '@/lib/format';
 import { breadcrumbSchema, faqSchema, generateStateFAQs } from '@/lib/schema';
 import { AdSlot } from '@/components/AdSlot';
 import { CiteButton } from '@/components/CiteButton';
+import { FreshnessTag } from '@/components/FreshnessTag';
 import { notFound } from 'next/navigation';
 import type { Metadata } from 'next';
 
@@ -193,6 +194,8 @@ export default async function StatePage({ params }: Props) {
           </div>
         ))}
       </section>
+
+      <FreshnessTag source="HUD Fair Market Rents" />
 
       <div className="flex items-center gap-4 mt-4">
         <CiteButton title={`${state.state} Fair Market Rents`} url={`https://fairrentwize.com/state/${slug}/`} source="FairRentWize (HUD Data)" />
