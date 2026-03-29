@@ -1,0 +1,27 @@
+{
+  "common": {
+    "home": "Home",
+    "calculator": "Calculator",
+    "states": "States",
+    "compare": "Compare",
+    "about": "About",
+    "privacy": "Privacy",
+    "terms": "Terms",
+    "contact": "Contact",
+    "allRightsReserved": "All rights reserved.",
+    "langSwitch": "Español",
+    "langSwitchPrefix": "/es"
+  },
+  "state": {
+    "fairMarketRents": "Fair Market Rents",
+    "avgRent1br": "Avg 1BR Rent",
+    "avgRent2br": "Avg 2BR Rent",
+    "medianIncome": "Median Income",
+    "tenantRights": "Tenant Rights",
+    "affordability": "Affordability",
+    "renterStats": "Renter Statistics",
+    "metroAreas": "Metro Areas",
+    "counties": "Counties",
+    "faq": "Frequently Asked Questions"
+  }
+}

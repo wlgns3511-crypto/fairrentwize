@@ -1,0 +1,27 @@
+{
+  "common": {
+    "home": "Inicio",
+    "calculator": "Calculadora",
+    "states": "Estados",
+    "compare": "Comparar",
+    "about": "Acerca de",
+    "privacy": "Privacidad",
+    "terms": "Términos",
+    "contact": "Contacto",
+    "allRightsReserved": "Todos los derechos reservados.",
+    "langSwitch": "English",
+    "langSwitchPrefix": ""
+  },
+  "state": {
+    "fairMarketRents": "Alquileres Justos de Mercado",
+    "avgRent1br": "Alquiler Promedio 1 Hab.",
+    "avgRent2br": "Alquiler Promedio 2 Hab.",
+    "medianIncome": "Ingreso Mediano",
+    "tenantRights": "Derechos del Inquilino",
+    "affordability": "Asequibilidad",
+    "renterStats": "Estadísticas de Inquilinos",
+    "metroAreas": "Áreas Metropolitanas",
+    "counties": "Condados",
+    "faq": "Preguntas Frecuentes"
+  }
+}
