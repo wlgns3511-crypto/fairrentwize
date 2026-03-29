@@ -1,10 +1,22 @@
 import type { MetadataRoute } from 'next';
 import { getAllStates, getAllCountySlugs, getAllMetroSlugs, generateCompareSlugs, getAllMetroComparisonSlugs } from '@/lib/db';
+import { getAllPosts } from '@/lib/blog';
 
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://fairrentwize.com';
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const now = new Date().toISOString();
+
+  const posts = getAllPosts();
+  const blogPages: MetadataRoute.Sitemap = [
+    { url: `${SITE_URL}/blog/`, lastModified: now, changeFrequency: 'weekly', priority: 0.8 },
+    ...posts.map((p) => ({
+      url: `${SITE_URL}/blog/${p.slug}/`,
+      lastModified: now,
+      changeFrequency: 'monthly' as const,
+      priority: 0.7,
+    })),
+  ];
 
   const staticPages: MetadataRoute.Sitemap = [
     { url: `${SITE_URL}/`, lastModified: now, changeFrequency: 'monthly', priority: 1.0 },
@@ -35,5 +47,5 @@ export default function sitemap(): MetadataRoute.Sitemap {
     url: `${SITE_URL}/metro-compare/${c.slug}/`, lastModified: now, changeFrequency: 'yearly' as const, priority: 0.5,
   }));
 
-  return [...staticPages, ...states, ...counties, ...metros, ...comparisons, ...metroComparisons];
+  return [...staticPages, ...blogPages, ...states, ...counties, ...metros, ...comparisons, ...metroComparisons];
 }
