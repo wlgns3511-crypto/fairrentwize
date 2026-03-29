@@ -31,6 +31,25 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
           src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5724806562146685"
           crossOrigin="anonymous"
         />
+        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify({
+          "@context": "https://schema.org",
+          "@graph": [
+            {
+              "@type": "WebSite",
+              "name": "FairRentWize",
+              "url": "https://fairrentwize.com",
+              "description": "Explore HUD Fair Market Rents for 3,000+ US counties and 400 metro areas. Compare rental costs, calculate affordability, and find rent burden data by location.",
+              "inLanguage": "en-US"
+            },
+            {
+              "@type": "Organization",
+              "name": "FairRentWize",
+              "url": "https://fairrentwize.com",
+              "description": "Explore HUD Fair Market Rents for 3,000+ US counties and 400 metro areas. Compare rental costs, calculate affordability, and find rent burden data by location.",
+              "sameAs": []
+            }
+          ]
+        }) }} />
       </head>
       <body className={`${inter.className} antialiased bg-white text-slate-900 min-h-screen flex flex-col`}>
         <header className="border-b border-slate-200">
