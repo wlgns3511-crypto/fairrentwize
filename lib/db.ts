@@ -131,6 +131,22 @@ export function countMetros(): number {
   return (getDb().prepare('SELECT COUNT(*) as c FROM metros').get() as { c: number }).c;
 }
 
+// --- Search queries ---
+
+export function searchMetros(query: string, limit = 20): Metro[] {
+  const q = `%${query}%`;
+  return getDb().prepare(
+    'SELECT * FROM metros WHERE metro_name LIKE ? OR state LIKE ? ORDER BY metro_name LIMIT ?'
+  ).all(q, q, limit) as Metro[];
+}
+
+export function searchCounties(query: string, limit = 20): County[] {
+  const q = `%${query}%`;
+  return getDb().prepare(
+    'SELECT * FROM counties WHERE county_name LIKE ? OR state LIKE ? ORDER BY county_name LIMIT ?'
+  ).all(q, q, limit) as County[];
+}
+
 // --- Compare queries ---
 
 export function getCompareStates(slug: string): { a: StateRow; b: StateRow } | undefined {

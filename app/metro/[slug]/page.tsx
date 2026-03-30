@@ -2,6 +2,7 @@ import { getAllMetroSlugs, getMetroBySlug, getStateByAbbr, getTopMetrosByRent } 
 import { formatCurrency, formatPercent } from '@/lib/format';
 import { breadcrumbSchema, faqSchema, generateMetroFAQs } from '@/lib/schema';
 import { AdSlot } from '@/components/AdSlot';
+import { AuthorBox } from '@/components/AuthorBox';
 import { notFound } from 'next/navigation';
 import type { Metadata } from 'next';
 
@@ -155,6 +156,8 @@ export default async function MetroPage({ params }: Props) {
           ))}
         </div>
       </section>
+
+      <AuthorBox />
 
       {/* High-CPC footer */}
       <div className="bg-blue-50 rounded-lg p-6 text-sm">
