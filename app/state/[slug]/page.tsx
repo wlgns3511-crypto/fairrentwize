@@ -4,6 +4,10 @@ import { breadcrumbSchema, faqSchema, generateStateFAQs } from '@/lib/schema';
 import { AdSlot } from '@/components/AdSlot';
 import { CiteButton } from '@/components/CiteButton';
 import { FreshnessTag } from '@/components/FreshnessTag';
+import { EditorNote } from '@/components/EditorNote';
+import { DidYouKnow } from '@/components/DidYouKnow';
+import { DataSourceBadge } from '@/components/DataSourceBadge';
+import { CrossSiteLinks } from '@/components/CrossSiteLinks';
 import { notFound } from 'next/navigation';
 import type { Metadata } from 'next';
 
@@ -50,6 +54,8 @@ export default async function StatePage({ params }: Props) {
             "url": `https://fairrentwize.com/state/${slug}/`,
             "license": "https://creativecommons.org/publicdomain/zero/1.0/",
             "creator": { "@type": "Organization", "name": "DataPeek Facts", "url": "https://datapeekfacts.com" },
+            "dateModified": "2026-03-31",
+            "author": { "@type": "Organization", "name": "DataPeek" },
             "temporalCoverage": "2024/2026",
             "distribution": { "@type": "DataDownload", "encodingFormat": "text/html" }
           })
@@ -70,6 +76,8 @@ export default async function StatePage({ params }: Props) {
         HUD Fair Market Rent data for {state.state} ({state.abbr}). Average 1-bedroom rent: {formatCurrency(state.avg_rent_1br)}/mo.
         Average 2-bedroom rent: {formatCurrency(state.avg_rent_2br)}/mo.
       </p>
+
+      <EditorNote note={`Fair Market Rents (FMRs) are set by HUD annually and represent the 40th percentile of gross rents in ${state.state}. They determine Housing Choice Voucher payment standards and affect millions of renters statewide.`} />
 
       {/* State Overview Cards */}
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
@@ -172,6 +180,8 @@ export default async function StatePage({ params }: Props) {
         </div>
       </section>
 
+      <DidYouKnow fact={`In ${state.state}, ${formatPercent(state.renter_pct)} of households rent their homes. HUD updates Fair Market Rents each year using Census data and local rent surveys to keep voucher payments aligned with actual housing costs.`} />
+
       {/* Compare with other states */}
       <section className="mb-8">
         <h2 className="text-xl font-bold mb-4">Compare {state.state} Rents</h2>
@@ -195,21 +205,18 @@ export default async function StatePage({ params }: Props) {
         ))}
       </section>
 
+      <DataSourceBadge sources={[
+        { name: "HUD FMR", url: "https://www.huduser.gov/portal/datasets/fmr.html" },
+        { name: "Census Bureau", url: "https://www.census.gov" },
+      ]} />
+
       <FreshnessTag source="HUD Fair Market Rents" />
 
       <div className="flex items-center gap-4 mt-4">
         <CiteButton title={`${state.state} Fair Market Rents`} url={`https://fairrentwize.com/state/${slug}/`} source="FairRentWize (HUD Data)" />
       </div>
 
-      {/* Related Data Resources */}
-      <section className="mt-8 p-4 bg-slate-50 rounded-lg">
-        <h3 className="text-sm font-semibold text-slate-500 mb-2">Related Data Resources</h3>
-        <div className="flex flex-wrap gap-3 text-sm">
-          <a href="https://propertytaxpeek.com" className="text-indigo-600 hover:underline">PropertyTaxPeek - Property tax rates &rarr;</a>
-          <a href="https://costbycity.com" className="text-indigo-600 hover:underline">CostByCity - Cost of living &rarr;</a>
-          <a href="https://zippeek.com" className="text-indigo-600 hover:underline">ZipPeek - ZIP code demographics &rarr;</a>
-        </div>
-      </section>
+      <CrossSiteLinks current="FairRentWize" />
     </>
   );
 }
