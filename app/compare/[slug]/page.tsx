@@ -12,7 +12,7 @@ export async function generateStaticParams() {
   return generateCompareSlugs().map(slug => ({ slug }));
 }
 
-export const revalidate = 86400; // ISR daily
+export const revalidate = false; // ISR daily
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
