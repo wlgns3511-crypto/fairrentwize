@@ -20,7 +20,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   if (!data) return {};
   const { a, b } = data;
   return {
-    title: `${a.metro_name} vs ${b.metro_name} Rent Comparison 2025`,
+    title: `${a.metro_name} vs ${b.metro_name} Rent Comparison 2026`,
     description: `Compare fair market rents: ${a.metro_name} 2BR ${formatCurrency(a.fmr_2br)}/mo vs ${b.metro_name} ${formatCurrency(b.fmr_2br)}/mo. Studio, 1BR, 2BR, 3BR, 4BR rates side by side.`,
     alternates: { canonical: `/metro-compare/${slug}/` },
   };
@@ -82,7 +82,7 @@ export default async function MetroComparePage({ params }: Props) {
       </nav>
 
       <h1 className="text-3xl font-bold mb-2">{a.metro_name} vs {b.metro_name}</h1>
-      <p className="text-slate-600 mb-8">Fair Market Rent Comparison — HUD 2025 Data</p>
+      <p className="text-slate-600 mb-8">Fair Market Rent Comparison — HUD 2026 Data</p>
 
       <div className="bg-indigo-50 rounded-xl p-6 mb-8">
         <h2 className="font-semibold mb-3">Quick Answer</h2>
