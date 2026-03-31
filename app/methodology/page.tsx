@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 export const metadata: Metadata = {
   title: "Our Methodology",
   description: "Learn how FairRentWize collects, processes, and verifies fair market rent and rental affordability data.",
+  alternates: { canonical: "/methodology/" },
 };
 
 export default function MethodologyPage() {
