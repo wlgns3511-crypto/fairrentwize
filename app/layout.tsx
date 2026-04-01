@@ -17,7 +17,7 @@ export const metadata: Metadata = {
     "Explore HUD Fair Market Rents for 3,000+ US counties and 400 metro areas. Compare rental costs, calculate affordability, and find rent burden data by location.",
   metadataBase: new URL(SITE_URL),
   robots: { index: true, follow: true, googleBot: { index: true, follow: true, "max-image-preview": "large" } },
-  openGraph: { type: "website", siteName: SITE_NAME, locale: "en_US" },
+  openGraph: { type: "website", url: SITE_URL, siteName: SITE_NAME, locale: "en_US" },
 };
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
