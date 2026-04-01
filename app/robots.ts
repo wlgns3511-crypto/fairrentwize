@@ -6,7 +6,7 @@ export default function robots(): MetadataRoute.Robots {
       {
         userAgent: '*',
         allow: '/',
-        disallow: ['/embed/'],
+        disallow: ['/embed/', '/api/', '/_next/'],
       },
     ],
     sitemap: 'https://fairrentwize.com/sitemap.xml',
