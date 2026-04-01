@@ -6,6 +6,7 @@ export const metadata: Metadata = {
   title: 'Search Fair Market Rents - Metro Areas & Counties',
   description: 'Search HUD Fair Market Rents for 3,000+ US counties and metro areas. Compare rental costs, affordability, and rent burden by location.',
   alternates: { canonical: '/search/' },
+  openGraph: { url: "/search/" },
 };
 
 const POPULAR_SEARCHES = [

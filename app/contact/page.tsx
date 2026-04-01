@@ -4,6 +4,7 @@ export const metadata: Metadata = {
   title: 'Contact Us',
   description: 'Contact FairRentWize for questions, feedback, or data inquiries about US fair market rents.',
   alternates: { canonical: '/contact/' },
+  openGraph: { url: "/contact/" },
 };
 
 export default function ContactPage() {

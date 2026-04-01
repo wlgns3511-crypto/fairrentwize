@@ -4,6 +4,7 @@ export const metadata: Metadata = {
   title: 'Privacy Policy',
   description: 'FairRentWize privacy policy - how we handle your data and protect your privacy.',
   alternates: { canonical: '/privacy/' },
+  openGraph: { url: "/privacy/" },
 };
 
 export default function PrivacyPage() {
@@ -17,7 +18,7 @@ export default function PrivacyPage() {
         <h2>Cookies</h2>
         <p>Third-party services (Google Analytics, Google AdSense) may place cookies on your device. You can manage cookie preferences in your browser settings.</p>
         <h2>Advertising</h2>
-        <p>We use Google AdSense to serve ads. Google may use cookies to serve ads based on your prior visits to this and other websites. You can opt out of personalized advertising by visiting Google Ads Settings.</p>
+        <p>We use Google AdSense to serve ads. Google may use cookies to serve ads based on your prior visits to this and other websites. You can opt out of personalized advertising by visiting <a href="https://www.google.com/settings/ads" className="text-indigo-600 hover:underline" target="_blank" rel="noopener noreferrer">Google Ads Settings</a>. You can also opt out of third-party vendor cookies at <a href="https://www.aboutads.info/choices/" className="text-indigo-600 hover:underline" target="_blank" rel="noopener noreferrer">www.aboutads.info</a>.</p>
         <h2>Data Accuracy</h2>
         <p>While we strive for accuracy, rental market data is subject to change. FMR data is based on HUD estimates and may not reflect current market conditions in all areas.</p>
         <h2>Calculator Data</h2>

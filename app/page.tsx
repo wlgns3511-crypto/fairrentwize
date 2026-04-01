@@ -6,6 +6,7 @@ export const metadata: Metadata = {
   title: 'FairRentWize - US Fair Market Rents & Rental Affordability Data 2026',
   description: 'Explore HUD Fair Market Rents for 3,000+ US counties and 400+ metro areas. Compare rental costs by bedroom size, calculate rent affordability, and analyze rent burden across America.',
   alternates: { canonical: '/' },
+  openGraph: { url: "/" },
 };
 
 export default function HomePage() {

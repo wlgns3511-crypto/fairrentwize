@@ -5,6 +5,7 @@ export const metadata: Metadata = {
   title: 'Rent Affordability Calculator 2026 - Can You Afford the Rent?',
   description: 'Calculate whether rent is affordable based on your income using the 30% rule. Compare Fair Market Rents by state and bedroom size. Free rent affordability tool.',
   alternates: { canonical: '/calculator/' },
+  openGraph: { url: "/calculator/" },
 };
 
 export default function CalculatorPage() {

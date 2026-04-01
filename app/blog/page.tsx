@@ -6,6 +6,7 @@ export const metadata: Metadata = {
   description:
     "Expert guides on fair market rent, renter rights, rent increases, Section 8 vouchers, and the rent vs. buy decision — backed by HUD data.",
   alternates: { canonical: "/blog/" },
+  openGraph: { url: "/blog/" },
 };
 
 function formatDate(dateStr: string) {

@@ -5,6 +5,7 @@ export const metadata: Metadata = {
   title: 'Rent Affordability Calculator - Embeddable Widget',
   description: 'Embeddable rent affordability calculator widget. Calculate if rent is affordable based on income using the 30% rule.',
   robots: { index: false, follow: false },
+  openGraph: { url: "/embed/rent-calc/" },
 };
 
 export default function EmbedCalcPage() {

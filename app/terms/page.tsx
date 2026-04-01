@@ -4,6 +4,7 @@ export const metadata: Metadata = {
   title: 'Terms of Service',
   description: 'FairRentWize terms of service and conditions of use.',
   alternates: { canonical: '/terms/' },
+  openGraph: { url: "/terms/" },
 };
 
 export default function TermsPage() {
