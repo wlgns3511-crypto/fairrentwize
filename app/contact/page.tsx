@@ -19,7 +19,7 @@ export default function ContactPage() {
           <li>Media and press requests</li>
           <li>Technical issues</li>
         </ul>
-        <p>Email: <strong>hello@fairrentwize.com</strong></p>
+        <p>Email: <strong>datapeekfacts@gmail.com</strong></p>
         <h2>Data Sources</h2>
         <p>Our data is primarily sourced from:</p>
         <ul>
