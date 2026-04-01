@@ -23,6 +23,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     title: `${a.metro_name} vs ${b.metro_name} Rent Comparison 2026`,
     description: `Compare fair market rents: ${a.metro_name} 2BR ${formatCurrency(a.fmr_2br)}/mo vs ${b.metro_name} ${formatCurrency(b.fmr_2br)}/mo. Studio, 1BR, 2BR, 3BR, 4BR rates side by side.`,
     alternates: { canonical: `/metro-compare/${slug}/` },
+    openGraph: { url: `/metro-compare/${slug}/` },
   };
 }
 

@@ -19,6 +19,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     title: `${county.county_name}, ${county.state} Fair Market Rent 2026`,
     description: `${county.county_name}, ${county.state} HUD FMR: Studio ${formatCurrency(county.fmr_studio)}, 1BR ${formatCurrency(county.fmr_1br)}, 2BR ${formatCurrency(county.fmr_2br)}, 3BR ${formatCurrency(county.fmr_3br)}. Median income: ${formatCurrency(county.median_income)}. Rent burden: ${formatPercent(county.rent_burden_pct)}.`,
     alternates: { canonical: `/county/${slug}/` },
+    openGraph: { url: `/county/${slug}/` },
   };
 }
 

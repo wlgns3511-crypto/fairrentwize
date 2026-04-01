@@ -25,6 +25,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     title: `${state.state} Fair Market Rents 2026 - Average Rent by County`,
     description: `${state.state} FMR data: avg 1BR ${formatCurrency(state.avg_rent_1br)}/mo, 2BR ${formatCurrency(state.avg_rent_2br)}/mo. Browse rent by county, metro, and bedroom size. Tenant rights score: ${state.tenant_rights_score}/10.`,
     alternates: { canonical: `/state/${slug}/` },
+    openGraph: { url: `/state/${slug}/` },
   };
 }
 

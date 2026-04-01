@@ -20,6 +20,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     title: `${metro.metro_name} Fair Market Rent 2026 - Rental Costs & Affordability`,
     description: `${metro.metro_name} metro area FMR: Studio ${formatCurrency(metro.fmr_studio)}, 1BR ${formatCurrency(metro.fmr_1br)}, 2BR ${formatCurrency(metro.fmr_2br)}. Vacancy rate: ${metro.vacancy_rate}%. Median income: ${formatCurrency(metro.median_income)}.`,
     alternates: { canonical: `/metro/${slug}/` },
+    openGraph: { url: `/metro/${slug}/` },
   };
 }
 

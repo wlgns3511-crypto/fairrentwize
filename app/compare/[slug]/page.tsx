@@ -23,6 +23,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     title: `${a.state} vs ${b.state} Rent Comparison 2026`,
     description: `Compare fair market rents: ${a.state} avg 2BR ${formatCurrency(a.avg_rent_2br)}/mo vs ${b.state} ${formatCurrency(b.avg_rent_2br)}/mo. Income, tenant rights, and renter statistics side by side.`,
     alternates: { canonical: `/compare/${slug}/` },
+    openGraph: { url: `/compare/${slug}/` },
   };
 }
 
