@@ -8,8 +8,8 @@ export const metadata: Metadata = {
   alternates: {
     canonical: "/es/",
     languages: { en: "/", es: "/es/", "x-default": "/" },
+  },
   openGraph: { url: "/es/" },
-},
 };
 
 export default function HomeEs() {
