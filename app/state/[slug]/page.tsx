@@ -8,6 +8,7 @@ import { EditorNote } from '@/components/EditorNote';
 import { DidYouKnow } from '@/components/DidYouKnow';
 import { DataSourceBadge } from '@/components/DataSourceBadge';
 import { CrossSiteLinks } from '@/components/CrossSiteLinks';
+import { RentCalculator } from '@/components/RentCalculator';
 import { notFound } from 'next/navigation';
 import type { Metadata } from 'next';
 
@@ -147,6 +148,8 @@ export default async function StatePage({ params }: Props) {
       )}
 
       <AdSlot id="state-mid" />
+
+      <RentCalculator />
 
       {/* Counties */}
       <section className="mb-8">

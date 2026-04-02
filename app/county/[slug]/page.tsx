@@ -2,6 +2,7 @@ import { getAllCountySlugs, getCountyBySlug, getRelatedCounties, getStateByAbbr 
 import { formatCurrency, formatPercent, formatNumber } from '@/lib/format';
 import { breadcrumbSchema, faqSchema, generateCountyFAQs } from '@/lib/schema';
 import { AdSlot } from '@/components/AdSlot';
+import { RentCalculator } from '@/components/RentCalculator';
 import { notFound } from 'next/navigation';
 import type { Metadata } from 'next';
 
@@ -109,6 +110,8 @@ export default async function CountyPage({ params }: Props) {
       </section>
 
       <AdSlot id="county-mid" />
+
+      <RentCalculator />
 
       {/* Income Needed */}
       <section className="mb-8">
