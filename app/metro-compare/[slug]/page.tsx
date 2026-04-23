@@ -8,10 +8,10 @@ import { ComparisonBar } from '@/components/ComparisonBar';
 interface Props { params: Promise<{ slug: string }> }
 
 export const dynamicParams = false;
-export const revalidate = false;
+export const revalidate = 86400;
 
 export async function generateStaticParams() {
-  return getAllMetroComparisonSlugs(300).map((c) => ({ slug: c.slug }));
+  return getAllMetroComparisonSlugs(100).map((c) => ({ slug: c.slug }));
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
@@ -167,7 +167,7 @@ export default async function MetroComparePage({ params }: Props) {
       </section>
 
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema(breadcrumbs)) }} />
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema(faqs)) }} />
+      {faqs.length > 0 && <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema(faqs)) }} />}
     </div>
   );
 }

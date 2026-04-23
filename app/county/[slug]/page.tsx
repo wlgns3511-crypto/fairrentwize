@@ -1,12 +1,27 @@
 import { getAllCountySlugs, getCountyBySlug, getRelatedCounties, getStateByAbbr } from '@/lib/db';
-import { formatCurrency, formatPercent, formatNumber } from '@/lib/format';
-import { breadcrumbSchema, faqSchema, generateCountyFAQs } from '@/lib/schema';
+import { buildDbPageRobots, buildTrustUpdatedLabel, getDataVintageLabel, getDbPageGate, getReviewedAt, getReviewedBy, METHODOLOGY_URL } from '@/lib/db-page';
+import { formatCurrency, formatPercent, formatNumber, getDataYear } from '@/lib/format';
+import { breadcrumbSchema, faqSchema } from '@/lib/schema';
+import { generateAutoFaqs } from '@/lib/auto-faqs';
 import { AdSlot } from '@/components/AdSlot';
 import RentCalculator from '@/components/RentCalculator';
+import { RentAffordabilityCheck } from '@/components/tools/RentAffordabilityCheck';
 import { notFound } from 'next/navigation';
 import type { Metadata } from 'next';
+import { FreshnessTag } from '@/components/FreshnessTag';
+import { TrustBlock } from '@/components/upgrades/TrustBlock';
+import { InsightBlock } from '@/components/upgrades/InsightBlock';
+import { RelatedEntities } from '@/components/upgrades/RelatedEntities';
+import { getCountyInsights } from '@/lib/insights';
+import { TableOfContents } from '@/components/upgrades/TableOfContents';
 
 interface Props { params: Promise<{ slug: string }> }
+
+export const dynamicParams = false;
+
+function buildCountyTopAnswer(county: NonNullable<ReturnType<typeof getCountyBySlug>>, affordableRent: number) {
+  return `${county.county_name}, ${county.state} has a 2-bedroom fair market rent of ${formatCurrency(county.fmr_2br)}/month and a median household income of ${formatCurrency(county.median_income)}/year. The 30% rule implies an affordable monthly rent of about ${formatCurrency(affordableRent)}, which makes this page useful for judging whether HUD rent levels are aligned with local incomes or already above a sustainable threshold.`;
+}
 
 export async function generateStaticParams() {
   return getAllCountySlugs().map(c => ({ slug: c.slug }));
@@ -16,11 +31,23 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
   const county = getCountyBySlug(slug);
   if (!county) return {};
+  const year = getDataYear();
+  const affordableRent = Math.round(county.median_income * 0.3 / 12);
+  // RANGE: efficiency/studio (low) vs 4BR (high) HUD fair market rent
+  const low = Math.round(county.fmr_studio);
+  const high = Math.round(county.fmr_4br);
+  const title = `${county.county_name}, ${county.state} Fair Market Rent ${year}: $${low.toLocaleString()}–$${high.toLocaleString()}/mo`;
+  const description = buildCountyTopAnswer(county, affordableRent);
+  const gate = getDbPageGate({
+    alternativeLinkCount: 4,
+    topAnswer: description,
+  });
   return {
-    title: `${county.county_name}, ${county.state} Fair Market Rent 2026`,
-    description: `${county.county_name}, ${county.state} HUD FMR: Studio ${formatCurrency(county.fmr_studio)}, 1BR ${formatCurrency(county.fmr_1br)}, 2BR ${formatCurrency(county.fmr_2br)}, 3BR ${formatCurrency(county.fmr_3br)}. Median income: ${formatCurrency(county.median_income)}. Rent burden: ${formatPercent(county.rent_burden_pct)}.`,
+    title,
+    description,
     alternates: { canonical: `/county/${slug}/` },
-    openGraph: { url: `/county/${slug}/` },
+    openGraph: { title, description, url: `/county/${slug}/` },
+    robots: buildDbPageRobots(gate.pass),
   };
 }
 
@@ -28,14 +55,16 @@ export default async function CountyPage({ params }: Props) {
   const { slug } = await params;
   const county = getCountyBySlug(slug);
   if (!county) notFound();
+  const year = getDataYear();
 
   const state = getStateByAbbr(county.state);
-  const related = getRelatedCounties(county.state, slug);
-  const faqs = generateCountyFAQs(county);
+  const related = getRelatedCounties(county.state, slug, 8);
+  const faqs = generateAutoFaqs(county);
 
   const affordableRent = Math.round(county.median_income * 0.3 / 12);
   const gap = county.fmr_2br - affordableRent;
   const isBurdened = county.rent_burden_pct >= 30;
+  const topAnswer = buildCountyTopAnswer(county, affordableRent);
 
   const bedroomData = [
     { label: 'Studio', value: county.fmr_studio, color: 'bg-blue-500' },
@@ -53,7 +82,7 @@ export default async function CountyPage({ params }: Props) {
         { name: state?.state || county.state, url: `/state/${state?.slug || ''}/` },
         { name: county.county_name, url: `/county/${slug}/` },
       ])) }} />
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema(faqs)) }} />
+      {faqs.length > 0 && <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema(faqs)) }} />}
 
       <nav className="text-sm text-slate-500 mb-4">
         <a href="/" className="hover:text-indigo-600">Home</a> &raquo;{' '}
@@ -62,10 +91,22 @@ export default async function CountyPage({ params }: Props) {
       </nav>
 
       <h1 className="text-3xl font-bold mb-2">{county.county_name}, {county.state} Fair Market Rent</h1>
+      <p className="text-slate-600 mb-3">{topAnswer}</p>
+
+      <FreshnessTag
+        source="HUD Fair Market Rents"
+        updated={getReviewedAt()}
+        reviewedBy={getReviewedBy()}
+        dataVintage={getDataVintageLabel()}
+        methodologyUrl={METHODOLOGY_URL}
+      />
+
       <p className="text-slate-600 mb-6">
-        2026 HUD Fair Market Rents for {county.county_name}, {county.state}.
+        HUD FY {year} Fair Market Rents for {county.county_name}, {county.state}.
         Population: {formatNumber(county.population)}. Median household income: {formatCurrency(county.median_income)}/year.
       </p>
+
+      <TableOfContents />
 
       {/* Rent by Bedroom Size - Visual */}
       <section className="mb-8">
@@ -111,6 +152,17 @@ export default async function CountyPage({ params }: Props) {
 
       <AdSlot id="county-mid" />
 
+      <RentAffordabilityCheck
+        countyName={county.county_name}
+        fmr={{
+          studio: county.fmr_studio,
+          br1: county.fmr_1br,
+          br2: county.fmr_2br,
+          br3: county.fmr_3br,
+          br4: county.fmr_4br,
+        }}
+      />
+
       <RentCalculator />
 
       {/* Income Needed */}
@@ -140,6 +192,18 @@ export default async function CountyPage({ params }: Props) {
         </div>
       </section>
 
+      <TrustBlock
+        sources={[
+          { name: "HUD Fair Market Rents", url: "https://www.huduser.gov/portal/datasets/fmr.html" },
+          { name: "Census ACS Housing", url: "https://www.census.gov/topics/housing.html" },
+        ]}
+        updated={buildTrustUpdatedLabel()}
+        reviewedBy={getReviewedBy()}
+        methodologyUrl={METHODOLOGY_URL}
+      />
+
+      <InsightBlock entityName={county.county_name} insights={getCountyInsights(county)} />
+
       {/* FAQs */}
       <section className="mb-8">
         <h2 className="text-xl font-bold mb-4">Frequently Asked Questions</h2>
@@ -151,20 +215,16 @@ export default async function CountyPage({ params }: Props) {
         ))}
       </section>
 
-      {/* Related Counties */}
-      {related.length > 0 && (
-        <section className="mb-8">
-          <h2 className="text-xl font-bold mb-4">Other Counties in {state?.state || county.state}</h2>
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-3 text-sm">
-            {related.map(r => (
-              <a key={r.slug} href={`/county/${r.slug}/`} className="p-3 border border-slate-200 rounded-lg hover:border-indigo-300">
-                <p className="font-medium">{r.county_name}</p>
-                <p className="text-slate-500">2BR: {formatCurrency(r.fmr_2br)}/mo</p>
-              </a>
-            ))}
-          </div>
-        </section>
-      )}
+      <RelatedEntities
+        entityName={county.county_name}
+        heading={`Other counties in ${state?.state || county.state}`}
+        statLabel="2BR FMR"
+        items={related.map((r) => ({
+          name: r.county_name,
+          href: `/county/${r.slug}/`,
+          stat: `${formatCurrency(r.fmr_2br)}/mo`,
+        }))}
+      />
 
       {/* High-CPC footer */}
       <div className="bg-blue-50 rounded-lg p-6 text-sm">

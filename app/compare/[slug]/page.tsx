@@ -12,7 +12,8 @@ export async function generateStaticParams() {
   return generateCompareSlugs().map(slug => ({ slug }));
 }
 
-export const revalidate = false; // ISR daily
+export const dynamicParams = false;
+export const revalidate = 86400; // ISR daily
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
@@ -69,7 +70,7 @@ export default async function ComparePage({ params }: Props) {
         { name: 'Compare', url: `/compare/${slug}/` },
         { name: `${a.state} vs ${b.state}`, url: `/compare/${slug}/` },
       ])) }} />
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema(faqs)) }} />
+      {faqs.length > 0 && <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema(faqs)) }} />}
 
       <nav className="text-sm text-slate-500 mb-4">
         <a href="/" className="hover:text-indigo-600">Home</a> &raquo; <span>Compare</span> &raquo; <span>{a.state} vs {b.state}</span>

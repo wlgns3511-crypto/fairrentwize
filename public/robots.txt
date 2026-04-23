@@ -1,0 +1,77 @@
+User-Agent: *
+Allow: /
+Disallow: /api/
+Disallow: /_next/
+Disallow: /embed/
+
+# ── SEO scraper tools (zero user-facing traffic) ──
+User-Agent: AhrefsBot
+Disallow: /
+
+User-Agent: SemrushBot
+Disallow: /
+
+User-Agent: MJ12bot
+Disallow: /
+
+User-Agent: DotBot
+Disallow: /
+
+User-Agent: BLEXBot
+Disallow: /
+
+User-Agent: DataForSeoBot
+Disallow: /
+
+User-Agent: PetalBot
+Disallow: /
+
+User-Agent: SeekportBot
+Disallow: /
+
+User-Agent: Diffbot
+Disallow: /
+
+# ── AI training crawlers (not user-facing search — keep Googlebot/Bingbot/Applebot/PerplexityBot) ──
+User-Agent: GPTBot
+Disallow: /
+
+User-Agent: CCBot
+Disallow: /
+
+User-Agent: ClaudeBot
+Disallow: /
+
+User-Agent: anthropic-ai
+Disallow: /
+
+User-Agent: Google-Extended
+Disallow: /
+
+User-Agent: Applebot-Extended
+Disallow: /
+
+User-Agent: Meta-ExternalAgent
+Disallow: /
+
+User-Agent: Bytespider
+Disallow: /
+
+User-Agent: Amazonbot
+Disallow: /
+
+User-Agent: ImagesiftBot
+Disallow: /
+
+User-Agent: meta-webindexer
+Disallow: /
+
+User-Agent: Amzn-SearchBot
+Disallow: /
+
+# ── Facebook link preview: block compare URLs (bot flood from /compare/ spam) ──
+User-Agent: facebookexternalhit
+Disallow: /compare/
+Disallow: /county-compare/
+
+Sitemap: https://fairrentwize.com/sitemap.xml

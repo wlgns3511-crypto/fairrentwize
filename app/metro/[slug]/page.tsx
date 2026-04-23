@@ -1,12 +1,23 @@
 import { getAllMetroSlugs, getMetroBySlug, getStateByAbbr, getTopMetrosByRent } from '@/lib/db';
-import { formatCurrency, formatPercent } from '@/lib/format';
+import { buildDbPageRobots, buildTrustUpdatedLabel, getDataVintageLabel, getDbPageGate, getReviewedAt, getReviewedBy, METHODOLOGY_URL } from '@/lib/db-page';
+import { formatCurrency, formatPercent, getDataYear } from '@/lib/format';
 import { breadcrumbSchema, faqSchema, generateMetroFAQs } from '@/lib/schema';
 import { AdSlot } from '@/components/AdSlot';
 import { AuthorBox } from '@/components/AuthorBox';
+import { FreshnessTag } from '@/components/FreshnessTag';
+import { AnswerHero } from '@/components/upgrades/AnswerHero';
+import { TrustBlock } from '@/components/upgrades/TrustBlock';
+import { DecisionNext } from '@/components/upgrades/DecisionNext';
 import { notFound } from 'next/navigation';
 import type { Metadata } from 'next';
 
 interface Props { params: Promise<{ slug: string }> }
+
+export const dynamicParams = false;
+
+function buildMetroTopAnswer(metro: NonNullable<ReturnType<typeof getMetroBySlug>>, affordableRent: number, rentBurden: string) {
+  return `${metro.metro_name} has a 2-bedroom fair market rent of ${formatCurrency(metro.fmr_2br)}/month against a median household income of ${formatCurrency(metro.median_income)}/year. That puts the metro at roughly ${rentBurden} rent burden on the HUD 2-bedroom benchmark, which is the quickest way to tell whether this market is within the 30% affordability rule or already above it.`;
+}
 
 export async function generateStaticParams() {
   return getAllMetroSlugs().map(m => ({ slug: m.slug }));
@@ -16,11 +27,20 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
   const metro = getMetroBySlug(slug);
   if (!metro) return {};
+  const year = getDataYear();
+  const affordableRent = Math.round(metro.median_income * 0.3 / 12);
+  const rentBurden = ((metro.fmr_2br * 12) / metro.median_income * 100).toFixed(1);
+  const description = buildMetroTopAnswer(metro, affordableRent, rentBurden);
+  const gate = getDbPageGate({
+    alternativeLinkCount: 4,
+    topAnswer: description,
+  });
   return {
-    title: `${metro.metro_name} Fair Market Rent 2026 - Rental Costs & Affordability`,
-    description: `${metro.metro_name} metro area FMR: Studio ${formatCurrency(metro.fmr_studio)}, 1BR ${formatCurrency(metro.fmr_1br)}, 2BR ${formatCurrency(metro.fmr_2br)}. Vacancy rate: ${metro.vacancy_rate}%. Median income: ${formatCurrency(metro.median_income)}.`,
+    title: `${metro.metro_name} Fair Market Rent ${year} - Rental Costs & Affordability`,
+    description,
     alternates: { canonical: `/metro/${slug}/` },
     openGraph: { url: `/metro/${slug}/` },
+    robots: buildDbPageRobots(gate.pass),
   };
 }
 
@@ -28,6 +48,7 @@ export default async function MetroPage({ params }: Props) {
   const { slug } = await params;
   const metro = getMetroBySlug(slug);
   if (!metro) notFound();
+  const year = getDataYear();
 
   const state = getStateByAbbr(metro.state);
   const faqs = generateMetroFAQs(metro);
@@ -36,6 +57,7 @@ export default async function MetroPage({ params }: Props) {
   const affordableRent = Math.round(metro.median_income * 0.3 / 12);
   const rentBurden = ((metro.fmr_2br * 12) / metro.median_income * 100).toFixed(1);
   const isBurdened = parseFloat(rentBurden) >= 30;
+  const topAnswer = buildMetroTopAnswer(metro, affordableRent, rentBurden);
 
   const bedroomData = [
     { label: 'Studio', value: metro.fmr_studio },
@@ -53,7 +75,7 @@ export default async function MetroPage({ params }: Props) {
         { name: state?.state || metro.state, url: `/state/${state?.slug || ''}/` },
         { name: metro.metro_name, url: `/metro/${slug}/` },
       ])) }} />
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema(faqs)) }} />
+      {faqs.length > 0 && <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema(faqs)) }} />}
 
       <nav className="text-sm text-slate-500 mb-4">
         <a href="/" className="hover:text-indigo-600">Home</a> &raquo;{' '}
@@ -61,11 +83,42 @@ export default async function MetroPage({ params }: Props) {
         <span>{metro.metro_name}</span>
       </nav>
 
-      <h1 className="text-3xl font-bold mb-2">{metro.metro_name} Fair Market Rent 2026</h1>
-      <p className="text-slate-600 mb-6">
-        HUD Fair Market Rent data for the {metro.metro_name} metropolitan area.
-        Median household income: {formatCurrency(metro.median_income)}/year. Vacancy rate: {metro.vacancy_rate}%.
-      </p>
+      <AnswerHero
+        title={`${metro.metro_name} fair market rent`}
+        subtitle={`HUD FMR ${year}`}
+        tagline={topAnswer}
+        badges={[
+          { label: `${rentBurden}% rent burden`, tone: isBurdened ? "amber" as const : "emerald" as const },
+          { label: `${metro.vacancy_rate}% vacancy`, tone: "indigo" as const },
+        ]}
+        alternatives={allMetros.filter(m => m.slug !== slug).slice(0, 3).map(m => ({
+          label: m.metro_name,
+          href: `/metro/${m.slug}/`,
+          sublabel: `${formatCurrency(m.fmr_2br)} 2BR`,
+        }))}
+        alternativesLabel="Compare with metros"
+      />
+
+      <FreshnessTag
+        source="HUD Fair Market Rents"
+        updated={getReviewedAt()}
+        reviewedBy={getReviewedBy()}
+        dataVintage={getDataVintageLabel()}
+        methodologyUrl={METHODOLOGY_URL}
+      />
+
+      <TrustBlock
+        sources={[
+          { name: "HUD Fair Market Rents", url: `https://www.huduser.gov/portal/datasets/fmr.html` },
+          { name: "HUD User FMR API", url: "https://www.huduser.gov/portal/dataset/fmr-api.html" },
+          { name: "Census ACS Rent", url: "https://www.census.gov/topics/housing.html" },
+          { name: "Section 8 Voucher Program", url: "https://www.hud.gov/topics/housing_choice_voucher_program_section_8" },
+          { name: "BLS CPI Rent Index", url: "https://www.bls.gov/cpi/factsheets/owners-equivalent-rent-and-rent.htm" },
+        ]}
+        updated={buildTrustUpdatedLabel()}
+        reviewedBy={getReviewedBy()}
+        methodologyUrl={METHODOLOGY_URL}
+      />
 
       {/* Overview Cards */}
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
@@ -157,6 +210,70 @@ export default async function MetroPage({ params }: Props) {
           ))}
         </div>
       </section>
+
+      {/* Why this matters — US renter context */}
+      <section className="mb-8 mt-6" data-upgrade="why-it-matters">
+        <h2 className="text-xl font-bold mb-3">
+          Why fair market rent in {metro.metro_name} matters
+        </h2>
+        <div className="rounded-lg border border-slate-200 bg-white p-5 text-slate-700 leading-relaxed space-y-3">
+          <p>
+            Fair Market Rent (FMR) is published annually by HUD and used to
+            set payment standards for the Section 8 Housing Choice Voucher
+            program. FMR represents roughly the 40th percentile of recent
+            asking rents in the metro &mdash; not the cheapest, not the
+            most expensive, but the price point at which a vouchered
+            tenant should be able to find a unit in a non-luxury,
+            non-distressed building.
+          </p>
+          <p>
+            For non-vouchered renters, FMR is one of the most useful
+            benchmarks available. It&apos;s independent of any listing
+            platform&apos;s incentives and is the same number every
+            housing nonprofit and government agency uses. If asking rents
+            you see online are far above FMR, you&apos;re looking at the
+            top of the market &mdash; widen the search.
+          </p>
+          <p>
+            The standard US rule of thumb: housing should not exceed 30%
+            of gross household income. At {formatCurrency(metro.median_income)}
+            /year median income in {metro.metro_name}, that ceiling is
+            {" "}{formatCurrency(affordableRent)}/month. The 2BR FMR of
+            {" "}{formatCurrency(metro.fmr_2br)} is {rentBurden}% of
+            median &mdash; {isBurdened ? "above" : "within"} the 30% rule.
+          </p>
+          <p className="text-sm text-slate-500">
+            HUD updates FMRs every October for the federal fiscal year
+            beginning October 1. Source: HUD User FMR documentation.
+          </p>
+        </div>
+      </section>
+
+      <DecisionNext
+        cards={[
+          {
+            title: `Salary needed in ${metro.metro_name}`,
+            blurb: `What gross income do you need to clear the 30% rent burden threshold here?`,
+            href: `https://salarybycity.com`,
+            cta: `Open SalaryByCity`,
+            tone: "indigo" as const,
+          },
+          {
+            title: `Cost of living in this metro`,
+            blurb: `Rent is the biggest line, but not the only one. See total cost of living.`,
+            href: `https://costbycity.com`,
+            cta: `Open CostByCity`,
+            tone: "emerald" as const,
+          },
+          {
+            title: `Property tax if you buy`,
+            blurb: `Comparing rent to buy? Property tax is often the deciding cost line.`,
+            href: `https://propertytaxpeek.com`,
+            cta: `Open PropertyTaxPeek`,
+            tone: "amber" as const,
+          },
+        ]}
+      />
 
       <AuthorBox />
 

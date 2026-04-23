@@ -1,6 +1,7 @@
 import { getAllStates, getTopCountiesByRent, getMostAffordableCounties, getTopMetrosByRent, countCounties, countMetros } from '@/lib/db';
 import { formatCurrency, formatPercent, formatNumber } from '@/lib/format';
 import type { Metadata } from 'next';
+import { PopularEntities } from '@/components/upgrades/PopularEntities';
 
 export const metadata: Metadata = {
   title: 'FairRentWize - US Fair Market Rents & Rental Affordability Data 2026',
@@ -55,6 +56,18 @@ export default function HomePage() {
           <p className="text-sm text-slate-600">Data Year</p>
         </div>
       </div>
+
+      <PopularEntities
+        heading="Most Searched Counties"
+        subheading="Top counties by population & rent burden"
+        items={expensive.slice(0, 12).map(c => ({
+          name: c.county_name,
+          href: `/county/${c.slug}/`,
+          stat: `$${Math.round(c.fmr_2br).toLocaleString()}/mo`,
+        }))}
+        viewAllHref="/rankings"
+        viewAllLabel="View all rankings →"
+      />
 
       {/* Most Expensive States */}
       <section className="mb-12">

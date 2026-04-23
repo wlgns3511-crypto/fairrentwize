@@ -5,11 +5,11 @@ import type { Metadata } from 'next';
 
 interface Props { params: Promise<{ slug: string }> }
 
-export const dynamicParams = false;
-export const revalidate = false;
+export const dynamicParams = true;
+export const revalidate = 86400;
 
 export function generateStaticParams() {
-  return getAllStates().slice(0, 300).map(s => ({ slug: s.slug }));
+  return getAllStates().map(s => ({ slug: s.slug }));
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {

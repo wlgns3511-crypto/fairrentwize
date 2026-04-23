@@ -161,14 +161,14 @@ export function getCompareStates(slug: string): { a: StateRow; b: StateRow } | u
 export function generateCompareSlugs(): string[] {
   const states = getAllStates();
   const slugs: string[] = [];
-  // Generate top 200 state-vs-state comparisons
+  const CAP = 100;
   const top = states.slice(0, 20);
-  for (let i = 0; i < top.length; i++) {
-    for (let j = i + 1; j < top.length; j++) {
+  for (let i = 0; i < top.length && slugs.length < CAP; i++) {
+    for (let j = i + 1; j < top.length && slugs.length < CAP; j++) {
       slugs.push(`${top[i].slug}-vs-${top[j].slug}`);
     }
   }
-  return slugs.slice(0, 200);
+  return slugs;
 }
 
 // --- Metro Comparison queries ---

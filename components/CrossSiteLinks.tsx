@@ -1,52 +1,28 @@
-const SITES = [
-  { name: "VocabWize", url: "https://vocabwize.com", cat: "Language" },
-  { name: "VocabLibre", url: "https://vocablibre.com", cat: "Language" },
-  { name: "DicionarioWize", url: "https://dicionariowize.com", cat: "Language" },
-  { name: "WortWize", url: "https://wortwize.com", cat: "Language" },
-  { name: "KalimaWize", url: "https://kalimawize.com", cat: "Language" },
-  { name: "KotobaPeek", url: "https://kotobapeek.com", cat: "Language" },
-  { name: "NameBlooms", url: "https://nameblooms.com", cat: "Language" },
-  { name: "WagePeek", url: "https://wagepeek.com", cat: "Finance" },
-  { name: "NetPayPeek", url: "https://netpaypeek.com", cat: "Finance" },
-  { name: "CostByCity", url: "https://costbycity.com", cat: "Finance" },
-  { name: "FairRentWize", url: "https://fairrentwize.com", cat: "Finance" },
-  { name: "PropertyTaxPeek", url: "https://propertytaxpeek.com", cat: "Finance" },
-  { name: "HomePricePeek", url: "https://homepricepeek.com", cat: "Finance" },
-  { name: "SalaryByCity", url: "https://salarybycity.com", cat: "Finance" },
-  { name: "DegreeWize", url: "https://degreewize.com", cat: "Education" },
-  { name: "MySchoolPeek", url: "https://myschoolpeek.com", cat: "Education" },
-  { name: "MedCheckWize", url: "https://medcheckwize.com", cat: "Health" },
-  { name: "MedCostPeek", url: "https://medcostpeek.com", cat: "Health" },
-  { name: "ElderCarePeek", url: "https://eldercarepeek.com", cat: "Health" },
-  { name: "IngredIPeek", url: "https://ingredipeek.com", cat: "Health" },
-  { name: "CalorieWize", url: "https://caloriewize.com", cat: "Health" },
-  { name: "PowerBillPeek", url: "https://powerbillpeek.com", cat: "Utilities" },
-  { name: "SunPowerPeek", url: "https://sunpowerpeek.com", cat: "Utilities" },
-  { name: "ShipCalcWize", url: "https://shipcalcwize.com", cat: "Tools" },
-  { name: "TariffPeek", url: "https://tariffpeek.com", cat: "Tools" },
-  { name: "CalcPeek", url: "https://calcpeek.com", cat: "Tools" },
-  { name: "VisaPeek", url: "https://visapeek.com", cat: "Travel" },
-  { name: "GuideByCity", url: "https://guidebycity.com", cat: "Travel" },
-  { name: "ZipPeek", url: "https://zippeek.com", cat: "Travel" },
-  { name: "SafeCityPeek", url: "https://safecitypeek.com", cat: "Travel" },
-  { name: "DataPeekFacts", url: "https://datapeekfacts.com", cat: "Hub" },
-];
+const HUB_URL = "https://datapeekfacts.com/";
+const HUB_GUIDE_PATH = "/guide/";
 
 export function CrossSiteLinks({ current }: { current: string }) {
-  const others = SITES.filter((s) => s.name !== current);
-  const sameCat = others.filter((s) => s.cat === SITES.find((x) => x.name === current)?.cat);
-  const display = [...sameCat, ...others.filter((s) => !sameCat.includes(s))].slice(0, 10);
+  const normalized = current.toLowerCase().replace(/\s+/g, '');
+  const isHub = normalized.includes('datapeekfacts');
+  const href = isHub ? HUB_GUIDE_PATH : HUB_URL;
 
   return (
-    <div className="mt-10 pt-6 border-t border-slate-100">
-      <p className="text-xs font-medium text-slate-400 uppercase tracking-wider mb-3">Explore the DataPeek Network</p>
-      <div className="flex flex-wrap gap-x-4 gap-y-1.5">
-        {display.map((s) => (
-          <a key={s.name} href={s.url} className="text-xs text-slate-500 hover:text-blue-600 transition-colors">
-            {s.name}
-          </a>
-        ))}
-      </div>
+    <div className="mt-10 border-t border-slate-100 pt-6">
+      <p className="mb-2 text-xs font-medium uppercase tracking-wider text-slate-400">
+        Explore More Data Tools
+      </p>
+      <p className="text-sm leading-6 text-slate-600">
+        For adjacent public-data tools, methodology notes, and network updates, visit{' '}
+        <a
+          href={href}
+          className="font-medium text-slate-700 hover:text-blue-600 hover:underline"
+          target={isHub ? undefined : '_blank'}
+          rel={isHub ? undefined : 'nofollow noopener noreferrer'}
+        >
+          DataPeek Facts
+        </a>
+        .
+      </p>
     </div>
   );
 }

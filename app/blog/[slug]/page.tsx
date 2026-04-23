@@ -4,6 +4,8 @@ import { getAllPosts, getPostBySlug } from "@/lib/blog";
 import { AdSlot } from "@/components/AdSlot";
 import { AuthorBox } from "@/components/AuthorBox";
 
+export const dynamicParams = false;
+
 export function generateStaticParams() {
   return getAllPosts().map((p) => ({ slug: p.slug }));
 }
@@ -69,15 +71,9 @@ export default async function BlogPostPage({
             datePublished: post.publishedAt,
             dateModified: post.updatedAt ?? post.publishedAt,
             author: {
-              "@type": "Person",
-              name: "FairRentWize Research Team",
-              description: "Rental market and housing data research",
-              url: "https://fairrentwize.com/about/",
-              worksFor: {
-                "@type": "Organization",
-                name: "FairRentWize",
-                url: "https://fairrentwize.com",
-              },
+              "@type": "Organization",
+              name: "FairRentWize Editorial Team",
+              url: "https://fairrentwize.com/editorial-policy/",
             },
             publisher: {
               "@type": "Organization",
