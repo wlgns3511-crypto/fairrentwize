@@ -18,7 +18,9 @@ export default function HomePage() {
   const totalCounties = countCounties();
   const totalMetros = countMetros();
 
-  const sortedByRent = [...states].sort((a, b) => b.avg_rent_2br - a.avg_rent_2br);
+  const sortedByRent = [...states]
+    .filter((s) => s.fmr_2br !== null)
+    .sort((a, b) => (b.fmr_2br ?? 0) - (a.fmr_2br ?? 0));
   const mostExpensiveStates = sortedByRent.slice(0, 10);
   const leastExpensiveStates = sortedByRent.slice(-10).reverse();
 
@@ -63,7 +65,7 @@ export default function HomePage() {
         items={expensive.slice(0, 12).map(c => ({
           name: c.county_name,
           href: `/county/${c.slug}/`,
-          stat: `$${Math.round(c.fmr_2br).toLocaleString()}/mo`,
+          stat: `$${Math.round(c.fmr_2br ?? 0).toLocaleString()}/mo`,
         }))}
         viewAllHref="/rankings"
         viewAllLabel="View all rankings →"
@@ -72,14 +74,15 @@ export default function HomePage() {
       {/* Most Expensive States */}
       <section className="mb-12">
         <h2 className="text-2xl font-bold mb-4">Most Expensive States for Rent</h2>
+        <p className="text-sm text-slate-600 mb-4">Ranked by FY2025 HUD 2-bedroom Fair Market Rent (state aggregate from NLIHC OOR 2025).</p>
         <div className="overflow-x-auto">
           <table className="w-full text-sm">
             <thead>
               <tr className="border-b border-slate-200 text-left">
                 <th className="py-2 pr-4">#</th>
                 <th className="py-2 pr-4">State</th>
-                <th className="py-2 pr-4 text-right">Avg 1BR</th>
-                <th className="py-2 pr-4 text-right">Avg 2BR</th>
+                <th className="py-2 pr-4 text-right">2BR FMR</th>
+                <th className="py-2 pr-4 text-right">Housing Wage</th>
                 <th className="py-2 pr-4 text-right">Median Income</th>
                 <th className="py-2 text-right">Renter %</th>
               </tr>
@@ -89,10 +92,10 @@ export default function HomePage() {
                 <tr key={s.abbr} className="border-b border-slate-100 hover:bg-slate-50">
                   <td className="py-2 pr-4 text-slate-400">{i + 1}</td>
                   <td className="py-2 pr-4"><a href={`/state/${s.slug}/`} className="text-indigo-600 hover:underline">{s.state}</a></td>
-                  <td className="py-2 pr-4 text-right">{formatCurrency(s.avg_rent_1br)}/mo</td>
-                  <td className="py-2 pr-4 text-right font-medium">{formatCurrency(s.avg_rent_2br)}/mo</td>
-                  <td className="py-2 pr-4 text-right">{formatCurrency(s.median_income)}</td>
-                  <td className="py-2 text-right">{formatPercent(s.renter_pct)}</td>
+                  <td className="py-2 pr-4 text-right font-medium">{formatCurrency(s.fmr_2br)}/mo</td>
+                  <td className="py-2 pr-4 text-right">${s.nlihc_housing_wage_2br?.toFixed(2) ?? '—'}/hr</td>
+                  <td className="py-2 pr-4 text-right">{formatCurrency(s.acs_median_household_income)}</td>
+                  <td className="py-2 text-right">{formatPercent(s.acs_renter_pct)}</td>
                 </tr>
               ))}
             </tbody>
@@ -109,10 +112,10 @@ export default function HomePage() {
               <tr className="border-b border-slate-200 text-left">
                 <th className="py-2 pr-4">#</th>
                 <th className="py-2 pr-4">State</th>
-                <th className="py-2 pr-4 text-right">Avg 1BR</th>
-                <th className="py-2 pr-4 text-right">Avg 2BR</th>
+                <th className="py-2 pr-4 text-right">2BR FMR</th>
+                <th className="py-2 pr-4 text-right">Housing Wage</th>
                 <th className="py-2 pr-4 text-right">Median Income</th>
-                <th className="py-2 text-right">Tenant Rights</th>
+                <th className="py-2 text-right">Rent-Burdened</th>
               </tr>
             </thead>
             <tbody>
@@ -120,10 +123,10 @@ export default function HomePage() {
                 <tr key={s.abbr} className="border-b border-slate-100 hover:bg-slate-50">
                   <td className="py-2 pr-4 text-slate-400">{i + 1}</td>
                   <td className="py-2 pr-4"><a href={`/state/${s.slug}/`} className="text-indigo-600 hover:underline">{s.state}</a></td>
-                  <td className="py-2 pr-4 text-right">{formatCurrency(s.avg_rent_1br)}/mo</td>
-                  <td className="py-2 pr-4 text-right font-medium">{formatCurrency(s.avg_rent_2br)}/mo</td>
-                  <td className="py-2 pr-4 text-right">{formatCurrency(s.median_income)}</td>
-                  <td className="py-2 text-right">{s.tenant_rights_score}/10</td>
+                  <td className="py-2 pr-4 text-right font-medium">{formatCurrency(s.fmr_2br)}/mo</td>
+                  <td className="py-2 pr-4 text-right">${s.nlihc_housing_wage_2br?.toFixed(2) ?? '—'}/hr</td>
+                  <td className="py-2 pr-4 text-right">{formatCurrency(s.acs_median_household_income)}</td>
+                  <td className="py-2 text-right">{formatPercent(s.acs_rent_burdened_pct)}</td>
                 </tr>
               ))}
             </tbody>
@@ -140,7 +143,7 @@ export default function HomePage() {
               <h3 className="font-semibold text-slate-900">{m.metro_name}</h3>
               <div className="flex gap-4 mt-2 text-sm text-slate-600">
                 <span>2BR: <strong className="text-indigo-700">{formatCurrency(m.fmr_2br)}/mo</strong></span>
-                <span>Vacancy: {m.vacancy_rate}%</span>
+                <span>1BR: {formatCurrency(m.fmr_1br)}/mo</span>
               </div>
             </a>
           ))}
@@ -178,10 +181,10 @@ export default function HomePage() {
               {expensive.map((c) => (
                 <tr key={c.slug} className="border-b border-slate-100 hover:bg-slate-50">
                   <td className="py-2 pr-4"><a href={`/county/${c.slug}/`} className="text-indigo-600 hover:underline">{c.county_name}</a></td>
-                  <td className="py-2 pr-4">{c.state}</td>
+                  <td className="py-2 pr-4">{c.state_abbr}</td>
                   <td className="py-2 pr-4 text-right">{formatCurrency(c.fmr_2br)}/mo</td>
-                  <td className="py-2 pr-4 text-right">{formatCurrency(c.median_income)}</td>
-                  <td className="py-2 text-right font-medium text-red-600">{formatPercent(c.rent_burden_pct)}</td>
+                  <td className="py-2 pr-4 text-right">{formatCurrency(c.acs_median_household_income)}</td>
+                  <td className="py-2 text-right font-medium text-red-600">{formatPercent(c.acs_rent_burdened_pct)}</td>
                 </tr>
               ))}
             </tbody>

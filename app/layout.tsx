@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import { headers } from 'next/headers';
 import { Inter } from "next/font/google";
 import "./globals.css";
 import { UpgradeAnalytics } from "@/components/upgrades/UpgradeAnalytics";
@@ -9,18 +8,12 @@ const inter = Inter({ subsets: ["latin"], display: "swap" });
 const SITE_NAME = "FairRentWize";
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://fairrentwize.com";
 
-const ROOT_LOCALES = ['es'] as const;
-type RootLocale = (typeof ROOT_LOCALES)[number];
+// es removed 2026-04-25 HCU Phase C — /es/ subtree killed (English-only top
+// GSC searches, /es/rankings/all/ 404 leftover from 4/23 sitemap-only prune).
 const ROOT_ALTERNATE_LANGUAGES = {
   en: `${SITE_URL}/`,
-  es: `${SITE_URL}/es/`,
   'x-default': `${SITE_URL}/`,
 } as const;
-
-function getHtmlLang(pathname: string | null): string {
-  const locale = pathname?.split('/').filter(Boolean)[0] as RootLocale | undefined;
-  return locale && ROOT_LOCALES.includes(locale) ? locale : 'en';
-}
 
 const GA_ID = "G-Y95BZ0SEQR";
 
@@ -33,18 +26,14 @@ export const metadata: Metadata = {
     "Explore HUD Fair Market Rents for 3,000+ US counties and 400 metro areas. Compare rental costs, calculate affordability, and find rent burden data by location.",
   metadataBase: new URL(SITE_URL),
   alternates: { languages: ROOT_ALTERNATE_LANGUAGES },
-  robots: { index: true, follow: true, googleBot: { index: true, follow: true, "max-image-preview": "large" } },
   openGraph: { type: "website", siteName: SITE_NAME, locale: "en_US" },
   twitter: { card: "summary_large_image" },
   other: { "google-adsense-account": "ca-pub-5724806562146685" },
 };
 
-export default async function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
-  const headerStore = await headers();
-  const pathname = headerStore.get('x-pathname');
-  const htmlLang = getHtmlLang(pathname);
+export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang={htmlLang}>
+    <html lang="en">
       <head>
         <link rel="preconnect" href="https://www.googletagmanager.com" />
         <link rel="dns-prefetch" href="https://pagead2.googlesyndication.com" />
@@ -93,7 +82,7 @@ export default async function RootLayout({ children }: Readonly<{ children: Reac
             <nav className="flex gap-6 text-sm">
               <a href="/calculator/" className="hover:text-indigo-600">Calculator</a>
               <a href="/state/california/" className="hover:text-indigo-600">States</a>
-              <a href="/compare/california-vs-texas/" className="hover:text-indigo-600">Compare</a>
+              <a href="/rankings/" className="hover:text-indigo-600">Rankings</a>
               <a href="/guide/" className="hover:text-indigo-600">Guides</a>
               <a href="/blog/" className="hover:text-indigo-600">Articles</a>
             </nav>

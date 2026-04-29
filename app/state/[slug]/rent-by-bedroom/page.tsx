@@ -142,15 +142,19 @@ export default async function RentByBedroomPage({ params }: Props) {
   const highestPremium = premiumRows.slice(0, 5);
   const lowestPremium = [...premiumRows].slice(-5).reverse();
 
-  const affordable1br = Math.round((state.median_income * 0.3) / 12);
-  const affordableVsBr2 = br2Stats ? affordable1br - br2Stats.p50 : 0;
+  const affordable1br = state.acs_median_household_income !== null
+    ? Math.round((state.acs_median_household_income * 0.3) / 12)
+    : 0;
+  const affordableVsBr2 = br2Stats && affordable1br > 0 ? affordable1br - br2Stats.p50 : 0;
 
-  // Peer states by average 2BR rent
+  // Peer states by average 2BR rent (NLIHC state aggregate)
   const allStates = getAllStates();
-  const peers = allStates
-    .filter((s) => s.slug !== slug)
-    .sort((a, b) => Math.abs(a.avg_rent_2br - state.avg_rent_2br) - Math.abs(b.avg_rent_2br - state.avg_rent_2br))
-    .slice(0, 4);
+  const peers = state.fmr_2br !== null
+    ? allStates
+        .filter((s) => s.slug !== slug && s.fmr_2br !== null)
+        .sort((a, b) => Math.abs((a.fmr_2br ?? 0) - (state.fmr_2br ?? 0)) - Math.abs((b.fmr_2br ?? 0) - (state.fmr_2br ?? 0)))
+        .slice(0, 4)
+    : [];
 
   const crumbs = [
     { name: 'Home', url: '/' },
@@ -185,7 +189,9 @@ export default async function RentByBedroomPage({ params }: Props) {
     },
     {
       question: `How does median income interact with these rents?`,
-      answer: `At ${state.state}\u2019s median household income of ${formatCurrency(state.median_income)}, the 30% affordability threshold puts rent at ${formatCurrency(affordable1br)}/mo or less. Comparing this against the statewide p50 2BR rent of ${formatCurrency(br2Stats?.p50 ?? 0)} shows whether a median earner in the state is broadly on the right side of the 30% rule, or already pushed into rent burden.`,
+      answer: state.acs_median_household_income !== null
+        ? `At ${state.state}\u2019s median household income of ${formatCurrency(state.acs_median_household_income)}, the 30% affordability threshold puts rent at ${formatCurrency(affordable1br)}/mo or less. Comparing this against the statewide p50 2BR rent of ${formatCurrency(br2Stats?.p50 ?? 0)} shows whether a median earner in the state is broadly on the right side of the 30% rule, or already pushed into rent burden.`
+        : `Median household income for ${state.state} is unavailable in this release, so the 30% affordability threshold cannot be computed at the statewide level. Compare county-level median incomes in the table above against each county's p50 2BR rent for a localized view.`,
     },
   ];
 
@@ -406,7 +412,7 @@ export default async function RentByBedroomPage({ params }: Props) {
             >
               <div className="text-xs font-semibold text-slate-500 uppercase tracking-wider mb-1">Peer state</div>
               <div className="text-lg font-bold text-slate-900">{p.state}</div>
-              <div className="text-xs text-slate-500 mt-1">2BR avg {formatCurrency(p.avg_rent_2br)}/mo</div>
+              <div className="text-xs text-slate-500 mt-1">2BR FMR {formatCurrency(p.fmr_2br)}/mo</div>
             </Link>
           ))}
         </div>
@@ -434,8 +440,9 @@ export default async function RentByBedroomPage({ params }: Props) {
         >
           &larr; Back to {state.state} overview
         </Link>
-        <Link href="/compare/" className="px-3 py-1.5 bg-indigo-50 border border-indigo-200 rounded-lg text-indigo-700 hover:bg-indigo-100 transition-colors">
-          State-vs-state compare &rarr;
+        {/* /compare/ killed 2026-04-25 HCU Phase C — pointed to rankings instead */}
+        <Link href="/rankings/" className="px-3 py-1.5 bg-indigo-50 border border-indigo-200 rounded-lg text-indigo-700 hover:bg-indigo-100 transition-colors">
+          See state rankings &rarr;
         </Link>
       </section>
 

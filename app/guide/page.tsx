@@ -56,9 +56,10 @@ export default function GuidesIndex() {
             <Link href="/state/california/" className="text-indigo-700 hover:underline font-medium">Browse states →</Link>
             <span className="text-slate-500"> HUD FMR + tenant rights by state</span>
           </li>
+          {/* /compare/ killed 2026-04-25 HCU Phase C — replaced with rankings hub */}
           <li>
-            <Link href="/compare/california-vs-texas/" className="text-indigo-700 hover:underline font-medium">Compare states →</Link>
-            <span className="text-slate-500"> rent and protections side by side</span>
+            <Link href="/rankings/" className="text-indigo-700 hover:underline font-medium">Rankings →</Link>
+            <span className="text-slate-500"> states ranked by rent burden, affordability, FMR</span>
           </li>
         </ul>
       </section>

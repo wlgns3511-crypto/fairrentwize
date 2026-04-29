@@ -1,24 +1,38 @@
 #!/usr/bin/env tsx
 /**
- * build-sitemap.ts — fairrentwize static sitemap generator.
- * Generates public/sitemap.xml (index if sharded, else single file).
+ * build-sitemap.ts — fairrentwize sitemap (HCU Phase C, 2026-04-25).
  *
- * PRUNING HISTORY (HCU March 2026 Tier F — 2026-04-23):
- *   Dropped /es/ homepage + /es/state/ × 51 = 52 thin translation mirrors.
- *   Minor drop (1.4%), but same HCU-defense playbook as Tier E/F peers —
- *   no live /es/ content, just a UI-chrome translation of states data.
- *   Route stays live via dynamicParams; just not announced to Google.
+ * PRUNING HISTORY:
+ *   2026-04-23 Tier F: dropped /es/ homepage + /es/state/ × 51 = 52 mirrors
+ *     from sitemap (route stayed live → external backlink 404 still accumulating
+ *     in GSC = `/es/rankings/all/` etc).
  *
- * Dynamic routes:
- *   state/[slug]         dynamicParams=true  → all states (getAllStates)
- *   county/[slug]        dynamicParams=true  → all counties (getAllCountySlugs)
- *   metro/[slug]         dynamicParams=true  → all metros (getAllMetroSlugs)
- *   compare/[slug]       dynamicParams=true  → all compare slugs (generateCompareSlugs)
- *   metro-compare/[slug] dynamicParams=true  → all valid metro comparisons
+ *   2026-04-25 Phase C (this rewrite):
+ *     GSC after 3 months on fairrentwize.com (54 queries / 0 clicks):
+ *       - 1,000+ /compare/{a-vs-b}/ 404 (state×state was 100 generated, but
+ *         external backlinks expanded matrix shape — city-vs-city legacy)
+ *       - 510 /compare/ "사용자 표준 없는 중복 페이지"
+ *       - 822 /metro-compare/{a-vs-b}/ "canonical alternate" (www subdomain)
+ *       - 39 /metro-compare/ + /county/ "발견됨-색인X"
+ *       - top 10 GSC queries 100% English, all calculator-shaped
+ *
+ *     Killed (410 via middleware): /compare/, /metro-compare/, /embed/,
+ *       /city/ (legacy 404), /es/ subtree (locale, English top searches).
+ *       app/{compare,metro-compare,embed,es}/ dirs removed (5 page.tsx files).
+ *
+ *     Kept: /calculator/ (top GSC signal), /state/ × 51 + rent-by-bedroom × 51,
+ *       /county/ × 2,943 (HUD county FMR, real data), /metro/ × 219,
+ *       /rankings/ + /rankings/highest/lowest + /rankings/most-affordable-{state} × 51,
+ *       /blog (~33), /guide (~6), /, /about, /contact, /privacy, /terms.
+ *
+ *     Sitemap: 3,560 → ~3,360 URLs (-5.6%, smaller ratio than visapeek -85%
+ *       because compare/metro-compare were already capped at 100 each. Phase C
+ *       value here = middleware 410 killing GSC zombie 1,500+ URLs that the
+ *       4/22 cap didn't deindex).
  */
 import * as fs from 'fs';
 import * as path from 'path';
-import { getAllStates, getAllCountySlugs, getAllMetroSlugs, generateCompareSlugs, getAllMetroComparisonSlugs } from '../lib/db';
+import { getAllStates, getAllCountySlugs, getAllMetroSlugs } from '../lib/db';
 import { getAllPosts } from '../lib/blog';
 import { getAllGuides } from '../lib/guides';
 
@@ -40,32 +54,33 @@ function writeShard(id: number, es: Entry[]) {
   fs.writeFileSync(path.join(OUT_DIR, `sitemap-${id}.xml`), xml);
 }
 
-// ---- Collect entries with dedup ----
 const seen = new Set<string>();
 const entries: Entry[] = [];
 function add(e: Entry) { if (!seen.has(e.url)) { seen.add(e.url); entries.push(e); } }
 
-// Static pages (EN only — /es/ dropped 2026-04-23 Tier F)
+// ── Static / hub pages (EN only) ─────────────────────────────────────────────
 add({ url: `${SITE_URL}/`, priority: '1.0', changefreq: 'monthly' });
 add({ url: `${SITE_URL}/calculator/`, priority: '0.9', changefreq: 'monthly' });
 add({ url: `${SITE_URL}/about/`, priority: '0.3', changefreq: 'yearly' });
 add({ url: `${SITE_URL}/privacy/`, priority: '0.3', changefreq: 'yearly' });
 add({ url: `${SITE_URL}/terms/`, priority: '0.3', changefreq: 'yearly' });
 add({ url: `${SITE_URL}/contact/`, priority: '0.3', changefreq: 'yearly' });
+add({ url: `${SITE_URL}/methodology/`, priority: '0.4', changefreq: 'yearly' });
+add({ url: `${SITE_URL}/disclaimer/`, priority: '0.3', changefreq: 'yearly' });
 
-// Blog
+// ── Blog ─────────────────────────────────────────────────────────────────────
 add({ url: `${SITE_URL}/blog/`, priority: '0.8', changefreq: 'weekly' });
 for (const p of getAllPosts()) {
   add({ url: `${SITE_URL}/blog/${p.slug}/`, priority: '0.7', changefreq: 'monthly' });
 }
 
-// Guides
+// ── Guides ───────────────────────────────────────────────────────────────────
 add({ url: `${SITE_URL}/guide/`, priority: '0.8', changefreq: 'weekly' });
 for (const g of getAllGuides()) {
   add({ url: `${SITE_URL}/guide/${g.slug}/`, lastmod: g.updatedAt || NOW, priority: '0.7', changefreq: 'monthly' });
 }
 
-// Rankings: hub + per-state
+// ── Rankings: hub + per-state ────────────────────────────────────────────────
 const allStatesList = getAllStates();
 add({ url: `${SITE_URL}/rankings/`, priority: '0.8', changefreq: 'monthly' });
 add({ url: `${SITE_URL}/rankings/highest-rent-by-state/`, priority: '0.6', changefreq: 'monthly' });
@@ -74,37 +89,34 @@ for (const s of allStatesList) {
   add({ url: `${SITE_URL}/rankings/most-affordable-in-${s.slug}/`, priority: '0.6', changefreq: 'monthly' });
 }
 
-// States: dynamicParams=true → all states (EN only).
-// /es/state/ × 51 thin-translation mirror DROPPED 2026-04-23 Tier F.
+// ── States × 51 + rent-by-bedroom × 51 (Tier S 4/21 expansion) ──────────────
 for (const s of allStatesList) {
-  add({ url: `${SITE_URL}/state/${s.slug}/`, priority: '0.8', changefreq: 'monthly' });
-  // Tier S HCU expansion 2026-04-21 — rent-by-bedroom subpage
+  add({ url: `${SITE_URL}/state/${s.slug}/`, priority: '0.85', changefreq: 'monthly' });
   add({ url: `${SITE_URL}/state/${s.slug}/rent-by-bedroom/`, priority: '0.7', changefreq: 'monthly' });
 }
 
-// Counties: dynamicParams=true → all counties
+// ── Counties × ~2,943 (real HUD county-level FMR data) ───────────────────────
 for (const c of getAllCountySlugs()) {
   add({ url: `${SITE_URL}/county/${c.slug}/`, priority: '0.7', changefreq: 'monthly' });
 }
 
-// Metros: dynamicParams=true → all metros
+// ── Metros × ~219 (real HUD metro-level FMR data) ────────────────────────────
 for (const m of getAllMetroSlugs()) {
-  add({ url: `${SITE_URL}/metro/${m.slug}/`, priority: '0.7', changefreq: 'monthly' });
+  add({ url: `${SITE_URL}/metro/${m.slug}/`, priority: '0.75', changefreq: 'monthly' });
 }
 
-// State comparisons: CAPPED to match page.tsx generateStaticParams (2026-04-22 HCU-defense)
-// generateCompareSlugs() already caps at 100; defensive .slice(0, 100) anyway.
-for (const slug of generateCompareSlugs().slice(0, 100)) {
-  add({ url: `${SITE_URL}/compare/${slug}/`, priority: '0.5', changefreq: 'monthly' });
+// ── Cardinality guard ────────────────────────────────────────────────────────
+// Phase C target ~3,360. Tripwire at 3,800 (county data could grow naturally).
+if (entries.length > 3800 && !process.env.SITEMAP_LARGE_OK) {
+  throw new Error(
+    `fairrentwize sitemap has ${entries.length.toLocaleString()} URLs — Phase C budget is ~3,360.\n` +
+      `Did /compare/ or /metro-compare/ get re-added? Those are the doorways HCU Phase C explicitly killed.\n` +
+      `Or did /county/ data grow > 3,500? Review and bump guard if intentional.\n` +
+      `Run with SITEMAP_LARGE_OK=1 if you genuinely meant to expand the tier.`,
+  );
 }
 
-// Metro comparisons: CAPPED at 100 to match page.tsx getAllMetroComparisonSlugs(100).
-// Was: full valid set (23,871 URLs) → soft-404 risk under dynamicParams=false.
-for (const c of getAllMetroComparisonSlugs(100)) {
-  add({ url: `${SITE_URL}/metro-compare/${c.slug}/`, priority: '0.5', changefreq: 'yearly' });
-}
-
-// ---- Write sharded output ----
+// ── Clean old sitemaps ───────────────────────────────────────────────────────
 for (const f of fs.readdirSync(OUT_DIR)) {
   if (/^sitemap(-\d+)?\.xml$/.test(f)) fs.unlinkSync(path.join(OUT_DIR, f));
 }

@@ -37,3 +37,9 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# data — regenerable from refresh-from-{hud,acs,nlihc}.ts
+/data/raw/
+/data/rents.db-shm
+/data/rents.db-wal
+/data/rents.db.bak*

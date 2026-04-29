@@ -32,13 +32,13 @@ function getAllRankings(): Record<string, RankingConfig> {
   const all: Record<string, RankingConfig> = {
     'highest-rent-by-state': {
       title: 'Highest Rent States in America',
-      desc: 'US states ranked by highest average 2-bedroom fair market rent.',
-      type: 'state', column: 'avg_rent_2br', dir: 'DESC', label: 'Avg 2BR Rent',
+      desc: 'US states ranked by highest 2-bedroom HUD Fair Market Rent (state aggregate from NLIHC OOR 2025).',
+      type: 'state', column: 'fmr_2br', dir: 'DESC', label: '2BR FMR',
     },
     'lowest-rent-by-state': {
       title: 'Lowest Rent States in America',
-      desc: 'US states ranked by lowest average 2-bedroom fair market rent.',
-      type: 'state', column: 'avg_rent_2br', dir: 'ASC', label: 'Avg 2BR Rent',
+      desc: 'US states ranked by lowest 2-bedroom HUD Fair Market Rent (state aggregate from NLIHC OOR 2025).',
+      type: 'state', column: 'fmr_2br', dir: 'ASC', label: '2BR FMR',
     },
   };
 
@@ -57,7 +57,7 @@ function getAllRankings(): Record<string, RankingConfig> {
 const ALL_RANKINGS = getAllRankings();
 
 interface Props { params: Promise<{ type: string }> }
-export const dynamicParams = true;
+export const dynamicParams = false;
 export const revalidate = 86400;
 
 export function generateStaticParams() {
@@ -87,7 +87,7 @@ export default async function RankingPage({ params }: Props) {
 
   if (r.type === 'state') {
     const states = db.prepare(
-      `SELECT * FROM states ORDER BY ${r.column} ${r.dir}`
+      `SELECT * FROM states WHERE ${r.column} IS NOT NULL ORDER BY ${r.column} ${r.dir}`
     ).all() as StateRow[];
     db.close();
 
@@ -119,10 +119,10 @@ export default async function RankingPage({ params }: Props) {
               <tr className="border-b-2 border-slate-200 text-left">
                 <th className="py-2.5 px-2">#</th>
                 <th className="py-2.5 px-2">State</th>
-                <th className="py-2.5 px-2 text-right">1BR Rent</th>
-                <th className="py-2.5 px-2 text-right">2BR Rent</th>
+                <th className="py-2.5 px-2 text-right">2BR FMR</th>
+                <th className="py-2.5 px-2 text-right">Housing Wage</th>
                 <th className="py-2.5 px-2 text-right">Median Income</th>
-                <th className="py-2.5 px-2 text-right">Renter %</th>
+                <th className="py-2.5 px-2 text-right">Rent-Burdened</th>
               </tr>
             </thead>
             <tbody>
@@ -132,10 +132,10 @@ export default async function RankingPage({ params }: Props) {
                   <td className="py-2 px-2">
                     <a href={`/state/${s.slug}/`} className="text-indigo-600 hover:underline font-medium">{s.state}</a>
                   </td>
-                  <td className="py-2 px-2 text-right">{formatCurrency(s.avg_rent_1br)}/mo</td>
-                  <td className="py-2 px-2 text-right font-medium">{formatCurrency(s.avg_rent_2br)}/mo</td>
-                  <td className="py-2 px-2 text-right">{formatCurrency(s.median_income)}</td>
-                  <td className="py-2 px-2 text-right">{formatPercent(s.renter_pct)}</td>
+                  <td className="py-2 px-2 text-right font-medium">{formatCurrency(s.fmr_2br)}/mo</td>
+                  <td className="py-2 px-2 text-right">{s.nlihc_housing_wage_2br !== null ? `$${s.nlihc_housing_wage_2br.toFixed(2)}/hr` : '—'}</td>
+                  <td className="py-2 px-2 text-right">{formatCurrency(s.acs_median_household_income)}</td>
+                  <td className="py-2 px-2 text-right">{formatPercent(s.acs_rent_burdened_pct)}</td>
                 </tr>
               ))}
             </tbody>
@@ -157,7 +157,10 @@ export default async function RankingPage({ params }: Props) {
         </section>
 
         <AdSlot id="ranking-bottom" />
-        <DataSourceBadge sources={[{ name: 'HUD FMR', url: 'https://www.huduser.gov/portal/datasets/fmr.html' }]} />
+        <DataSourceBadge sources={[
+          { name: 'HUD FMR', url: 'https://www.huduser.gov/portal/datasets/fmr.html' },
+          { name: 'NLIHC OOR 2025', url: 'https://nlihc.org/oor' },
+        ]} />
         <CrossSiteLinks current="FairRentWize" />
       </>
     );
@@ -165,7 +168,7 @@ export default async function RankingPage({ params }: Props) {
 
   // County rankings (state-specific)
   const counties = db.prepare(
-    `SELECT * FROM counties WHERE state = ? ORDER BY ${r.column} ${r.dir} LIMIT 50`
+    `SELECT * FROM counties WHERE state_abbr = ? AND ${r.column} IS NOT NULL ORDER BY ${r.column} ${r.dir} LIMIT 50`
   ).all(r.stateAbbr!) as County[];
   db.close();
 
@@ -217,8 +220,8 @@ export default async function RankingPage({ params }: Props) {
                 <td className="py-2 px-2 text-right">{formatCurrency(c.fmr_studio)}</td>
                 <td className="py-2 px-2 text-right">{formatCurrency(c.fmr_1br)}</td>
                 <td className="py-2 px-2 text-right font-medium">{formatCurrency(c.fmr_2br)}</td>
-                <td className="py-2 px-2 text-right">{formatCurrency(c.median_income)}</td>
-                <td className="py-2 px-2 text-right">{formatPercent(c.rent_burden_pct)}</td>
+                <td className="py-2 px-2 text-right">{formatCurrency(c.acs_median_household_income)}</td>
+                <td className="py-2 px-2 text-right">{formatPercent(c.acs_rent_burdened_pct)}</td>
               </tr>
             ))}
           </tbody>

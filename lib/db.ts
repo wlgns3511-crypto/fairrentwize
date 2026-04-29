@@ -10,43 +10,63 @@ function getDb(): Database.Database {
 }
 
 export interface County {
-  id: number;
+  fips: string;
+  state_fips: string;
+  state_abbr: string;
   county_name: string;
-  state: string;
+  county_short_name: string;
   slug: string;
-  fmr_studio: number;
-  fmr_1br: number;
-  fmr_2br: number;
-  fmr_3br: number;
-  fmr_4br: number;
-  median_income: number;
-  rent_burden_pct: number;
-  population: number;
+  fmr_studio: number | null;
+  fmr_1br: number | null;
+  fmr_2br: number | null;
+  fmr_3br: number | null;
+  fmr_4br: number | null;
+  hud_source_kind: 'NCNTY' | 'METRO_N' | 'METRO_M_FANOUT' | null;
+  hud_source_code: string | null;
+  cbsa: string | null;
+  acs_median_rent_overall: number | null;
+  acs_median_rent_overall_moe: number | null;
+  acs_median_rent_overall_relative_moe: number | null;
+  acs_median_rent_studio: number | null;
+  acs_median_rent_1br: number | null;
+  acs_median_rent_2br: number | null;
+  acs_median_rent_3br: number | null;
+  acs_median_rent_4br: number | null;
+  acs_median_household_income: number | null;
+  acs_rent_burdened_pct: number | null;
+  acs_renter_occupied_pct: number | null;
+  acs_total_occupied_units: number | null;
 }
 
 export interface Metro {
-  id: number;
+  cbsa: string;
   metro_name: string;
-  state: string;
+  state_abbr: string;
   slug: string;
-  fmr_studio: number;
-  fmr_1br: number;
-  fmr_2br: number;
-  fmr_3br: number;
-  fmr_4br: number;
-  median_income: number;
-  vacancy_rate: number;
+  fmr_studio: number | null;
+  fmr_1br: number | null;
+  fmr_2br: number | null;
+  fmr_3br: number | null;
+  fmr_4br: number | null;
+  hud_source_code: string | null;
 }
 
 export interface StateRow {
   state: string;
   abbr: string;
   slug: string;
-  avg_rent_1br: number;
-  avg_rent_2br: number;
-  median_income: number;
-  renter_pct: number;
-  tenant_rights_score: number;
+  fips: string;
+  fmr_2br: number | null;
+  acs_median_rent_overall: number | null;
+  acs_median_rent_2br: number | null;
+  acs_median_household_income: number | null;
+  acs_renter_pct: number | null;
+  acs_rent_burdened_pct: number | null;
+  nlihc_housing_wage_2br: number | null;
+  nlihc_housing_wage_rank: number | null;
+  nlihc_annual_income_2br: number | null;
+  nlihc_mean_renter_wage: number | null;
+  nlihc_renter_households: number | null;
 }
 
 // --- State queries ---
@@ -64,15 +84,32 @@ export function getStateByAbbr(abbr: string): StateRow | undefined {
 }
 
 export function getStatesRanked(orderBy: string, limit = 50): StateRow[] {
-  const allowed = ['avg_rent_1br', 'avg_rent_2br', 'median_income', 'renter_pct', 'tenant_rights_score'];
-  if (!allowed.includes(orderBy)) orderBy = 'avg_rent_2br';
-  return getDb().prepare(`SELECT * FROM states ORDER BY ${orderBy} DESC LIMIT ?`).all(limit) as StateRow[];
+  const allowed = [
+    'fmr_2br',
+    'acs_median_rent_overall',
+    'acs_median_rent_2br',
+    'acs_median_household_income',
+    'acs_renter_pct',
+    'acs_rent_burdened_pct',
+    'nlihc_housing_wage_2br',
+    'nlihc_mean_renter_wage',
+  ];
+  const col = allowed.includes(orderBy) ? orderBy : 'fmr_2br';
+  return getDb()
+    .prepare(`SELECT * FROM states WHERE ${col} IS NOT NULL ORDER BY ${col} DESC LIMIT ?`)
+    .all(limit) as StateRow[];
 }
 
 // --- County queries ---
 
 export function getAllCountySlugs(): { slug: string }[] {
-  return getDb().prepare('SELECT slug FROM counties ORDER BY population DESC').all() as { slug: string }[];
+  // Order by ACS occupied-unit count as a proxy for population (real ACS data,
+  // unlike the old synthetic `population` column).
+  return getDb()
+    .prepare(
+      'SELECT slug FROM counties ORDER BY COALESCE(acs_total_occupied_units, 0) DESC'
+    )
+    .all() as { slug: string }[];
 }
 
 export function getCountyBySlug(slug: string): County | undefined {
@@ -80,25 +117,39 @@ export function getCountyBySlug(slug: string): County | undefined {
 }
 
 export function getCountiesByState(abbr: string): County[] {
-  return getDb().prepare('SELECT * FROM counties WHERE state = ? ORDER BY population DESC').all(abbr) as County[];
+  return getDb()
+    .prepare(
+      'SELECT * FROM counties WHERE state_abbr = ? ORDER BY COALESCE(acs_total_occupied_units, 0) DESC'
+    )
+    .all(abbr) as County[];
 }
 
 export function getTopCountiesByRent(limit = 20): County[] {
-  return getDb().prepare('SELECT * FROM counties ORDER BY fmr_2br DESC LIMIT ?').all(limit) as County[];
+  return getDb()
+    .prepare('SELECT * FROM counties WHERE fmr_2br IS NOT NULL ORDER BY fmr_2br DESC LIMIT ?')
+    .all(limit) as County[];
 }
 
 export function getMostAffordableCounties(limit = 20): County[] {
-  return getDb().prepare('SELECT * FROM counties ORDER BY fmr_2br ASC LIMIT ?').all(limit) as County[];
+  return getDb()
+    .prepare('SELECT * FROM counties WHERE fmr_2br IS NOT NULL ORDER BY fmr_2br ASC LIMIT ?')
+    .all(limit) as County[];
 }
 
 export function getHighBurdenCounties(limit = 20): County[] {
-  return getDb().prepare('SELECT * FROM counties ORDER BY rent_burden_pct DESC LIMIT ?').all(limit) as County[];
+  return getDb()
+    .prepare(
+      'SELECT * FROM counties WHERE acs_rent_burdened_pct IS NOT NULL ORDER BY acs_rent_burdened_pct DESC LIMIT ?'
+    )
+    .all(limit) as County[];
 }
 
-export function getRelatedCounties(state: string, excludeSlug: string, limit = 8): County[] {
-  return getDb().prepare(
-    'SELECT * FROM counties WHERE state = ? AND slug != ? ORDER BY population DESC LIMIT ?'
-  ).all(state, excludeSlug, limit) as County[];
+export function getRelatedCounties(state_abbr: string, excludeSlug: string, limit = 8): County[] {
+  return getDb()
+    .prepare(
+      'SELECT * FROM counties WHERE state_abbr = ? AND slug != ? ORDER BY COALESCE(acs_total_occupied_units, 0) DESC LIMIT ?'
+    )
+    .all(state_abbr, excludeSlug, limit) as County[];
 }
 
 export function countCounties(): number {
@@ -116,15 +167,21 @@ export function getMetroBySlug(slug: string): Metro | undefined {
 }
 
 export function getMetrosByState(abbr: string): Metro[] {
-  return getDb().prepare('SELECT * FROM metros WHERE state = ? ORDER BY metro_name').all(abbr) as Metro[];
+  return getDb()
+    .prepare('SELECT * FROM metros WHERE state_abbr = ? ORDER BY metro_name')
+    .all(abbr) as Metro[];
 }
 
 export function getTopMetrosByRent(limit = 20): Metro[] {
-  return getDb().prepare('SELECT * FROM metros ORDER BY fmr_2br DESC LIMIT ?').all(limit) as Metro[];
+  return getDb()
+    .prepare('SELECT * FROM metros WHERE fmr_2br IS NOT NULL ORDER BY fmr_2br DESC LIMIT ?')
+    .all(limit) as Metro[];
 }
 
 export function getMostAffordableMetros(limit = 20): Metro[] {
-  return getDb().prepare('SELECT * FROM metros ORDER BY fmr_2br ASC LIMIT ?').all(limit) as Metro[];
+  return getDb()
+    .prepare('SELECT * FROM metros WHERE fmr_2br IS NOT NULL ORDER BY fmr_2br ASC LIMIT ?')
+    .all(limit) as Metro[];
 }
 
 export function countMetros(): number {
@@ -135,16 +192,20 @@ export function countMetros(): number {
 
 export function searchMetros(query: string, limit = 20): Metro[] {
   const q = `%${query}%`;
-  return getDb().prepare(
-    'SELECT * FROM metros WHERE metro_name LIKE ? OR state LIKE ? ORDER BY metro_name LIMIT ?'
-  ).all(q, q, limit) as Metro[];
+  return getDb()
+    .prepare(
+      'SELECT * FROM metros WHERE metro_name LIKE ? OR state_abbr LIKE ? ORDER BY metro_name LIMIT ?'
+    )
+    .all(q, q, limit) as Metro[];
 }
 
 export function searchCounties(query: string, limit = 20): County[] {
   const q = `%${query}%`;
-  return getDb().prepare(
-    'SELECT * FROM counties WHERE county_name LIKE ? OR state LIKE ? ORDER BY county_name LIMIT ?'
-  ).all(q, q, limit) as County[];
+  return getDb()
+    .prepare(
+      'SELECT * FROM counties WHERE county_name LIKE ? OR state_abbr LIKE ? ORDER BY county_name LIMIT ?'
+    )
+    .all(q, q, limit) as County[];
 }
 
 // --- Compare queries ---
@@ -169,40 +230,4 @@ export function generateCompareSlugs(): string[] {
     }
   }
   return slugs;
-}
-
-// --- Metro Comparison queries ---
-
-export interface MetroComparison {
-  id: number;
-  slug: string;
-  metro_a_slug: string;
-  metro_b_slug: string;
-}
-
-export function getAllMetroComparisonSlugs(limit = 50000): MetroComparison[] {
-  return getDb().prepare('SELECT * FROM metro_comparisons ORDER BY id LIMIT ?').all(limit) as MetroComparison[];
-}
-
-export function getMetroComparisonBySlug(slug: string): { a: Metro; b: Metro } | undefined {
-  const row = getDb().prepare('SELECT metro_a_slug, metro_b_slug FROM metro_comparisons WHERE slug = ?').get(slug) as { metro_a_slug: string; metro_b_slug: string } | undefined;
-  if (row) {
-    const a = getMetroBySlug(row.metro_a_slug);
-    const b = getMetroBySlug(row.metro_b_slug);
-    if (a && b) return { a, b };
-  }
-
-  // Fallback: parse slug and look up each metro dynamically
-  const parts = slug.split('-vs-');
-  if (parts.length !== 2) return undefined;
-  const a = getMetroBySlug(parts[0]);
-  const b = getMetroBySlug(parts[1]);
-  if (!a || !b) return undefined;
-  return { a, b };
-}
-
-export function countMetroComparisons(): number {
-  try {
-    return (getDb().prepare('SELECT COUNT(*) as c FROM metro_comparisons').get() as { c: number }).c;
-  } catch { return 0; }
 }

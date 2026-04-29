@@ -1,7 +1,7 @@
-import { getAllStates, getStateBySlug, getCountiesByState, getMetrosByState } from '@/lib/db';
+import { getAllStates, getStateBySlug, getCountiesByState, getMetrosByState, type StateRow } from '@/lib/db';
 import { buildDbPageRobots, buildTrustUpdatedLabel, getDataVintageLabel, getDbPageGate, getReviewedAt, getReviewedBy, METHODOLOGY_URL } from '@/lib/db-page';
 import { generateStateInsights } from '@/lib/state-insights';
-import { formatCurrency, formatPercent, formatNumber, getDataYear } from '@/lib/format';
+import { formatCurrency, formatPercent, getDataYear } from '@/lib/format';
 import { breadcrumbSchema, faqSchema, generateStateFAQs } from '@/lib/schema';
 import { AdSlot } from '@/components/AdSlot';
 import { CiteButton } from '@/components/CiteButton';
@@ -16,13 +16,29 @@ import RentCalculator from '@/components/RentCalculator';
 import { notFound } from 'next/navigation';
 import type { Metadata } from 'next';
 import { StateRich } from '@/components/state/StateRich';
+import { DataSuppressedNotice } from '@/components/DataSuppressedNotice';
+import { getAllStateCommentary } from '@/lib/rent-commentary';
+import { getNationalContext, getWageGap } from '@/lib/state-facts';
 
 interface Props { params: Promise<{ slug: string }> }
 
 export const dynamicParams = false;
 
-function buildStateTopAnswer(state: NonNullable<ReturnType<typeof getStateBySlug>>, affordableRent: number) {
-  return `${state.state} renters face an average 2-bedroom fair market rent of ${formatCurrency(state.avg_rent_2br)}/month against a median household income of ${formatCurrency(state.median_income)}/year. The 30% rule implies an affordable monthly rent of about ${formatCurrency(affordableRent)}, which shows whether the statewide rent baseline is broadly manageable or already pushing households into rent burden.`;
+function buildStateTopAnswer(state: StateRow, affordableRent: number | null): string {
+  const parts: string[] = [];
+  if (state.fmr_2br !== null) {
+    parts.push(`${state.state} renters face an average 2-bedroom HUD Fair Market Rent of ${formatCurrency(state.fmr_2br)}/month`);
+  } else {
+    parts.push(`${state.state} HUD Fair Market Rent statistics`);
+  }
+  if (state.acs_median_household_income !== null) {
+    parts[0] += ` against a median household income of ${formatCurrency(state.acs_median_household_income)}/year`;
+  }
+  parts[0] += '.';
+  if (affordableRent !== null) {
+    parts.push(`The 30% affordability rule implies a sustainable monthly rent of about ${formatCurrency(affordableRent)}, making this page a quick gauge of whether statewide rent levels are within reach for a median earner.`);
+  }
+  return parts.join(' ');
 }
 
 export async function generateStaticParams() {
@@ -34,7 +50,9 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const state = getStateBySlug(slug);
   if (!state) return {};
   const year = getDataYear();
-  const affordableRent = Math.round(state.median_income * 0.3 / 12);
+  const affordableRent = state.acs_median_household_income !== null
+    ? Math.round(state.acs_median_household_income * 0.3 / 12)
+    : null;
   const description = buildStateTopAnswer(state, affordableRent);
   const gate = getDbPageGate({
     alternativeLinkCount: 4,
@@ -61,9 +79,20 @@ export default async function StatePage({ params }: Props) {
   const year = getDataYear();
 
   const insights = generateStateInsights(state, allStates);
-  const affordableRent = Math.round(state.median_income * 0.3 / 12);
-  const isAffordable = affordableRent >= state.avg_rent_2br;
+  const affordableRent = state.acs_median_household_income !== null
+    ? Math.round(state.acs_median_household_income * 0.3 / 12)
+    : null;
+  const isAffordable = affordableRent !== null && state.fmr_2br !== null && affordableRent >= state.fmr_2br;
   const topAnswer = buildStateTopAnswer(state, affordableRent);
+
+  const commentary = getAllStateCommentary(state, allStates);
+  const nationalCtx = getNationalContext(allStates);
+  const wageGap = getWageGap(state);
+
+  const stateSuppressedReasons: string[] = [];
+  if (state.fmr_2br === null) stateSuppressedReasons.push('state-aggregate 2BR FMR');
+  if (state.acs_median_household_income === null) stateSuppressedReasons.push('median household income');
+  if (state.nlihc_housing_wage_2br === null) stateSuppressedReasons.push('NLIHC housing wage');
 
   return (
     <>
@@ -74,7 +103,7 @@ export default async function StatePage({ params }: Props) {
             "@context": "https://schema.org",
             "@type": "Dataset",
             "name": `${state.state} Fair Market Rents ${year}`,
-            "description": `HUD Fair Market Rent data for ${state.state} by county and metro area. Average 1BR: ${formatCurrency(state.avg_rent_1br)}/mo, 2BR: ${formatCurrency(state.avg_rent_2br)}/mo.`,
+            "description": `HUD Fair Market Rent data for ${state.state} by county and metro area. State-aggregate 2BR FMR: ${state.fmr_2br !== null ? formatCurrency(state.fmr_2br) + '/mo' : 'unavailable'}.`,
             "url": `https://fairrentwize.com/state/${slug}/`,
             "license": "https://creativecommons.org/publicdomain/zero/1.0/",
             "creator": { "@type": "Organization", "name": "DataPeek Facts", "url": "https://datapeekfacts.com" },
@@ -108,13 +137,25 @@ export default async function StatePage({ params }: Props) {
       <TrustBlock
         sources={[
           { name: "HUD Fair Market Rents", url: "https://www.huduser.gov/portal/datasets/fmr.html" },
-          { name: "Census ACS Housing", url: "https://www.census.gov/topics/housing.html" },
-          { name: "HUD User FMR Documentation", url: "https://www.huduser.gov/portal/datasets/fmr.html#documentation" },
+          { name: "Census ACS 2023 5-Year (B25008/B25070/B19013)", url: "https://www.census.gov/topics/housing.html" },
+          { name: "NLIHC Out of Reach 2025", url: "https://nlihc.org/oor" },
         ]}
         updated={buildTrustUpdatedLabel()}
         reviewedBy={getReviewedBy()}
         methodologyUrl={METHODOLOGY_URL}
       />
+
+      {/* Layer 2: status-aware intro */}
+      <section className="mb-6 rounded-xl border border-slate-200 bg-slate-50/40 p-5">
+        <p className="text-sm leading-7 text-slate-700">{commentary.intro}</p>
+      </section>
+
+      {stateSuppressedReasons.length > 0 && (
+        <DataSuppressedNotice
+          reasons={stateSuppressedReasons}
+          source="multiple"
+        />
+      )}
 
       <section className="grid gap-4 md:grid-cols-2 mb-6">
         <article className="rounded-xl border border-slate-200 p-5">
@@ -131,11 +172,6 @@ export default async function StatePage({ params }: Props) {
         </article>
       </section>
 
-      <p className="text-slate-600 mb-6">
-        HUD Fair Market Rent data for {state.state} ({state.abbr}). Average 1-bedroom rent: {formatCurrency(state.avg_rent_1br)}/mo.
-        Average 2-bedroom rent: {formatCurrency(state.avg_rent_2br)}/mo.
-      </p>
-
       <section className="my-6 p-6 bg-gradient-to-r from-indigo-50 to-slate-50 rounded-xl border border-indigo-100">
         <h2 className="text-lg font-bold text-slate-900 mb-3">Key Insights for {state.state}</h2>
         <ul className="space-y-2">
@@ -148,42 +184,113 @@ export default async function StatePage({ params }: Props) {
         </ul>
       </section>
 
-      <EditorNote note={`Fair Market Rents (FMRs) are set by HUD annually and represent the 40th percentile of gross rents in ${state.state}. They determine Housing Choice Voucher payment standards and affect millions of renters statewide.`} />
+      <EditorNote note={`Fair Market Rents (FMRs) are set by HUD annually and represent roughly the 40th percentile of gross rents in ${state.state}. They determine Housing Choice Voucher payment standards and affect millions of renters statewide.`} />
 
       {/* State Overview Cards */}
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
         <div className="bg-indigo-50 rounded-lg p-4">
-          <p className="text-sm text-slate-600">Avg 1BR Rent</p>
-          <p className="text-xl font-bold text-indigo-700">{formatCurrency(state.avg_rent_1br)}/mo</p>
+          <p className="text-sm text-slate-600">2BR FMR</p>
+          <p className="text-xl font-bold text-indigo-700">
+            {state.fmr_2br !== null ? `${formatCurrency(state.fmr_2br)}/mo` : '—'}
+          </p>
         </div>
         <div className="bg-indigo-50 rounded-lg p-4">
-          <p className="text-sm text-slate-600">Avg 2BR Rent</p>
-          <p className="text-xl font-bold text-indigo-700">{formatCurrency(state.avg_rent_2br)}/mo</p>
+          <p className="text-sm text-slate-600">Housing Wage (2BR)</p>
+          <p className="text-xl font-bold text-indigo-700">
+            {state.nlihc_housing_wage_2br !== null ? `$${state.nlihc_housing_wage_2br.toFixed(2)}/hr` : '—'}
+          </p>
         </div>
         <div className="bg-indigo-50 rounded-lg p-4">
           <p className="text-sm text-slate-600">Median Income</p>
-          <p className="text-xl font-bold text-indigo-700">{formatCurrency(state.median_income)}</p>
+          <p className="text-xl font-bold text-indigo-700">
+            {state.acs_median_household_income !== null ? formatCurrency(state.acs_median_household_income) : '—'}
+          </p>
         </div>
         <div className="bg-indigo-50 rounded-lg p-4">
-          <p className="text-sm text-slate-600">Tenant Rights</p>
-          <p className="text-xl font-bold text-indigo-700">{state.tenant_rights_score}/10</p>
+          <p className="text-sm text-slate-600">Rent-Burdened</p>
+          <p className="text-xl font-bold text-indigo-700">
+            {state.acs_rent_burdened_pct !== null ? formatPercent(state.acs_rent_burdened_pct) : '—'}
+          </p>
         </div>
       </div>
 
       {/* Affordability Analysis */}
-      <div className={`rounded-lg p-4 mb-8 ${isAffordable ? 'bg-green-50 border border-green-200' : 'bg-red-50 border border-red-200'}`}>
-        <h2 className="font-semibold mb-1">{isAffordable ? 'Rent is Generally Affordable' : 'Rent May Be a Burden'}</h2>
-        <p className="text-sm text-slate-700">
-          At the median income of {formatCurrency(state.median_income)}/year, the 30% rule suggests spending up to {formatCurrency(affordableRent)}/mo on rent.
-          The average 2BR rent of {formatCurrency(state.avg_rent_2br)}/mo is {isAffordable ? 'within' : 'above'} this threshold.
-        </p>
-      </div>
+      {affordableRent !== null && state.fmr_2br !== null && (
+        <div className={`rounded-lg p-4 mb-8 ${isAffordable ? 'bg-green-50 border border-green-200' : 'bg-red-50 border border-red-200'}`}>
+          <h2 className="font-semibold mb-1">{isAffordable ? 'Rent is Generally Affordable' : 'Rent May Be a Burden'}</h2>
+          <p className="text-sm text-slate-700">
+            At the median income of {formatCurrency(state.acs_median_household_income)}/year, the 30% rule suggests spending up to {formatCurrency(affordableRent)}/mo on rent.
+            The state-aggregate 2BR FMR of {formatCurrency(state.fmr_2br)}/mo is {isAffordable ? 'within' : 'above'} this threshold.
+          </p>
+          <p className="mt-3 text-sm leading-7 text-slate-700">{commentary.affordability}</p>
+        </div>
+      )}
 
       {/* Renter Stats */}
-      <div className="mb-8">
-        <h2 className="text-xl font-bold mb-2">Renter Statistics</h2>
-        <p className="text-sm text-slate-600">{formatPercent(state.renter_pct)} of households in {state.state} are renters.</p>
-      </div>
+      {state.acs_renter_pct !== null && (
+        <div className="mb-8">
+          <h2 className="text-xl font-bold mb-2">Renter Statistics</h2>
+          <p className="text-sm text-slate-600">{formatPercent(state.acs_renter_pct)} of households in {state.state} are renters (ACS 2023 5-Year, B25008).</p>
+        </div>
+      )}
+
+      {/* Layer 2: comparison vs national + housing wage gap */}
+      <section className="mb-8 rounded-xl border border-indigo-100 bg-indigo-50/40 p-5">
+        <h2 className="text-lg font-bold text-slate-900 mb-2">{state.state} vs. the US average</h2>
+        <div className="grid gap-3 md:grid-cols-2 text-sm text-slate-700 mb-3">
+          <div>
+            <span className="font-medium">2BR FMR:</span>{' '}
+            {state.fmr_2br !== null ? formatCurrency(state.fmr_2br) : '—'} vs.{' '}
+            US avg {formatCurrency(Math.round(nationalCtx.usAvgFmr))}
+          </div>
+          <div>
+            <span className="font-medium">Housing wage:</span>{' '}
+            {state.nlihc_housing_wage_2br !== null ? `$${state.nlihc_housing_wage_2br.toFixed(2)}/hr` : '—'} vs.{' '}
+            US avg ${nationalCtx.usAvgHousingWage.toFixed(2)}/hr
+          </div>
+          <div>
+            <span className="font-medium">Renter share:</span>{' '}
+            {state.acs_renter_pct !== null ? formatPercent(state.acs_renter_pct) : '—'} vs.{' '}
+            US avg {formatPercent(nationalCtx.usAvgRenterPct)}
+          </div>
+          <div>
+            <span className="font-medium">Cost-burdened:</span>{' '}
+            {state.acs_rent_burdened_pct !== null ? formatPercent(state.acs_rent_burdened_pct) : '—'} vs.{' '}
+            US avg {formatPercent(nationalCtx.usAvgRentBurden)}
+          </div>
+        </div>
+        <p className="text-sm leading-7 text-slate-700">{commentary.comparison}</p>
+      </section>
+
+      {/* Housing wage gap detail (NLIHC) */}
+      {wageGap && (
+        <section className="mb-8 rounded-xl border border-slate-200 p-5">
+          <h2 className="text-lg font-bold text-slate-900 mb-2">Wage gap for renters in {state.state}</h2>
+          <div className="grid gap-3 md:grid-cols-3 text-sm">
+            <div>
+              <p className="text-slate-500">Housing wage (2BR)</p>
+              <p className="font-semibold text-slate-900">${wageGap.need.toFixed(2)}/hr</p>
+            </div>
+            <div>
+              <p className="text-slate-500">Mean renter wage</p>
+              <p className="font-semibold text-slate-900">${wageGap.earn.toFixed(2)}/hr</p>
+            </div>
+            <div>
+              <p className="text-slate-500">{wageGap.gap > 0 ? 'Gap' : 'Surplus'}</p>
+              <p className={`font-semibold ${wageGap.gap > 0 ? 'text-red-700' : 'text-green-700'}`}>
+                {wageGap.gap > 0 ? '−' : '+'}${Math.abs(wageGap.gap).toFixed(2)}/hr
+              </p>
+            </div>
+          </div>
+          {wageGap.gap > 0 && (
+            <p className="mt-3 text-sm text-slate-600">
+              At the mean renter wage of ${wageGap.earn.toFixed(2)}/hr, a renter in {state.state} would need to work
+              roughly <span className="font-semibold">{wageGap.weeklyHours} hours per week</span> to afford a 2-bedroom unit at FMR under the 30% rule.
+              (NLIHC OOR 2025.)
+            </p>
+          )}
+        </section>
+      )}
 
       {/* Metro Areas */}
       {metros.length > 0 && (
@@ -197,7 +304,7 @@ export default async function StatePage({ params }: Props) {
                   <th className="py-2 pr-4 text-right">Studio</th>
                   <th className="py-2 pr-4 text-right">1BR</th>
                   <th className="py-2 pr-4 text-right">2BR</th>
-                  <th className="py-2 text-right">Vacancy</th>
+                  <th className="py-2 text-right">3BR</th>
                 </tr>
               </thead>
               <tbody>
@@ -207,7 +314,7 @@ export default async function StatePage({ params }: Props) {
                     <td className="py-2 pr-4 text-right">{formatCurrency(m.fmr_studio)}</td>
                     <td className="py-2 pr-4 text-right">{formatCurrency(m.fmr_1br)}</td>
                     <td className="py-2 pr-4 text-right font-medium">{formatCurrency(m.fmr_2br)}</td>
-                    <td className="py-2 text-right">{m.vacancy_rate}%</td>
+                    <td className="py-2 text-right">{formatCurrency(m.fmr_3br)}</td>
                   </tr>
                 ))}
               </tbody>
@@ -268,8 +375,8 @@ export default async function StatePage({ params }: Props) {
                   <td className="py-2 pr-4 text-right">{formatCurrency(c.fmr_1br)}</td>
                   <td className="py-2 pr-4 text-right font-medium">{formatCurrency(c.fmr_2br)}</td>
                   <td className="py-2 pr-4 text-right">{formatCurrency(c.fmr_3br)}</td>
-                  <td className="py-2 pr-4 text-right">{formatCurrency(c.median_income)}</td>
-                  <td className="py-2 text-right">{formatPercent(c.rent_burden_pct)}</td>
+                  <td className="py-2 pr-4 text-right">{formatCurrency(c.acs_median_household_income)}</td>
+                  <td className="py-2 text-right">{formatPercent(c.acs_rent_burdened_pct)}</td>
                 </tr>
               ))}
             </tbody>
@@ -277,21 +384,14 @@ export default async function StatePage({ params }: Props) {
         </div>
       </section>
 
-      <DidYouKnow fact={`In ${state.state}, ${formatPercent(state.renter_pct)} of households rent their homes. HUD updates Fair Market Rents each year using Census data and local rent surveys to keep voucher payments aligned with actual housing costs.`} />
-
-      {/* Compare with other states */}
-      <section className="mb-8">
-        <h2 className="text-xl font-bold mb-4">Compare {state.state} Rents</h2>
-        <div className="flex flex-wrap gap-2 text-sm">
-          {allStates.filter(s => s.abbr !== state.abbr).slice(0, 15).map(s => (
-            <a key={s.abbr} href={`/compare/${state.slug}-vs-${s.slug}/`} className="px-3 py-1 bg-slate-100 rounded-full hover:bg-indigo-100 hover:text-indigo-700">
-              {state.abbr} vs {s.abbr}
-            </a>
-          ))}
-        </div>
+      {/* Layer 2: outlook — practical takeaway */}
+      <section className="mb-8 rounded-xl border border-slate-200 p-5">
+        <h2 className="text-lg font-bold text-slate-900 mb-2">What this means for renters in {state.state}</h2>
+        <p className="text-sm leading-7 text-slate-700">{commentary.outlook}</p>
       </section>
 
-      {/* FAQs */}
+      <DidYouKnow fact={`HUD updates Fair Market Rents each year using Census ACS data and local rent surveys to keep voucher payments aligned with actual housing costs. The state aggregate above blends NLIHC's 2025 estimate of the 2BR FMR across all ${state.state} counties.`} />
+
       <section className="mb-8">
         <h2 className="text-xl font-bold mb-4">Frequently Asked Questions</h2>
         {faqs.map((faq, i) => (
@@ -305,10 +405,11 @@ export default async function StatePage({ params }: Props) {
       <DataSourceBadge sources={[
         { name: "HUD FMR", url: "https://www.huduser.gov/portal/datasets/fmr.html" },
         { name: "Census Bureau", url: "https://www.census.gov" },
+        { name: "NLIHC OOR 2025", url: "https://nlihc.org/oor" },
       ]} />
 
       <div className="flex items-center gap-4 mt-4">
-        <CiteButton title={`${state.state} Fair Market Rents`} url={`https://fairrentwize.com/state/${slug}/`} source="FairRentWize (HUD Data)" />
+        <CiteButton title={`${state.state} Fair Market Rents`} url={`https://fairrentwize.com/state/${slug}/`} source="FairRentWize (HUD + ACS + NLIHC)" />
       </div>
 
       <FeedbackButton pageId={slug} />

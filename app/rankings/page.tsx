@@ -140,11 +140,12 @@ export default function RankingsIndex() {
             </Link>
             <span className="text-slate-500"> affordability based on your income</span>
           </li>
+          {/* /compare/ killed 2026-04-25 HCU Phase C — pointed at state hub */}
           <li>
-            <Link href="/compare/california-vs-texas/" className="text-indigo-700 hover:underline font-medium">
-              Compare states →
+            <Link href="/state/california/" className="text-indigo-700 hover:underline font-medium">
+              State pages →
             </Link>
-            <span className="text-slate-500"> rent and protections side by side</span>
+            <span className="text-slate-500"> per-state FMR, tenant rights, rent burden</span>
           </li>
           <li>
             <Link href="/guide/" className="text-indigo-700 hover:underline font-medium">

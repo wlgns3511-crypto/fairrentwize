@@ -153,11 +153,12 @@ export default async function BlogPostPage({
           >
             Rent Calculator
           </a>
+          {/* /compare/ killed 2026-04-25 HCU Phase C — replaced with rankings hub */}
           <a
-            href="/compare/"
+            href="/rankings/"
             className="text-sm px-4 py-2 bg-white border border-indigo-300 text-indigo-700 rounded-lg hover:bg-indigo-50 font-medium"
           >
-            Compare Areas
+            State Rankings
           </a>
           <a
             href="/"

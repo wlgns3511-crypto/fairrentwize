@@ -35,40 +35,49 @@ export function generateCountyFAQs(county: County): { question: string; answer: 
   const year = getDataYear();
   const faqs: { question: string; answer: string }[] = [];
 
-  faqs.push({
-    question: `What is the fair market rent in ${county.county_name}, ${county.state}?`,
-    answer: `The ${year} HUD Fair Market Rent for a 2-bedroom in ${county.county_name} is ${formatCurrency(county.fmr_2br)}/month. Studio: ${formatCurrency(county.fmr_studio)}, 1BR: ${formatCurrency(county.fmr_1br)}, 3BR: ${formatCurrency(county.fmr_3br)}, 4BR: ${formatCurrency(county.fmr_4br)}.`,
-  });
+  if (county.fmr_2br !== null) {
+    faqs.push({
+      question: `What is the fair market rent in ${county.county_name}, ${county.state_abbr}?`,
+      answer: `The ${year} HUD Fair Market Rent for a 2-bedroom in ${county.county_name} is ${formatCurrency(county.fmr_2br)}/month. Studio: ${formatCurrency(county.fmr_studio)}, 1BR: ${formatCurrency(county.fmr_1br)}, 3BR: ${formatCurrency(county.fmr_3br)}, 4BR: ${formatCurrency(county.fmr_4br)}.`,
+    });
+  }
 
-  faqs.push({
-    question: `What is the rent burden in ${county.county_name}?`,
-    answer: `Rent burden in ${county.county_name} is ${formatPercent(county.rent_burden_pct)} of median household income (${formatCurrency(county.median_income)}/year). The HUD considers 30% or more cost-burdened.`,
-  });
+  if (
+    county.acs_rent_burdened_pct !== null &&
+    county.acs_median_household_income !== null
+  ) {
+    faqs.push({
+      question: `What is the rent burden in ${county.county_name}?`,
+      answer: `${formatPercent(county.acs_rent_burdened_pct)} of renter households in ${county.county_name} pay 30%+ of income on housing (ACS 2023 5-Year B25070). The median household income is ${formatCurrency(county.acs_median_household_income)}/year. HUD considers 30% or more cost-burdened.`,
+    });
+  }
 
-  faqs.push({
-    question: `How much income do you need to rent in ${county.county_name}?`,
-    answer: `To afford a 2-bedroom at ${formatCurrency(county.fmr_2br)}/month using the 30% rule, you need an annual income of at least ${formatCurrency(Math.round(county.fmr_2br * 12 / 0.3))}.`,
-  });
+  if (county.fmr_2br !== null) {
+    faqs.push({
+      question: `How much income do you need to rent in ${county.county_name}?`,
+      answer: `To afford a 2-bedroom at ${formatCurrency(county.fmr_2br)}/month using the 30% rule, you need an annual income of at least ${formatCurrency(Math.round((county.fmr_2br * 12) / 0.3))}.`,
+    });
+  }
 
   return faqs;
 }
 
 export function generateMetroFAQs(metro: Metro): { question: string; answer: string }[] {
   const year = getDataYear();
-  return [
-    {
+  const faqs: { question: string; answer: string }[] = [];
+
+  if (metro.fmr_2br !== null) {
+    faqs.push({
       question: `What is the average rent in ${metro.metro_name}?`,
       answer: `The ${year} HUD FMR for a 2-bedroom in the ${metro.metro_name} metro area is ${formatCurrency(metro.fmr_2br)}/month. 1BR: ${formatCurrency(metro.fmr_1br)}, 3BR: ${formatCurrency(metro.fmr_3br)}.`,
-    },
-    {
-      question: `What is the vacancy rate in ${metro.metro_name}?`,
-      answer: `The rental vacancy rate in ${metro.metro_name} is ${metro.vacancy_rate}%. A rate below 5% typically indicates a tight rental market.`,
-    },
-    {
-      question: `Is ${metro.metro_name} affordable for renters?`,
-      answer: `With a median income of ${formatCurrency(metro.median_income)} and 2BR rent at ${formatCurrency(metro.fmr_2br)}/mo, rent takes about ${((metro.fmr_2br * 12 / metro.median_income) * 100).toFixed(0)}% of income in ${metro.metro_name}.`,
-    },
-  ];
+    });
+    faqs.push({
+      question: `What income is needed to afford a 2-bedroom in ${metro.metro_name}?`,
+      answer: `Using the 30% affordability rule, a household needs an annual income of at least ${formatCurrency(Math.round((metro.fmr_2br * 12) / 0.3))} to afford a 2-bedroom at FMR (${formatCurrency(metro.fmr_2br)}/month).`,
+    });
+  }
+
+  return faqs;
 }
 
 export function itemListSchema(name: string, url: string, items: { name: string; url: string }[]) {
@@ -108,18 +117,35 @@ export function articleSchema(post: { title: string; description: string; slug: 
 
 export function generateStateFAQs(state: StateRow): { question: string; answer: string }[] {
   const year = getDataYear();
-  return [
-    {
-      question: `What is the average rent in ${state.state}?`,
-      answer: `The ${year} statewide average rent in ${state.state} is ${formatCurrency(state.avg_rent_1br)}/mo for a 1-bedroom and ${formatCurrency(state.avg_rent_2br)}/mo for a 2-bedroom.`,
-    },
-    {
+  const faqs: { question: string; answer: string }[] = [];
+
+  if (state.fmr_2br !== null) {
+    faqs.push({
+      question: `What is the fair market rent in ${state.state}?`,
+      answer: `The ${year} HUD Fair Market Rent for a 2-bedroom unit in ${state.state} averages ${formatCurrency(state.fmr_2br)}/month (NLIHC OOR 2025 state aggregate). Actual FMR varies by county and metro area.`,
+    });
+  }
+
+  if (state.nlihc_housing_wage_2br !== null) {
+    faqs.push({
+      question: `What hourly wage do you need to afford a 2-bedroom in ${state.state}?`,
+      answer: `The 2025 housing wage for ${state.state} — what a renter must earn per hour, working full-time, to afford a 2-bedroom at FMR without being cost-burdened — is $${state.nlihc_housing_wage_2br.toFixed(2)}/hour (NLIHC Out of Reach 2025).`,
+    });
+  }
+
+  if (state.acs_renter_pct !== null) {
+    faqs.push({
       question: `What percentage of people rent in ${state.state}?`,
-      answer: `Approximately ${formatPercent(state.renter_pct)} of households in ${state.state} are renters.`,
-    },
-    {
-      question: `How strong are tenant rights in ${state.state}?`,
-      answer: `${state.state} has a tenant rights score of ${state.tenant_rights_score}/10. ${state.tenant_rights_score >= 7 ? 'This indicates strong renter protections.' : state.tenant_rights_score >= 5 ? 'This indicates moderate renter protections.' : 'This indicates relatively limited renter protections.'}`,
-    },
-  ];
+      answer: `Approximately ${formatPercent(state.acs_renter_pct)} of households in ${state.state} are renters (ACS 2023 5-Year, B25008).`,
+    });
+  }
+
+  if (state.acs_rent_burdened_pct !== null) {
+    faqs.push({
+      question: `How many renters in ${state.state} are cost-burdened?`,
+      answer: `${formatPercent(state.acs_rent_burdened_pct)} of renter households in ${state.state} pay 30% or more of their income on housing (ACS 2023 5-Year, B25070), the HUD threshold for cost burden.`,
+    });
+  }
+
+  return faqs;
 }

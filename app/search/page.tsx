@@ -96,7 +96,7 @@ export default async function SearchPage({ searchParams }: Props) {
                       <span>Studio: <strong>{formatCurrency(metro.fmr_studio)}/mo</strong></span>
                       <span>1BR: <strong>{formatCurrency(metro.fmr_1br)}/mo</strong></span>
                       <span>2BR: <strong>{formatCurrency(metro.fmr_2br)}/mo</strong></span>
-                      <span>Vacancy: <strong>{metro.vacancy_rate}%</strong></span>
+                      <span>3BR: <strong>{formatCurrency(metro.fmr_3br)}/mo</strong></span>
                     </div>
                   </a>
                 ))}
@@ -114,7 +114,7 @@ export default async function SearchPage({ searchParams }: Props) {
                     href={`/county/${county.slug}/`}
                     className="block border border-slate-200 rounded-xl p-4 hover:border-indigo-300 hover:bg-indigo-50 transition-colors"
                   >
-                    <div className="font-semibold text-slate-900 mb-2">{county.county_name}, {county.state}</div>
+                    <div className="font-semibold text-slate-900 mb-2">{county.county_name}, {county.state_abbr}</div>
                     <div className="flex flex-wrap gap-4 text-xs text-slate-600">
                       <span>Studio: <strong>{formatCurrency(county.fmr_studio)}/mo</strong></span>
                       <span>1BR: <strong>{formatCurrency(county.fmr_1br)}/mo</strong></span>
@@ -153,7 +153,7 @@ export default async function SearchPage({ searchParams }: Props) {
                 <div className="flex justify-between items-start">
                   <div>
                     <div className="font-semibold text-slate-900">{metro.metro_name}</div>
-                    <div className="text-xs text-slate-500 mt-0.5">Vacancy: {metro.vacancy_rate}%</div>
+                    <div className="text-xs text-slate-500 mt-0.5">1BR: {formatCurrency(metro.fmr_1br)}/mo</div>
                   </div>
                   <div className="text-right">
                     <div className="text-indigo-700 font-bold">{formatCurrency(metro.fmr_2br)}/mo</div>

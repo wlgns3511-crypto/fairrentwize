@@ -406,7 +406,7 @@ const posts: BlogPost[] = [
 </ul>
 
 <h2>How to Use City Rent Data</h2>
-<p>Raw median rents are a starting point, but they don't tell the whole story. Neighborhood-level variation within a single city can be enormous — in New York, a one-bedroom can range from $1,400 in parts of the Bronx to $5,000+ in Tribeca. Always cross-reference city-level data with our <a href="/city/new-york/">NYC rent data</a> or your specific city's neighborhood-level figures.</p>
+<p>Raw median rents are a starting point, but they don't tell the whole story. Neighborhood-level variation within a single city can be enormous — in New York, a one-bedroom can range from $1,400 in parts of the Bronx to $5,000+ in Tribeca. Always cross-reference city-level data with our <a href="/metro/new-york-newark-jersey-city/">NYC metro rent data</a> or your specific city's neighborhood-level figures.</p>
 <p>Also factor in the <strong>rent-to-income ratio</strong>: a city with $1,500 median rent and $80,000 median household income is far more affordable than a city with $1,900 rent and $65,000 median income. Our calculator lets you input your income to see what you should realistically be paying.</p>
 
 <h2>2026 Outlook: What Drives Rents Next</h2>

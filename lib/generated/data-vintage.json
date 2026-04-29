@@ -1,0 +1,31 @@
+{
+  "generated_at": "2026-04-29T12:58:23.981Z",
+  "sources": {
+    "hud_fmr": {
+      "vintage": "FY2025",
+      "description": "HUD Fair Market Rents Fiscal Year 2025",
+      "url": "https://www.huduser.gov/portal/datasets/fmr.html",
+      "via": "ArcGIS REST (services.arcgis.com/.../Fair_Market_Rents)",
+      "fetched_at": "2026-04-29T12:50:17.102Z"
+    },
+    "acs": {
+      "vintage": "2023 5-Year (2019-2023 ACS)",
+      "description": "Census ACS B25031 (Median Gross Rent), B19013 (Income), B25070 (Rent Burden), B25008 (Tenure)",
+      "url": "https://www.census.gov/programs-surveys/acs/",
+      "fetched_at": "2026-04-29T12:34:55.811Z",
+      "quality_filter": "MOE / estimate ≤ 30% on B25031_001E; counties failing the filter are dropped from the keep set"
+    },
+    "nlihc": {
+      "vintage": "Out of Reach 2025",
+      "description": "NLIHC Housing Wage 2-bedroom (FY25 FMR / 30% income rule)",
+      "url": "https://nlihc.org/oor",
+      "fetched_at": "2026-04-29T12:38:24.635Z"
+    }
+  },
+  "coverage": {
+    "states": 51,
+    "counties_kept": 3021,
+    "metros": 353,
+    "counties_dropped_from_synthetic_baseline": 2249
+  }
+}

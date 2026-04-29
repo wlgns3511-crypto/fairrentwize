@@ -1,0 +1,9184 @@
+{
+  "generated_at": "2026-04-29T12:58:23.980Z",
+  "notes": "Slugs present in the previous synthetic DB but absent from the real-data rebuild. Middleware should respond 410 for these to release Google's index footprint.",
+  "counts": {
+    "total": 2293,
+    "state": 0,
+    "county": 2249,
+    "metro": 44
+  },
+  "slugs": [
+    {
+      "type": "county",
+      "slug": "adams-county-al"
+    },
+    {
+      "type": "county",
+      "slug": "adams-county-ar"
+    },
+    {
+      "type": "county",
+      "slug": "adams-county-fl"
+    },
+    {
+      "type": "county",
+      "slug": "adams-county-ga"
+    },
+    {
+      "type": "county",
+      "slug": "adams-county-ks"
+    },
+    {
+      "type": "county",
+      "slug": "adams-county-ky"
+    },
+    {
+      "type": "county",
+      "slug": "adams-county-mn"
+    },
+    {
+      "type": "county",
+      "slug": "adams-county-mo"
+    },
+    {
+      "type": "county",
+      "slug": "adams-county-nc"
+    },
+    {
+      "type": "county",
+      "slug": "adams-county-sd"
+    },
+    {
+      "type": "county",
+      "slug": "adams-county-tn"
+    },
+    {
+      "type": "county",
+      "slug": "adams-county-tx"
+    },
+    {
+      "type": "county",
+      "slug": "adams-county-va"
+    },
+    {
+      "type": "county",
+      "slug": "adams-county-wv"
+    },
+    {
+      "type": "county",
+      "slug": "anderson-county-al"
+    },
+    {
+      "type": "county",
+      "slug": "anderson-county-ar"
+    },
+    {
+      "type": "county",
+      "slug": "anderson-county-fl"
+    },
+    {
+      "type": "county",
+      "slug": "anderson-county-ga"
+    },
+    {
+      "type": "county",
+      "slug": "anderson-county-ia"
+    },
+    {
+      "type": "county",
+      "slug": "anderson-county-id"
+    },
+    {
+      "type": "county",
+      "slug": "anderson-county-il"
+    },
+    {
+      "type": "county",
+      "slug": "anderson-county-mi"
+    },
+    {
+      "type": "county",
+      "slug": "anderson-county-mo"
+    },
+    {
+      "type": "county",
+      "slug": "anderson-county-ms"
+    },
+    {
+      "type": "county",
+      "slug": "anderson-county-mt"
+    },
+    {
+      "type": "county",
+      "slug": "anderson-county-nc"
+    },
+    {
+      "type": "county",
+      "slug": "anderson-county-nd"
+    },
+    {
+      "type": "county",
+      "slug": "anderson-county-ne"
+    },
+    {
+      "type": "county",
+      "slug": "anderson-county-nj"
+    },
+    {
+      "type": "county",
+      "slug": "anderson-county-nm"
+    },
+    {
+      "type": "county",
+      "slug": "anderson-county-ny"
+    },
+    {
+      "type": "county",
+      "slug": "anderson-county-oh"
+    },
+    {
+      "type": "county",
+      "slug": "anderson-county-ok"
+    },
+    {
+      "type": "county",
+      "slug": "anderson-county-ri"
+    },
+    {
+      "type": "county",
+      "slug": "anderson-county-sd"
+    },
+    {
+      "type": "county",
+      "slug": "anderson-county-va"
+    },
+    {
+      "type": "county",
+      "slug": "anderson-county-wi"
+    },
+    {
+      "type": "county",
+      "slug": "baker-county-ak"
+    },
+    {
+      "type": "county",
+      "slug": "baker-county-al"
+    },
+    {
+      "type": "county",
+      "slug": "baker-county-ar"
+    },
+    {
+      "type": "county",
+      "slug": "baker-county-co"
+    },
+    {
+      "type": "county",
+      "slug": "baker-county-ia"
+    },
+    {
+      "type": "county",
+      "slug": "baker-county-il"
+    },
+    {
+      "type": "county",
+      "slug": "baker-county-in"
+    },
+    {
+      "type": "county",
+      "slug": "baker-county-ks"
+    },
+    {
+      "type": "county",
+      "slug": "baker-county-ky"
+    },
+    {
+      "type": "county",
+      "slug": "baker-county-me"
+    },
+    {
+      "type": "county",
+      "slug": "baker-county-mo"
+    },
+    {
+      "type": "county",
+      "slug": "baker-county-ms"
+    },
+    {
+      "type": "county",
+      "slug": "baker-county-mt"
+    },
+    {
+      "type": "county",
+      "slug": "baker-county-nc"
+    },
+    {
+      "type": "county",
+      "slug": "baker-county-ne"
+    },
+    {
+      "type": "county",
+      "slug": "baker-county-oh"
+    },
+    {
+      "type": "county",
+      "slug": "baker-county-ok"
+    },
+    {
+      "type": "county",
+      "slug": "baker-county-pa"
+    },
+    {
+      "type": "county",
+      "slug": "baker-county-sc"
+    },
+    {
+      "type": "county",
+      "slug": "baker-county-tx"
+    },
+    {
+      "type": "county",
+      "slug": "baker-county-ut"
+    },
+    {
+      "type": "county",
+      "slug": "baker-county-va"
+    },
+    {
+      "type": "county",
+      "slug": "baker-county-wv"
+    },
+    {
+      "type": "county",
+      "slug": "brown-county-ak"
+    },
+    {
+      "type": "county",
+      "slug": "brown-county-al"
+    },
+    {
+      "type": "county",
+      "slug": "brown-county-ar"
+    },
+    {
+      "type": "county",
+      "slug": "brown-county-co"
+    },
+    {
+      "type": "county",
+      "slug": "brown-county-fl"
+    },
+    {
+      "type": "county",
+      "slug": "brown-county-ga"
+    },
+    {
+      "type": "county",
+      "slug": "brown-county-ia"
+    },
+    {
+      "type": "county",
+      "slug": "brown-county-id"
+    },
+    {
+      "type": "county",
+      "slug": "brown-county-ky"
+    },
+    {
+      "type": "county",
+      "slug": "brown-county-la"
+    },
+    {
+      "type": "county",
+      "slug": "brown-county-ma"
+    },
+    {
+      "type": "county",
+      "slug": "brown-county-mi"
+    },
+    {
+      "type": "county",
+      "slug": "brown-county-mo"
+    },
+    {
+      "type": "county",
+      "slug": "brown-county-ms"
+    },
+    {
+      "type": "county",
+      "slug": "brown-county-mt"
+    },
+    {
+      "type": "county",
+      "slug": "brown-county-nc"
+    },
+    {
+      "type": "county",
+      "slug": "brown-county-nd"
+    },
+    {
+      "type": "county",
+      "slug": "brown-county-nm"
+    },
+    {
+      "type": "county",
+      "slug": "brown-county-ny"
+    },
+    {
+      "type": "county",
+      "slug": "brown-county-tn"
+    },
+    {
+      "type": "county",
+      "slug": "brown-county-va"
+    },
+    {
+      "type": "county",
+      "slug": "brown-county-wy"
+    },
+    {
+      "type": "county",
+      "slug": "butler-county-ar"
+    },
+    {
+      "type": "county",
+      "slug": "butler-county-ga"
+    },
+    {
+      "type": "county",
+      "slug": "butler-county-id"
+    },
+    {
+      "type": "county",
+      "slug": "butler-county-il"
+    },
+    {
+      "type": "county",
+      "slug": "butler-county-in"
+    },
+    {
+      "type": "county",
+      "slug": "butler-county-la"
+    },
+    {
+      "type": "county",
+      "slug": "butler-county-mi"
+    },
+    {
+      "type": "county",
+      "slug": "butler-county-mn"
+    },
+    {
+      "type": "county",
+      "slug": "butler-county-nc"
+    },
+    {
+      "type": "county",
+      "slug": "butler-county-ok"
+    },
+    {
+      "type": "county",
+      "slug": "butler-county-sc"
+    },
+    {
+      "type": "county",
+      "slug": "butler-county-sd"
+    },
+    {
+      "type": "county",
+      "slug": "butler-county-tx"
+    },
+    {
+      "type": "county",
+      "slug": "butler-county-va"
+    },
+    {
+      "type": "county",
+      "slug": "butler-county-wi"
+    },
+    {
+      "type": "county",
+      "slug": "calhoun-county-ak"
+    },
+    {
+      "type": "county",
+      "slug": "calhoun-county-ga"
+    },
+    {
+      "type": "county",
+      "slug": "calhoun-county-id"
+    },
+    {
+      "type": "county",
+      "slug": "calhoun-county-in"
+    },
+    {
+      "type": "county",
+      "slug": "calhoun-county-ks"
+    },
+    {
+      "type": "county",
+      "slug": "calhoun-county-ky"
+    },
+    {
+      "type": "county",
+      "slug": "calhoun-county-mn"
+    },
+    {
+      "type": "county",
+      "slug": "calhoun-county-mo"
+    },
+    {
+      "type": "county",
+      "slug": "calhoun-county-mt"
+    },
+    {
+      "type": "county",
+      "slug": "calhoun-county-ne"
+    },
+    {
+      "type": "county",
+      "slug": "calhoun-county-oh"
+    },
+    {
+      "type": "county",
+      "slug": "calhoun-county-tn"
+    },
+    {
+      "type": "county",
+      "slug": "calhoun-county-va"
+    },
+    {
+      "type": "county",
+      "slug": "calhoun-county-wi"
+    },
+    {
+      "type": "county",
+      "slug": "calhoun-county-wv"
+    },
+    {
+      "type": "county",
+      "slug": "campbell-county-ak"
+    },
+    {
+      "type": "county",
+      "slug": "campbell-county-al"
+    },
+    {
+      "type": "county",
+      "slug": "campbell-county-ca"
+    },
+    {
+      "type": "county",
+      "slug": "campbell-county-co"
+    },
+    {
+      "type": "county",
+      "slug": "campbell-county-ga"
+    },
+    {
+      "type": "county",
+      "slug": "campbell-county-ia"
+    },
+    {
+      "type": "county",
+      "slug": "campbell-county-il"
+    },
+    {
+      "type": "county",
+      "slug": "campbell-county-in"
+    },
+    {
+      "type": "county",
+      "slug": "campbell-county-ks"
+    },
+    {
+      "type": "county",
+      "slug": "campbell-county-me"
+    },
+    {
+      "type": "county",
+      "slug": "campbell-county-mi"
+    },
+    {
+      "type": "county",
+      "slug": "campbell-county-mo"
+    },
+    {
+      "type": "county",
+      "slug": "campbell-county-ms"
+    },
+    {
+      "type": "county",
+      "slug": "campbell-county-mt"
+    },
+    {
+      "type": "county",
+      "slug": "campbell-county-nc"
+    },
+    {
+      "type": "county",
+      "slug": "campbell-county-ne"
+    },
+    {
+      "type": "county",
+      "slug": "campbell-county-nm"
+    },
+    {
+      "type": "county",
+      "slug": "campbell-county-oh"
+    },
+    {
+      "type": "county",
+      "slug": "campbell-county-sc"
+    },
+    {
+      "type": "county",
+      "slug": "campbell-county-tx"
+    },
+    {
+      "type": "county",
+      "slug": "campbell-county-wi"
+    },
+    {
+      "type": "county",
+      "slug": "campbell-county-wv"
+    },
+    {
+      "type": "county",
+      "slug": "carroll-county-ak"
+    },
+    {
+      "type": "county",
+      "slug": "carroll-county-al"
+    },
+    {
+      "type": "county",
+      "slug": "carroll-county-ca"
+    },
+    {
+      "type": "county",
+      "slug": "carroll-county-ct"
+    },
+    {
+      "type": "county",
+      "slug": "carroll-county-fl"
+    },
+    {
+      "type": "county",
+      "slug": "carroll-county-ks"
+    },
+    {
+      "type": "county",
+      "slug": "carroll-county-la"
+    },
+    {
+      "type": "county",
+      "slug": "carroll-county-mi"
+    },
+    {
+      "type": "county",
+      "slug": "carroll-county-mt"
+    },
+    {
+      "type": "county",
+      "slug": "carroll-county-nc"
+    },
+    {
+      "type": "county",
+      "slug": "carroll-county-ok"
+    },
+    {
+      "type": "county",
+      "slug": "carroll-county-tx"
+    },
+    {
+      "type": "county",
+      "slug": "carroll-county-ut"
+    },
+    {
+      "type": "county",
+      "slug": "carroll-county-vt"
+    },
+    {
+      "type": "county",
+      "slug": "carroll-county-wi"
+    },
+    {
+      "type": "county",
+      "slug": "carroll-county-wv"
+    },
+    {
+      "type": "county",
+      "slug": "carter-county-ar"
+    },
+    {
+      "type": "county",
+      "slug": "carter-county-ca"
+    },
+    {
+      "type": "county",
+      "slug": "carter-county-co"
+    },
+    {
+      "type": "county",
+      "slug": "carter-county-fl"
+    },
+    {
+      "type": "county",
+      "slug": "carter-county-ga"
+    },
+    {
+      "type": "county",
+      "slug": "carter-county-ia"
+    },
+    {
+      "type": "county",
+      "slug": "carter-county-id"
+    },
+    {
+      "type": "county",
+      "slug": "carter-county-il"
+    },
+    {
+      "type": "county",
+      "slug": "carter-county-in"
+    },
+    {
+      "type": "county",
+      "slug": "carter-county-ks"
+    },
+    {
+      "type": "county",
+      "slug": "carter-county-mi"
+    },
+    {
+      "type": "county",
+      "slug": "carter-county-ms"
+    },
+    {
+      "type": "county",
+      "slug": "carter-county-nd"
+    },
+    {
+      "type": "county",
+      "slug": "carter-county-ne"
+    },
+    {
+      "type": "county",
+      "slug": "carter-county-nm"
+    },
+    {
+      "type": "county",
+      "slug": "carter-county-oh"
+    },
+    {
+      "type": "county",
+      "slug": "carter-county-or"
+    },
+    {
+      "type": "county",
+      "slug": "carter-county-sc"
+    },
+    {
+      "type": "county",
+      "slug": "carter-county-sd"
+    },
+    {
+      "type": "county",
+      "slug": "carter-county-tx"
+    },
+    {
+      "type": "county",
+      "slug": "carter-county-va"
+    },
+    {
+      "type": "county",
+      "slug": "carter-county-wa"
+    },
+    {
+      "type": "county",
+      "slug": "carter-county-wi"
+    },
+    {
+      "type": "county",
+      "slug": "cherokee-county-co"
+    },
+    {
+      "type": "county",
+      "slug": "cherokee-county-fl"
+    },
+    {
+      "type": "county",
+      "slug": "cherokee-county-in"
+    },
+    {
+      "type": "county",
+      "slug": "cherokee-county-ky"
+    },
+    {
+      "type": "county",
+      "slug": "cherokee-county-mn"
+    },
+    {
+      "type": "county",
+      "slug": "cherokee-county-mo"
+    },
+    {
+      "type": "county",
+      "slug": "cherokee-county-ms"
+    },
+    {
+      "type": "county",
+      "slug": "cherokee-county-mt"
+    },
+    {
+      "type": "county",
+      "slug": "cherokee-county-ne"
+    },
+    {
+      "type": "county",
+      "slug": "cherokee-county-nj"
+    },
+    {
+      "type": "county",
+      "slug": "cherokee-county-ny"
+    },
+    {
+      "type": "county",
+      "slug": "cherokee-county-tn"
+    },
+    {
+      "type": "county",
+      "slug": "cherokee-county-va"
+    },
+    {
+      "type": "county",
+      "slug": "cherokee-county-wi"
+    },
+    {
+      "type": "county",
+      "slug": "clark-county-ak"
+    },
+    {
+      "type": "county",
+      "slug": "clark-county-ga"
+    },
+    {
+      "type": "county",
+      "slug": "clark-county-ia"
+    },
+    {
+      "type": "county",
+      "slug": "clark-county-me"
+    },
+    {
+      "type": "county",
+      "slug": "clark-county-mi"
+    },
+    {
+      "type": "county",
+      "slug": "clark-county-mn"
+    },
+    {
+      "type": "county",
+      "slug": "clark-county-ms"
+    },
+    {
+      "type": "county",
+      "slug": "clark-county-mt"
+    },
+    {
+      "type": "county",
+      "slug": "clark-county-nc"
+    },
+    {
+      "type": "county",
+      "slug": "clark-county-nd"
+    },
+    {
+      "type": "county",
+      "slug": "clark-county-ne"
+    },
+    {
+      "type": "county",
+      "slug": "clark-county-nj"
+    },
+    {
+      "type": "county",
+      "slug": "clark-county-pa"
+    },
+    {
+      "type": "county",
+      "slug": "clark-county-tn"
+    },
+    {
+      "type": "county",
+      "slug": "clark-county-tx"
+    },
+    {
+      "type": "county",
+      "slug": "clark-county-va"
+    },
+    {
+      "type": "county",
+      "slug": "clay-county-ak"
+    },
+    {
+      "type": "county",
+      "slug": "clay-county-id"
+    },
+    {
+      "type": "county",
+      "slug": "clay-county-la"
+    },
+    {
+      "type": "county",
+      "slug": "clay-county-mi"
+    },
+    {
+      "type": "county",
+      "slug": "clay-county-mt"
+    },
+    {
+      "type": "county",
+      "slug": "clay-county-oh"
+    },
+    {
+      "type": "county",
+      "slug": "clay-county-ok"
+    },
+    {
+      "type": "county",
+      "slug": "clay-county-or"
+    },
+    {
+      "type": "county",
+      "slug": "clay-county-ri"
+    },
+    {
+      "type": "county",
+      "slug": "clay-county-sc"
+    },
+    {
+      "type": "county",
+      "slug": "clay-county-va"
+    },
+    {
+      "type": "county",
+      "slug": "clay-county-wi"
+    },
+    {
+      "type": "county",
+      "slug": "clinton-county-ar"
+    },
+    {
+      "type": "county",
+      "slug": "clinton-county-fl"
+    },
+    {
+      "type": "county",
+      "slug": "clinton-county-ga"
+    },
+    {
+      "type": "county",
+      "slug": "clinton-county-id"
+    },
+    {
+      "type": "county",
+      "slug": "clinton-county-ks"
+    },
+    {
+      "type": "county",
+      "slug": "clinton-county-la"
+    },
+    {
+      "type": "county",
+      "slug": "clinton-county-md"
+    },
+    {
+      "type": "county",
+      "slug": "clinton-county-mn"
+    },
+    {
+      "type": "county",
+      "slug": "clinton-county-ms"
+    },
+    {
+      "type": "county",
+      "slug": "clinton-county-mt"
+    },
+    {
+      "type": "county",
+      "slug": "clinton-county-nc"
+    },
+    {
+      "type": "county",
+      "slug": "clinton-county-nm"
+    },
+    {
+      "type": "county",
+      "slug": "clinton-county-tn"
+    },
+    {
+      "type": "county",
+      "slug": "clinton-county-tx"
+    },
+    {
+      "type": "county",
+      "slug": "clinton-county-va"
+    },
+    {
+      "type": "county",
+      "slug": "clinton-county-vt"
+    },
+    {
+      "type": "county",
+      "slug": "clinton-county-wi"
+    },
+    {
+      "type": "county",
+      "slug": "columbia-county-ak"
+    },
+    {
+      "type": "county",
+      "slug": "columbia-county-al"
+    },
+    {
+      "type": "county",
+      "slug": "columbia-county-ca"
+    },
+    {
+      "type": "county",
+      "slug": "columbia-county-co"
+    },
+    {
+      "type": "county",
+      "slug": "columbia-county-ia"
+    },
+    {
+      "type": "county",
+      "slug": "columbia-county-in"
+    },
+    {
+      "type": "county",
+      "slug": "columbia-county-ks"
+    },
+    {
+      "type": "county",
+      "slug": "columbia-county-ky"
+    },
+    {
+      "type": "county",
+      "slug": "columbia-county-la"
+    },
+    {
+      "type": "county",
+      "slug": "columbia-county-mi"
+    },
+    {
+      "type": "county",
+      "slug": "columbia-county-mn"
+    },
+    {
+      "type": "county",
+      "slug": "columbia-county-mo"
+    },
+    {
+      "type": "county",
+      "slug": "columbia-county-mt"
+    },
+    {
+      "type": "county",
+      "slug": "columbia-county-nc"
+    },
+    {
+      "type": "county",
+      "slug": "columbia-county-ne"
+    },
+    {
+      "type": "county",
+      "slug": "columbia-county-nm"
+    },
+    {
+      "type": "county",
+      "slug": "columbia-county-nv"
+    },
+    {
+      "type": "county",
+      "slug": "columbia-county-oh"
+    },
+    {
+      "type": "county",
+      "slug": "columbia-county-tn"
+    },
+    {
+      "type": "county",
+      "slug": "columbia-county-tx"
+    },
+    {
+      "type": "county",
+      "slug": "columbia-county-va"
+    },
+    {
+      "type": "county",
+      "slug": "columbia-county-wv"
+    },
+    {
+      "type": "county",
+      "slug": "craig-county-ak"
+    },
+    {
+      "type": "county",
+      "slug": "craig-county-ar"
+    },
+    {
+      "type": "county",
+      "slug": "craig-county-co"
+    },
+    {
+      "type": "county",
+      "slug": "craig-county-ga"
+    },
+    {
+      "type": "county",
+      "slug": "craig-county-ia"
+    },
+    {
+      "type": "county",
+      "slug": "craig-county-il"
+    },
+    {
+      "type": "county",
+      "slug": "craig-county-ks"
+    },
+    {
+      "type": "county",
+      "slug": "craig-county-ky"
+    },
+    {
+      "type": "county",
+      "slug": "craig-county-la"
+    },
+    {
+      "type": "county",
+      "slug": "craig-county-mn"
+    },
+    {
+      "type": "county",
+      "slug": "craig-county-mo"
+    },
+    {
+      "type": "county",
+      "slug": "craig-county-ms"
+    },
+    {
+      "type": "county",
+      "slug": "craig-county-nc"
+    },
+    {
+      "type": "county",
+      "slug": "craig-county-nd"
+    },
+    {
+      "type": "county",
+      "slug": "craig-county-ne"
+    },
+    {
+      "type": "county",
+      "slug": "craig-county-ny"
+    },
+    {
+      "type": "county",
+      "slug": "craig-county-oh"
+    },
+    {
+      "type": "county",
+      "slug": "craig-county-sc"
+    },
+    {
+      "type": "county",
+      "slug": "craig-county-tx"
+    },
+    {
+      "type": "county",
+      "slug": "craig-county-wa"
+    },
+    {
+      "type": "county",
+      "slug": "craig-county-wi"
+    },
+    {
+      "type": "county",
+      "slug": "craig-county-wv"
+    },
+    {
+      "type": "county",
+      "slug": "crawford-county-co"
+    },
+    {
+      "type": "county",
+      "slug": "crawford-county-fl"
+    },
+    {
+      "type": "county",
+      "slug": "crawford-county-id"
+    },
+    {
+      "type": "county",
+      "slug": "crawford-county-ky"
+    },
+    {
+      "type": "county",
+      "slug": "crawford-county-la"
+    },
+    {
+      "type": "county",
+      "slug": "crawford-county-mt"
+    },
+    {
+      "type": "county",
+      "slug": "crawford-county-nc"
+    },
+    {
+      "type": "county",
+      "slug": "crawford-county-nd"
+    },
+    {
+      "type": "county",
+      "slug": "crawford-county-ok"
+    },
+    {
+      "type": "county",
+      "slug": "crawford-county-or"
+    },
+    {
+      "type": "county",
+      "slug": "crawford-county-sc"
+    },
+    {
+      "type": "county",
+      "slug": "crawford-county-sd"
+    },
+    {
+      "type": "county",
+      "slug": "crawford-county-tn"
+    },
+    {
+      "type": "county",
+      "slug": "crawford-county-tx"
+    },
+    {
+      "type": "county",
+      "slug": "crawford-county-ut"
+    },
+    {
+      "type": "county",
+      "slug": "crawford-county-va"
+    },
+    {
+      "type": "county",
+      "slug": "cumberland-county-ak"
+    },
+    {
+      "type": "county",
+      "slug": "cumberland-county-co"
+    },
+    {
+      "type": "county",
+      "slug": "cumberland-county-fl"
+    },
+    {
+      "type": "county",
+      "slug": "cumberland-county-ga"
+    },
+    {
+      "type": "county",
+      "slug": "cumberland-county-ia"
+    },
+    {
+      "type": "county",
+      "slug": "cumberland-county-in"
+    },
+    {
+      "type": "county",
+      "slug": "cumberland-county-ks"
+    },
+    {
+      "type": "county",
+      "slug": "cumberland-county-la"
+    },
+    {
+      "type": "county",
+      "slug": "cumberland-county-ma"
+    },
+    {
+      "type": "county",
+      "slug": "cumberland-county-md"
+    },
+    {
+      "type": "county",
+      "slug": "cumberland-county-mi"
+    },
+    {
+      "type": "county",
+      "slug": "cumberland-county-mo"
+    },
+    {
+      "type": "county",
+      "slug": "cumberland-county-ms"
+    },
+    {
+      "type": "county",
+      "slug": "cumberland-county-ne"
+    },
+    {
+      "type": "county",
+      "slug": "cumberland-county-nv"
+    },
+    {
+      "type": "county",
+      "slug": "cumberland-county-ok"
+    },
+    {
+      "type": "county",
+      "slug": "cumberland-county-or"
+    },
+    {
+      "type": "county",
+      "slug": "cumberland-county-tx"
+    },
+    {
+      "type": "county",
+      "slug": "cumberland-county-vt"
+    },
+    {
+      "type": "county",
+      "slug": "cumberland-county-wa"
+    },
+    {
+      "type": "county",
+      "slug": "cumberland-county-wi"
+    },
+    {
+      "type": "county",
+      "slug": "cumberland-county-wv"
+    },
+    {
+      "type": "county",
+      "slug": "cuyahoga-county-oh"
+    },
+    {
+      "type": "county",
+      "slug": "dallas-county-co"
+    },
+    {
+      "type": "county",
+      "slug": "dallas-county-fl"
+    },
+    {
+      "type": "county",
+      "slug": "dallas-county-ga"
+    },
+    {
+      "type": "county",
+      "slug": "dallas-county-il"
+    },
+    {
+      "type": "county",
+      "slug": "dallas-county-in"
+    },
+    {
+      "type": "county",
+      "slug": "dallas-county-ks"
+    },
+    {
+      "type": "county",
+      "slug": "dallas-county-ky"
+    },
+    {
+      "type": "county",
+      "slug": "dallas-county-la"
+    },
+    {
+      "type": "county",
+      "slug": "dallas-county-ma"
+    },
+    {
+      "type": "county",
+      "slug": "dallas-county-mn"
+    },
+    {
+      "type": "county",
+      "slug": "dallas-county-ms"
+    },
+    {
+      "type": "county",
+      "slug": "dallas-county-mt"
+    },
+    {
+      "type": "county",
+      "slug": "dallas-county-nc"
+    },
+    {
+      "type": "county",
+      "slug": "dallas-county-ne"
+    },
+    {
+      "type": "county",
+      "slug": "dallas-county-nv"
+    },
+    {
+      "type": "county",
+      "slug": "dallas-county-or"
+    },
+    {
+      "type": "county",
+      "slug": "dallas-county-sd"
+    },
+    {
+      "type": "county",
+      "slug": "dallas-county-tn"
+    },
+    {
+      "type": "county",
+      "slug": "dallas-county-va"
+    },
+    {
+      "type": "county",
+      "slug": "dallas-county-wa"
+    },
+    {
+      "type": "county",
+      "slug": "dallas-county-wv"
+    },
+    {
+      "type": "county",
+      "slug": "davis-county-ak"
+    },
+    {
+      "type": "county",
+      "slug": "davis-county-al"
+    },
+    {
+      "type": "county",
+      "slug": "davis-county-co"
+    },
+    {
+      "type": "county",
+      "slug": "davis-county-fl"
+    },
+    {
+      "type": "county",
+      "slug": "davis-county-ga"
+    },
+    {
+      "type": "county",
+      "slug": "davis-county-id"
+    },
+    {
+      "type": "county",
+      "slug": "davis-county-in"
+    },
+    {
+      "type": "county",
+      "slug": "davis-county-ks"
+    },
+    {
+      "type": "county",
+      "slug": "davis-county-ky"
+    },
+    {
+      "type": "county",
+      "slug": "davis-county-la"
+    },
+    {
+      "type": "county",
+      "slug": "davis-county-md"
+    },
+    {
+      "type": "county",
+      "slug": "davis-county-mi"
+    },
+    {
+      "type": "county",
+      "slug": "davis-county-mn"
+    },
+    {
+      "type": "county",
+      "slug": "davis-county-mo"
+    },
+    {
+      "type": "county",
+      "slug": "davis-county-ms"
+    },
+    {
+      "type": "county",
+      "slug": "davis-county-ne"
+    },
+    {
+      "type": "county",
+      "slug": "davis-county-nm"
+    },
+    {
+      "type": "county",
+      "slug": "davis-county-nv"
+    },
+    {
+      "type": "county",
+      "slug": "davis-county-oh"
+    },
+    {
+      "type": "county",
+      "slug": "davis-county-ok"
+    },
+    {
+      "type": "county",
+      "slug": "davis-county-pa"
+    },
+    {
+      "type": "county",
+      "slug": "davis-county-tx"
+    },
+    {
+      "type": "county",
+      "slug": "davis-county-va"
+    },
+    {
+      "type": "county",
+      "slug": "davis-county-wi"
+    },
+    {
+      "type": "county",
+      "slug": "dixon-county-al"
+    },
+    {
+      "type": "county",
+      "slug": "dixon-county-ar"
+    },
+    {
+      "type": "county",
+      "slug": "dixon-county-ca"
+    },
+    {
+      "type": "county",
+      "slug": "dixon-county-fl"
+    },
+    {
+      "type": "county",
+      "slug": "dixon-county-ga"
+    },
+    {
+      "type": "county",
+      "slug": "dixon-county-il"
+    },
+    {
+      "type": "county",
+      "slug": "dixon-county-in"
+    },
+    {
+      "type": "county",
+      "slug": "dixon-county-ks"
+    },
+    {
+      "type": "county",
+      "slug": "dixon-county-ky"
+    },
+    {
+      "type": "county",
+      "slug": "dixon-county-mn"
+    },
+    {
+      "type": "county",
+      "slug": "dixon-county-mo"
+    },
+    {
+      "type": "county",
+      "slug": "dixon-county-ms"
+    },
+    {
+      "type": "county",
+      "slug": "dixon-county-nc"
+    },
+    {
+      "type": "county",
+      "slug": "dixon-county-nd"
+    },
+    {
+      "type": "county",
+      "slug": "dixon-county-ny"
+    },
+    {
+      "type": "county",
+      "slug": "dixon-county-oh"
+    },
+    {
+      "type": "county",
+      "slug": "dixon-county-pa"
+    },
+    {
+      "type": "county",
+      "slug": "dixon-county-sd"
+    },
+    {
+      "type": "county",
+      "slug": "dixon-county-tn"
+    },
+    {
+      "type": "county",
+      "slug": "dixon-county-tx"
+    },
+    {
+      "type": "county",
+      "slug": "dixon-county-va"
+    },
+    {
+      "type": "county",
+      "slug": "dixon-county-wa"
+    },
+    {
+      "type": "county",
+      "slug": "dixon-county-wv"
+    },
+    {
+      "type": "county",
+      "slug": "douglas-county-al"
+    },
+    {
+      "type": "county",
+      "slug": "douglas-county-ar"
+    },
+    {
+      "type": "county",
+      "slug": "douglas-county-ct"
+    },
+    {
+      "type": "county",
+      "slug": "douglas-county-de"
+    },
+    {
+      "type": "county",
+      "slug": "douglas-county-ia"
+    },
+    {
+      "type": "county",
+      "slug": "douglas-county-id"
+    },
+    {
+      "type": "county",
+      "slug": "douglas-county-in"
+    },
+    {
+      "type": "county",
+      "slug": "douglas-county-ky"
+    },
+    {
+      "type": "county",
+      "slug": "douglas-county-la"
+    },
+    {
+      "type": "county",
+      "slug": "douglas-county-mi"
+    },
+    {
+      "type": "county",
+      "slug": "douglas-county-ms"
+    },
+    {
+      "type": "county",
+      "slug": "douglas-county-mt"
+    },
+    {
+      "type": "county",
+      "slug": "douglas-county-nc"
+    },
+    {
+      "type": "county",
+      "slug": "douglas-county-nj"
+    },
+    {
+      "type": "county",
+      "slug": "douglas-county-ny"
+    },
+    {
+      "type": "county",
+      "slug": "douglas-county-sc"
+    },
+    {
+      "type": "county",
+      "slug": "douglas-county-tn"
+    },
+    {
+      "type": "county",
+      "slug": "douglas-county-tx"
+    },
+    {
+      "type": "county",
+      "slug": "douglas-county-va"
+    },
+    {
+      "type": "county",
+      "slug": "douglas-county-wv"
+    },
+    {
+      "type": "county",
+      "slug": "ellis-county-ak"
+    },
+    {
+      "type": "county",
+      "slug": "ellis-county-co"
+    },
+    {
+      "type": "county",
+      "slug": "ellis-county-ga"
+    },
+    {
+      "type": "county",
+      "slug": "ellis-county-ia"
+    },
+    {
+      "type": "county",
+      "slug": "ellis-county-id"
+    },
+    {
+      "type": "county",
+      "slug": "ellis-county-il"
+    },
+    {
+      "type": "county",
+      "slug": "ellis-county-in"
+    },
+    {
+      "type": "county",
+      "slug": "ellis-county-ky"
+    },
+    {
+      "type": "county",
+      "slug": "ellis-county-la"
+    },
+    {
+      "type": "county",
+      "slug": "ellis-county-mi"
+    },
+    {
+      "type": "county",
+      "slug": "ellis-county-mo"
+    },
+    {
+      "type": "county",
+      "slug": "ellis-county-ms"
+    },
+    {
+      "type": "county",
+      "slug": "ellis-county-mt"
+    },
+    {
+      "type": "county",
+      "slug": "ellis-county-nc"
+    },
+    {
+      "type": "county",
+      "slug": "ellis-county-nd"
+    },
+    {
+      "type": "county",
+      "slug": "ellis-county-ne"
+    },
+    {
+      "type": "county",
+      "slug": "ellis-county-oh"
+    },
+    {
+      "type": "county",
+      "slug": "ellis-county-or"
+    },
+    {
+      "type": "county",
+      "slug": "ellis-county-pa"
+    },
+    {
+      "type": "county",
+      "slug": "ellis-county-ri"
+    },
+    {
+      "type": "county",
+      "slug": "ellis-county-tn"
+    },
+    {
+      "type": "county",
+      "slug": "ellis-county-ut"
+    },
+    {
+      "type": "county",
+      "slug": "ellis-county-va"
+    },
+    {
+      "type": "county",
+      "slug": "ellis-county-wi"
+    },
+    {
+      "type": "county",
+      "slug": "fayette-county-ar"
+    },
+    {
+      "type": "county",
+      "slug": "fayette-county-az"
+    },
+    {
+      "type": "county",
+      "slug": "fayette-county-ca"
+    },
+    {
+      "type": "county",
+      "slug": "fayette-county-co"
+    },
+    {
+      "type": "county",
+      "slug": "fayette-county-ks"
+    },
+    {
+      "type": "county",
+      "slug": "fayette-county-la"
+    },
+    {
+      "type": "county",
+      "slug": "fayette-county-mo"
+    },
+    {
+      "type": "county",
+      "slug": "fayette-county-mt"
+    },
+    {
+      "type": "county",
+      "slug": "fayette-county-nc"
+    },
+    {
+      "type": "county",
+      "slug": "fayette-county-ne"
+    },
+    {
+      "type": "county",
+      "slug": "fayette-county-nv"
+    },
+    {
+      "type": "county",
+      "slug": "fayette-county-ny"
+    },
+    {
+      "type": "county",
+      "slug": "fayette-county-or"
+    },
+    {
+      "type": "county",
+      "slug": "fayette-county-sc"
+    },
+    {
+      "type": "county",
+      "slug": "fayette-county-sd"
+    },
+    {
+      "type": "county",
+      "slug": "fayette-county-va"
+    },
+    {
+      "type": "county",
+      "slug": "fayette-county-wa"
+    },
+    {
+      "type": "county",
+      "slug": "fayette-county-wi"
+    },
+    {
+      "type": "county",
+      "slug": "floyd-county-ct"
+    },
+    {
+      "type": "county",
+      "slug": "floyd-county-id"
+    },
+    {
+      "type": "county",
+      "slug": "floyd-county-il"
+    },
+    {
+      "type": "county",
+      "slug": "floyd-county-ks"
+    },
+    {
+      "type": "county",
+      "slug": "floyd-county-la"
+    },
+    {
+      "type": "county",
+      "slug": "floyd-county-mn"
+    },
+    {
+      "type": "county",
+      "slug": "floyd-county-mo"
+    },
+    {
+      "type": "county",
+      "slug": "floyd-county-mt"
+    },
+    {
+      "type": "county",
+      "slug": "floyd-county-nc"
+    },
+    {
+      "type": "county",
+      "slug": "floyd-county-ne"
+    },
+    {
+      "type": "county",
+      "slug": "floyd-county-or"
+    },
+    {
+      "type": "county",
+      "slug": "floyd-county-pa"
+    },
+    {
+      "type": "county",
+      "slug": "floyd-county-sc"
+    },
+    {
+      "type": "county",
+      "slug": "floyd-county-tx"
+    },
+    {
+      "type": "county",
+      "slug": "floyd-county-ut"
+    },
+    {
+      "type": "county",
+      "slug": "floyd-county-wv"
+    },
+    {
+      "type": "county",
+      "slug": "ford-county-ar"
+    },
+    {
+      "type": "county",
+      "slug": "ford-county-az"
+    },
+    {
+      "type": "county",
+      "slug": "ford-county-ca"
+    },
+    {
+      "type": "county",
+      "slug": "ford-county-ga"
+    },
+    {
+      "type": "county",
+      "slug": "ford-county-ia"
+    },
+    {
+      "type": "county",
+      "slug": "ford-county-in"
+    },
+    {
+      "type": "county",
+      "slug": "ford-county-ky"
+    },
+    {
+      "type": "county",
+      "slug": "ford-county-la"
+    },
+    {
+      "type": "county",
+      "slug": "ford-county-mi"
+    },
+    {
+      "type": "county",
+      "slug": "ford-county-mn"
+    },
+    {
+      "type": "county",
+      "slug": "ford-county-mo"
+    },
+    {
+      "type": "county",
+      "slug": "ford-county-ms"
+    },
+    {
+      "type": "county",
+      "slug": "ford-county-nc"
+    },
+    {
+      "type": "county",
+      "slug": "ford-county-ne"
+    },
+    {
+      "type": "county",
+      "slug": "ford-county-nj"
+    },
+    {
+      "type": "county",
+      "slug": "ford-county-nm"
+    },
+    {
+      "type": "county",
+      "slug": "ford-county-nv"
+    },
+    {
+      "type": "county",
+      "slug": "ford-county-oh"
+    },
+    {
+      "type": "county",
+      "slug": "ford-county-or"
+    },
+    {
+      "type": "county",
+      "slug": "ford-county-sc"
+    },
+    {
+      "type": "county",
+      "slug": "ford-county-sd"
+    },
+    {
+      "type": "county",
+      "slug": "ford-county-tn"
+    },
+    {
+      "type": "county",
+      "slug": "ford-county-tx"
+    },
+    {
+      "type": "county",
+      "slug": "ford-county-va"
+    },
+    {
+      "type": "county",
+      "slug": "ford-county-wa"
+    },
+    {
+      "type": "county",
+      "slug": "ford-county-wi"
+    },
+    {
+      "type": "county",
+      "slug": "fox-county-ar"
+    },
+    {
+      "type": "county",
+      "slug": "fox-county-co"
+    },
+    {
+      "type": "county",
+      "slug": "fox-county-fl"
+    },
+    {
+      "type": "county",
+      "slug": "fox-county-ga"
+    },
+    {
+      "type": "county",
+      "slug": "fox-county-ia"
+    },
+    {
+      "type": "county",
+      "slug": "fox-county-id"
+    },
+    {
+      "type": "county",
+      "slug": "fox-county-il"
+    },
+    {
+      "type": "county",
+      "slug": "fox-county-in"
+    },
+    {
+      "type": "county",
+      "slug": "fox-county-ks"
+    },
+    {
+      "type": "county",
+      "slug": "fox-county-ky"
+    },
+    {
+      "type": "county",
+      "slug": "fox-county-me"
+    },
+    {
+      "type": "county",
+      "slug": "fox-county-mi"
+    },
+    {
+      "type": "county",
+      "slug": "fox-county-mn"
+    },
+    {
+      "type": "county",
+      "slug": "fox-county-mo"
+    },
+    {
+      "type": "county",
+      "slug": "fox-county-nc"
+    },
+    {
+      "type": "county",
+      "slug": "fox-county-nj"
+    },
+    {
+      "type": "county",
+      "slug": "fox-county-nv"
+    },
+    {
+      "type": "county",
+      "slug": "fox-county-ny"
+    },
+    {
+      "type": "county",
+      "slug": "fox-county-oh"
+    },
+    {
+      "type": "county",
+      "slug": "fox-county-ok"
+    },
+    {
+      "type": "county",
+      "slug": "fox-county-tn"
+    },
+    {
+      "type": "county",
+      "slug": "fox-county-tx"
+    },
+    {
+      "type": "county",
+      "slug": "fox-county-va"
+    },
+    {
+      "type": "county",
+      "slug": "franklin-county-az"
+    },
+    {
+      "type": "county",
+      "slug": "franklin-county-co"
+    },
+    {
+      "type": "county",
+      "slug": "franklin-county-md"
+    },
+    {
+      "type": "county",
+      "slug": "franklin-county-mi"
+    },
+    {
+      "type": "county",
+      "slug": "franklin-county-mn"
+    },
+    {
+      "type": "county",
+      "slug": "franklin-county-ms"
+    },
+    {
+      "type": "county",
+      "slug": "franklin-county-ok"
+    },
+    {
+      "type": "county",
+      "slug": "franklin-county-sd"
+    },
+    {
+      "type": "county",
+      "slug": "franklin-county-wi"
+    },
+    {
+      "type": "county",
+      "slug": "franklin-county-wv"
+    },
+    {
+      "type": "county",
+      "slug": "fulton-county-al"
+    },
+    {
+      "type": "county",
+      "slug": "fulton-county-fl"
+    },
+    {
+      "type": "county",
+      "slug": "fulton-county-ks"
+    },
+    {
+      "type": "county",
+      "slug": "fulton-county-mi"
+    },
+    {
+      "type": "county",
+      "slug": "fulton-county-mn"
+    },
+    {
+      "type": "county",
+      "slug": "fulton-county-mo"
+    },
+    {
+      "type": "county",
+      "slug": "fulton-county-ms"
+    },
+    {
+      "type": "county",
+      "slug": "fulton-county-nc"
+    },
+    {
+      "type": "county",
+      "slug": "fulton-county-ne"
+    },
+    {
+      "type": "county",
+      "slug": "fulton-county-ok"
+    },
+    {
+      "type": "county",
+      "slug": "fulton-county-sc"
+    },
+    {
+      "type": "county",
+      "slug": "fulton-county-sd"
+    },
+    {
+      "type": "county",
+      "slug": "fulton-county-tn"
+    },
+    {
+      "type": "county",
+      "slug": "fulton-county-tx"
+    },
+    {
+      "type": "county",
+      "slug": "fulton-county-va"
+    },
+    {
+      "type": "county",
+      "slug": "fulton-county-wv"
+    },
+    {
+      "type": "county",
+      "slug": "gordon-county-al"
+    },
+    {
+      "type": "county",
+      "slug": "gordon-county-ca"
+    },
+    {
+      "type": "county",
+      "slug": "gordon-county-fl"
+    },
+    {
+      "type": "county",
+      "slug": "gordon-county-ia"
+    },
+    {
+      "type": "county",
+      "slug": "gordon-county-il"
+    },
+    {
+      "type": "county",
+      "slug": "gordon-county-ks"
+    },
+    {
+      "type": "county",
+      "slug": "gordon-county-ky"
+    },
+    {
+      "type": "county",
+      "slug": "gordon-county-md"
+    },
+    {
+      "type": "county",
+      "slug": "gordon-county-mi"
+    },
+    {
+      "type": "county",
+      "slug": "gordon-county-mn"
+    },
+    {
+      "type": "county",
+      "slug": "gordon-county-mo"
+    },
+    {
+      "type": "county",
+      "slug": "gordon-county-nc"
+    },
+    {
+      "type": "county",
+      "slug": "gordon-county-ne"
+    },
+    {
+      "type": "county",
+      "slug": "gordon-county-nm"
+    },
+    {
+      "type": "county",
+      "slug": "gordon-county-nv"
+    },
+    {
+      "type": "county",
+      "slug": "gordon-county-oh"
+    },
+    {
+      "type": "county",
+      "slug": "gordon-county-sc"
+    },
+    {
+      "type": "county",
+      "slug": "gordon-county-sd"
+    },
+    {
+      "type": "county",
+      "slug": "gordon-county-tn"
+    },
+    {
+      "type": "county",
+      "slug": "gordon-county-tx"
+    },
+    {
+      "type": "county",
+      "slug": "gordon-county-va"
+    },
+    {
+      "type": "county",
+      "slug": "gordon-county-wv"
+    },
+    {
+      "type": "county",
+      "slug": "grant-county-al"
+    },
+    {
+      "type": "county",
+      "slug": "grant-county-co"
+    },
+    {
+      "type": "county",
+      "slug": "grant-county-ga"
+    },
+    {
+      "type": "county",
+      "slug": "grant-county-ia"
+    },
+    {
+      "type": "county",
+      "slug": "grant-county-ma"
+    },
+    {
+      "type": "county",
+      "slug": "grant-county-mi"
+    },
+    {
+      "type": "county",
+      "slug": "grant-county-mo"
+    },
+    {
+      "type": "county",
+      "slug": "grant-county-ms"
+    },
+    {
+      "type": "county",
+      "slug": "grant-county-nc"
+    },
+    {
+      "type": "county",
+      "slug": "grant-county-sc"
+    },
+    {
+      "type": "county",
+      "slug": "grant-county-sd"
+    },
+    {
+      "type": "county",
+      "slug": "grant-county-tx"
+    },
+    {
+      "type": "county",
+      "slug": "grant-county-va"
+    },
+    {
+      "type": "county",
+      "slug": "greene-county-al"
+    },
+    {
+      "type": "county",
+      "slug": "greene-county-ca"
+    },
+    {
+      "type": "county",
+      "slug": "greene-county-co"
+    },
+    {
+      "type": "county",
+      "slug": "greene-county-id"
+    },
+    {
+      "type": "county",
+      "slug": "greene-county-ks"
+    },
+    {
+      "type": "county",
+      "slug": "greene-county-ky"
+    },
+    {
+      "type": "county",
+      "slug": "greene-county-la"
+    },
+    {
+      "type": "county",
+      "slug": "greene-county-mi"
+    },
+    {
+      "type": "county",
+      "slug": "greene-county-mn"
+    },
+    {
+      "type": "county",
+      "slug": "greene-county-nd"
+    },
+    {
+      "type": "county",
+      "slug": "greene-county-ne"
+    },
+    {
+      "type": "county",
+      "slug": "greene-county-nm"
+    },
+    {
+      "type": "county",
+      "slug": "greene-county-ok"
+    },
+    {
+      "type": "county",
+      "slug": "greene-county-or"
+    },
+    {
+      "type": "county",
+      "slug": "greene-county-sc"
+    },
+    {
+      "type": "county",
+      "slug": "greene-county-tx"
+    },
+    {
+      "type": "county",
+      "slug": "greene-county-ut"
+    },
+    {
+      "type": "county",
+      "slug": "greene-county-wi"
+    },
+    {
+      "type": "county",
+      "slug": "greene-county-wy"
+    },
+    {
+      "type": "county",
+      "slug": "hall-county-ak"
+    },
+    {
+      "type": "county",
+      "slug": "hall-county-ar"
+    },
+    {
+      "type": "county",
+      "slug": "hall-county-co"
+    },
+    {
+      "type": "county",
+      "slug": "hall-county-fl"
+    },
+    {
+      "type": "county",
+      "slug": "hall-county-ia"
+    },
+    {
+      "type": "county",
+      "slug": "hall-county-ks"
+    },
+    {
+      "type": "county",
+      "slug": "hall-county-ky"
+    },
+    {
+      "type": "county",
+      "slug": "hall-county-la"
+    },
+    {
+      "type": "county",
+      "slug": "hall-county-mi"
+    },
+    {
+      "type": "county",
+      "slug": "hall-county-mn"
+    },
+    {
+      "type": "county",
+      "slug": "hall-county-mo"
+    },
+    {
+      "type": "county",
+      "slug": "hall-county-nc"
+    },
+    {
+      "type": "county",
+      "slug": "hall-county-nd"
+    },
+    {
+      "type": "county",
+      "slug": "hall-county-nh"
+    },
+    {
+      "type": "county",
+      "slug": "hall-county-nj"
+    },
+    {
+      "type": "county",
+      "slug": "hall-county-ny"
+    },
+    {
+      "type": "county",
+      "slug": "hall-county-oh"
+    },
+    {
+      "type": "county",
+      "slug": "hall-county-ok"
+    },
+    {
+      "type": "county",
+      "slug": "hall-county-sc"
+    },
+    {
+      "type": "county",
+      "slug": "hall-county-tn"
+    },
+    {
+      "type": "county",
+      "slug": "hall-county-va"
+    },
+    {
+      "type": "county",
+      "slug": "hall-county-wi"
+    },
+    {
+      "type": "county",
+      "slug": "hamilton-county-al"
+    },
+    {
+      "type": "county",
+      "slug": "hamilton-county-ar"
+    },
+    {
+      "type": "county",
+      "slug": "hamilton-county-co"
+    },
+    {
+      "type": "county",
+      "slug": "hamilton-county-ga"
+    },
+    {
+      "type": "county",
+      "slug": "hamilton-county-id"
+    },
+    {
+      "type": "county",
+      "slug": "hamilton-county-ky"
+    },
+    {
+      "type": "county",
+      "slug": "hamilton-county-la"
+    },
+    {
+      "type": "county",
+      "slug": "hamilton-county-mi"
+    },
+    {
+      "type": "county",
+      "slug": "hamilton-county-mo"
+    },
+    {
+      "type": "county",
+      "slug": "hamilton-county-ms"
+    },
+    {
+      "type": "county",
+      "slug": "hamilton-county-nc"
+    },
+    {
+      "type": "county",
+      "slug": "hamilton-county-nd"
+    },
+    {
+      "type": "county",
+      "slug": "hamilton-county-nj"
+    },
+    {
+      "type": "county",
+      "slug": "hamilton-county-ok"
+    },
+    {
+      "type": "county",
+      "slug": "hamilton-county-pa"
+    },
+    {
+      "type": "county",
+      "slug": "hamilton-county-sd"
+    },
+    {
+      "type": "county",
+      "slug": "hamilton-county-ut"
+    },
+    {
+      "type": "county",
+      "slug": "hamilton-county-va"
+    },
+    {
+      "type": "county",
+      "slug": "hamilton-county-wi"
+    },
+    {
+      "type": "county",
+      "slug": "hamilton-county-wy"
+    },
+    {
+      "type": "county",
+      "slug": "hancock-county-ca"
+    },
+    {
+      "type": "county",
+      "slug": "hancock-county-ks"
+    },
+    {
+      "type": "county",
+      "slug": "hancock-county-md"
+    },
+    {
+      "type": "county",
+      "slug": "hancock-county-mi"
+    },
+    {
+      "type": "county",
+      "slug": "hancock-county-mn"
+    },
+    {
+      "type": "county",
+      "slug": "hancock-county-mo"
+    },
+    {
+      "type": "county",
+      "slug": "hancock-county-nc"
+    },
+    {
+      "type": "county",
+      "slug": "hancock-county-nj"
+    },
+    {
+      "type": "county",
+      "slug": "hancock-county-ok"
+    },
+    {
+      "type": "county",
+      "slug": "hancock-county-or"
+    },
+    {
+      "type": "county",
+      "slug": "hancock-county-tx"
+    },
+    {
+      "type": "county",
+      "slug": "hancock-county-va"
+    },
+    {
+      "type": "county",
+      "slug": "hancock-county-wi"
+    },
+    {
+      "type": "county",
+      "slug": "harrison-county-ar"
+    },
+    {
+      "type": "county",
+      "slug": "harrison-county-co"
+    },
+    {
+      "type": "county",
+      "slug": "harrison-county-de"
+    },
+    {
+      "type": "county",
+      "slug": "harrison-county-ga"
+    },
+    {
+      "type": "county",
+      "slug": "harrison-county-ks"
+    },
+    {
+      "type": "county",
+      "slug": "harrison-county-la"
+    },
+    {
+      "type": "county",
+      "slug": "harrison-county-mi"
+    },
+    {
+      "type": "county",
+      "slug": "harrison-county-mn"
+    },
+    {
+      "type": "county",
+      "slug": "harrison-county-mo"
+    },
+    {
+      "type": "county",
+      "slug": "harrison-county-nc"
+    },
+    {
+      "type": "county",
+      "slug": "harrison-county-nd"
+    },
+    {
+      "type": "county",
+      "slug": "harrison-county-ne"
+    },
+    {
+      "type": "county",
+      "slug": "harrison-county-pa"
+    },
+    {
+      "type": "county",
+      "slug": "harrison-county-sc"
+    },
+    {
+      "type": "county",
+      "slug": "harrison-county-sd"
+    },
+    {
+      "type": "county",
+      "slug": "harrison-county-tn"
+    },
+    {
+      "type": "county",
+      "slug": "harrison-county-va"
+    },
+    {
+      "type": "county",
+      "slug": "harrison-county-wi"
+    },
+    {
+      "type": "county",
+      "slug": "harrison-county-wy"
+    },
+    {
+      "type": "county",
+      "slug": "hart-county-ak"
+    },
+    {
+      "type": "county",
+      "slug": "hart-county-al"
+    },
+    {
+      "type": "county",
+      "slug": "hart-county-ar"
+    },
+    {
+      "type": "county",
+      "slug": "hart-county-ca"
+    },
+    {
+      "type": "county",
+      "slug": "hart-county-co"
+    },
+    {
+      "type": "county",
+      "slug": "hart-county-ia"
+    },
+    {
+      "type": "county",
+      "slug": "hart-county-id"
+    },
+    {
+      "type": "county",
+      "slug": "hart-county-in"
+    },
+    {
+      "type": "county",
+      "slug": "hart-county-ks"
+    },
+    {
+      "type": "county",
+      "slug": "hart-county-md"
+    },
+    {
+      "type": "county",
+      "slug": "hart-county-me"
+    },
+    {
+      "type": "county",
+      "slug": "hart-county-mi"
+    },
+    {
+      "type": "county",
+      "slug": "hart-county-mn"
+    },
+    {
+      "type": "county",
+      "slug": "hart-county-mo"
+    },
+    {
+      "type": "county",
+      "slug": "hart-county-ms"
+    },
+    {
+      "type": "county",
+      "slug": "hart-county-nc"
+    },
+    {
+      "type": "county",
+      "slug": "hart-county-nd"
+    },
+    {
+      "type": "county",
+      "slug": "hart-county-ne"
+    },
+    {
+      "type": "county",
+      "slug": "hart-county-ny"
+    },
+    {
+      "type": "county",
+      "slug": "hart-county-oh"
+    },
+    {
+      "type": "county",
+      "slug": "hart-county-or"
+    },
+    {
+      "type": "county",
+      "slug": "hart-county-pa"
+    },
+    {
+      "type": "county",
+      "slug": "hart-county-sd"
+    },
+    {
+      "type": "county",
+      "slug": "hart-county-tn"
+    },
+    {
+      "type": "county",
+      "slug": "hart-county-tx"
+    },
+    {
+      "type": "county",
+      "slug": "hart-county-va"
+    },
+    {
+      "type": "county",
+      "slug": "hart-county-wv"
+    },
+    {
+      "type": "county",
+      "slug": "henry-county-ar"
+    },
+    {
+      "type": "county",
+      "slug": "henry-county-co"
+    },
+    {
+      "type": "county",
+      "slug": "henry-county-fl"
+    },
+    {
+      "type": "county",
+      "slug": "henry-county-ks"
+    },
+    {
+      "type": "county",
+      "slug": "henry-county-la"
+    },
+    {
+      "type": "county",
+      "slug": "henry-county-ma"
+    },
+    {
+      "type": "county",
+      "slug": "henry-county-md"
+    },
+    {
+      "type": "county",
+      "slug": "henry-county-nc"
+    },
+    {
+      "type": "county",
+      "slug": "henry-county-ne"
+    },
+    {
+      "type": "county",
+      "slug": "henry-county-nv"
+    },
+    {
+      "type": "county",
+      "slug": "henry-county-ok"
+    },
+    {
+      "type": "county",
+      "slug": "henry-county-pa"
+    },
+    {
+      "type": "county",
+      "slug": "henry-county-sd"
+    },
+    {
+      "type": "county",
+      "slug": "henry-county-tx"
+    },
+    {
+      "type": "county",
+      "slug": "henry-county-wi"
+    },
+    {
+      "type": "county",
+      "slug": "henry-county-wv"
+    },
+    {
+      "type": "county",
+      "slug": "hill-county-al"
+    },
+    {
+      "type": "county",
+      "slug": "hill-county-ar"
+    },
+    {
+      "type": "county",
+      "slug": "hill-county-co"
+    },
+    {
+      "type": "county",
+      "slug": "hill-county-ga"
+    },
+    {
+      "type": "county",
+      "slug": "hill-county-ia"
+    },
+    {
+      "type": "county",
+      "slug": "hill-county-il"
+    },
+    {
+      "type": "county",
+      "slug": "hill-county-in"
+    },
+    {
+      "type": "county",
+      "slug": "hill-county-ks"
+    },
+    {
+      "type": "county",
+      "slug": "hill-county-ky"
+    },
+    {
+      "type": "county",
+      "slug": "hill-county-la"
+    },
+    {
+      "type": "county",
+      "slug": "hill-county-md"
+    },
+    {
+      "type": "county",
+      "slug": "hill-county-me"
+    },
+    {
+      "type": "county",
+      "slug": "hill-county-mi"
+    },
+    {
+      "type": "county",
+      "slug": "hill-county-mn"
+    },
+    {
+      "type": "county",
+      "slug": "hill-county-mo"
+    },
+    {
+      "type": "county",
+      "slug": "hill-county-ms"
+    },
+    {
+      "type": "county",
+      "slug": "hill-county-nc"
+    },
+    {
+      "type": "county",
+      "slug": "hill-county-ne"
+    },
+    {
+      "type": "county",
+      "slug": "hill-county-nm"
+    },
+    {
+      "type": "county",
+      "slug": "hill-county-ok"
+    },
+    {
+      "type": "county",
+      "slug": "hill-county-sc"
+    },
+    {
+      "type": "county",
+      "slug": "hill-county-sd"
+    },
+    {
+      "type": "county",
+      "slug": "hill-county-tn"
+    },
+    {
+      "type": "county",
+      "slug": "hill-county-ut"
+    },
+    {
+      "type": "county",
+      "slug": "hill-county-va"
+    },
+    {
+      "type": "county",
+      "slug": "hill-county-wi"
+    },
+    {
+      "type": "county",
+      "slug": "hill-county-wy"
+    },
+    {
+      "type": "county",
+      "slug": "hood-county-ak"
+    },
+    {
+      "type": "county",
+      "slug": "hood-county-al"
+    },
+    {
+      "type": "county",
+      "slug": "hood-county-ar"
+    },
+    {
+      "type": "county",
+      "slug": "hood-county-co"
+    },
+    {
+      "type": "county",
+      "slug": "hood-county-ct"
+    },
+    {
+      "type": "county",
+      "slug": "hood-county-ga"
+    },
+    {
+      "type": "county",
+      "slug": "hood-county-id"
+    },
+    {
+      "type": "county",
+      "slug": "hood-county-il"
+    },
+    {
+      "type": "county",
+      "slug": "hood-county-in"
+    },
+    {
+      "type": "county",
+      "slug": "hood-county-ks"
+    },
+    {
+      "type": "county",
+      "slug": "hood-county-ky"
+    },
+    {
+      "type": "county",
+      "slug": "hood-county-la"
+    },
+    {
+      "type": "county",
+      "slug": "hood-county-me"
+    },
+    {
+      "type": "county",
+      "slug": "hood-county-mi"
+    },
+    {
+      "type": "county",
+      "slug": "hood-county-mo"
+    },
+    {
+      "type": "county",
+      "slug": "hood-county-mt"
+    },
+    {
+      "type": "county",
+      "slug": "hood-county-nc"
+    },
+    {
+      "type": "county",
+      "slug": "hood-county-nd"
+    },
+    {
+      "type": "county",
+      "slug": "hood-county-ne"
+    },
+    {
+      "type": "county",
+      "slug": "hood-county-ny"
+    },
+    {
+      "type": "county",
+      "slug": "hood-county-oh"
+    },
+    {
+      "type": "county",
+      "slug": "hood-county-tn"
+    },
+    {
+      "type": "county",
+      "slug": "hood-county-va"
+    },
+    {
+      "type": "county",
+      "slug": "hood-county-wi"
+    },
+    {
+      "type": "county",
+      "slug": "howard-county-al"
+    },
+    {
+      "type": "county",
+      "slug": "howard-county-co"
+    },
+    {
+      "type": "county",
+      "slug": "howard-county-fl"
+    },
+    {
+      "type": "county",
+      "slug": "howard-county-ga"
+    },
+    {
+      "type": "county",
+      "slug": "howard-county-il"
+    },
+    {
+      "type": "county",
+      "slug": "howard-county-ks"
+    },
+    {
+      "type": "county",
+      "slug": "howard-county-ky"
+    },
+    {
+      "type": "county",
+      "slug": "howard-county-la"
+    },
+    {
+      "type": "county",
+      "slug": "howard-county-ms"
+    },
+    {
+      "type": "county",
+      "slug": "howard-county-mt"
+    },
+    {
+      "type": "county",
+      "slug": "howard-county-nc"
+    },
+    {
+      "type": "county",
+      "slug": "howard-county-nd"
+    },
+    {
+      "type": "county",
+      "slug": "howard-county-ny"
+    },
+    {
+      "type": "county",
+      "slug": "howard-county-oh"
+    },
+    {
+      "type": "county",
+      "slug": "howard-county-pa"
+    },
+    {
+      "type": "county",
+      "slug": "howard-county-sd"
+    },
+    {
+      "type": "county",
+      "slug": "howard-county-tn"
+    },
+    {
+      "type": "county",
+      "slug": "howard-county-va"
+    },
+    {
+      "type": "county",
+      "slug": "howard-county-vt"
+    },
+    {
+      "type": "county",
+      "slug": "howard-county-wv"
+    },
+    {
+      "type": "county",
+      "slug": "howard-county-wy"
+    },
+    {
+      "type": "county",
+      "slug": "hunt-county-fl"
+    },
+    {
+      "type": "county",
+      "slug": "hunt-county-ga"
+    },
+    {
+      "type": "county",
+      "slug": "hunt-county-ia"
+    },
+    {
+      "type": "county",
+      "slug": "hunt-county-id"
+    },
+    {
+      "type": "county",
+      "slug": "hunt-county-in"
+    },
+    {
+      "type": "county",
+      "slug": "hunt-county-ks"
+    },
+    {
+      "type": "county",
+      "slug": "hunt-county-ky"
+    },
+    {
+      "type": "county",
+      "slug": "hunt-county-la"
+    },
+    {
+      "type": "county",
+      "slug": "hunt-county-mi"
+    },
+    {
+      "type": "county",
+      "slug": "hunt-county-mn"
+    },
+    {
+      "type": "county",
+      "slug": "hunt-county-mo"
+    },
+    {
+      "type": "county",
+      "slug": "hunt-county-ms"
+    },
+    {
+      "type": "county",
+      "slug": "hunt-county-nc"
+    },
+    {
+      "type": "county",
+      "slug": "hunt-county-ne"
+    },
+    {
+      "type": "county",
+      "slug": "hunt-county-nh"
+    },
+    {
+      "type": "county",
+      "slug": "hunt-county-oh"
+    },
+    {
+      "type": "county",
+      "slug": "hunt-county-ok"
+    },
+    {
+      "type": "county",
+      "slug": "hunt-county-pa"
+    },
+    {
+      "type": "county",
+      "slug": "hunt-county-sd"
+    },
+    {
+      "type": "county",
+      "slug": "hunt-county-tn"
+    },
+    {
+      "type": "county",
+      "slug": "hunt-county-va"
+    },
+    {
+      "type": "county",
+      "slug": "hunt-county-wv"
+    },
+    {
+      "type": "county",
+      "slug": "iredell-county-ak"
+    },
+    {
+      "type": "county",
+      "slug": "iredell-county-al"
+    },
+    {
+      "type": "county",
+      "slug": "iredell-county-ar"
+    },
+    {
+      "type": "county",
+      "slug": "iredell-county-ca"
+    },
+    {
+      "type": "county",
+      "slug": "iredell-county-co"
+    },
+    {
+      "type": "county",
+      "slug": "iredell-county-ga"
+    },
+    {
+      "type": "county",
+      "slug": "iredell-county-ia"
+    },
+    {
+      "type": "county",
+      "slug": "iredell-county-il"
+    },
+    {
+      "type": "county",
+      "slug": "iredell-county-in"
+    },
+    {
+      "type": "county",
+      "slug": "iredell-county-ks"
+    },
+    {
+      "type": "county",
+      "slug": "iredell-county-ky"
+    },
+    {
+      "type": "county",
+      "slug": "iredell-county-la"
+    },
+    {
+      "type": "county",
+      "slug": "iredell-county-ma"
+    },
+    {
+      "type": "county",
+      "slug": "iredell-county-mn"
+    },
+    {
+      "type": "county",
+      "slug": "iredell-county-mo"
+    },
+    {
+      "type": "county",
+      "slug": "iredell-county-ms"
+    },
+    {
+      "type": "county",
+      "slug": "iredell-county-mt"
+    },
+    {
+      "type": "county",
+      "slug": "iredell-county-nd"
+    },
+    {
+      "type": "county",
+      "slug": "iredell-county-ne"
+    },
+    {
+      "type": "county",
+      "slug": "iredell-county-nv"
+    },
+    {
+      "type": "county",
+      "slug": "iredell-county-ny"
+    },
+    {
+      "type": "county",
+      "slug": "iredell-county-oh"
+    },
+    {
+      "type": "county",
+      "slug": "iredell-county-ok"
+    },
+    {
+      "type": "county",
+      "slug": "iredell-county-pa"
+    },
+    {
+      "type": "county",
+      "slug": "iredell-county-sc"
+    },
+    {
+      "type": "county",
+      "slug": "iredell-county-tn"
+    },
+    {
+      "type": "county",
+      "slug": "iredell-county-tx"
+    },
+    {
+      "type": "county",
+      "slug": "iredell-county-ut"
+    },
+    {
+      "type": "county",
+      "slug": "iredell-county-va"
+    },
+    {
+      "type": "county",
+      "slug": "iredell-county-wv"
+    },
+    {
+      "type": "county",
+      "slug": "jackson-county-co"
+    },
+    {
+      "type": "county",
+      "slug": "jackson-county-nd"
+    },
+    {
+      "type": "county",
+      "slug": "jackson-county-ne"
+    },
+    {
+      "type": "county",
+      "slug": "jackson-county-ny"
+    },
+    {
+      "type": "county",
+      "slug": "jackson-county-va"
+    },
+    {
+      "type": "county",
+      "slug": "jackson-county-wa"
+    },
+    {
+      "type": "county",
+      "slug": "jackson-county-wy"
+    },
+    {
+      "type": "county",
+      "slug": "jasper-county-al"
+    },
+    {
+      "type": "county",
+      "slug": "jasper-county-az"
+    },
+    {
+      "type": "county",
+      "slug": "jasper-county-ca"
+    },
+    {
+      "type": "county",
+      "slug": "jasper-county-fl"
+    },
+    {
+      "type": "county",
+      "slug": "jasper-county-ks"
+    },
+    {
+      "type": "county",
+      "slug": "jasper-county-ky"
+    },
+    {
+      "type": "county",
+      "slug": "jasper-county-la"
+    },
+    {
+      "type": "county",
+      "slug": "jasper-county-md"
+    },
+    {
+      "type": "county",
+      "slug": "jasper-county-me"
+    },
+    {
+      "type": "county",
+      "slug": "jasper-county-mi"
+    },
+    {
+      "type": "county",
+      "slug": "jasper-county-mn"
+    },
+    {
+      "type": "county",
+      "slug": "jasper-county-mt"
+    },
+    {
+      "type": "county",
+      "slug": "jasper-county-nc"
+    },
+    {
+      "type": "county",
+      "slug": "jasper-county-ne"
+    },
+    {
+      "type": "county",
+      "slug": "jasper-county-nh"
+    },
+    {
+      "type": "county",
+      "slug": "jasper-county-nm"
+    },
+    {
+      "type": "county",
+      "slug": "jasper-county-nv"
+    },
+    {
+      "type": "county",
+      "slug": "jasper-county-sd"
+    },
+    {
+      "type": "county",
+      "slug": "jasper-county-tn"
+    },
+    {
+      "type": "county",
+      "slug": "jasper-county-ut"
+    },
+    {
+      "type": "county",
+      "slug": "jasper-county-va"
+    },
+    {
+      "type": "county",
+      "slug": "jasper-county-wa"
+    },
+    {
+      "type": "county",
+      "slug": "jasper-county-wi"
+    },
+    {
+      "type": "county",
+      "slug": "jasper-county-wv"
+    },
+    {
+      "type": "county",
+      "slug": "jefferson-county-ca"
+    },
+    {
+      "type": "county",
+      "slug": "jefferson-county-mi"
+    },
+    {
+      "type": "county",
+      "slug": "jefferson-county-mn"
+    },
+    {
+      "type": "county",
+      "slug": "jefferson-county-nc"
+    },
+    {
+      "type": "county",
+      "slug": "jefferson-county-nm"
+    },
+    {
+      "type": "county",
+      "slug": "jefferson-county-sc"
+    },
+    {
+      "type": "county",
+      "slug": "jefferson-county-va"
+    },
+    {
+      "type": "county",
+      "slug": "jerome-county-ak"
+    },
+    {
+      "type": "county",
+      "slug": "jerome-county-ar"
+    },
+    {
+      "type": "county",
+      "slug": "jerome-county-ca"
+    },
+    {
+      "type": "county",
+      "slug": "jerome-county-fl"
+    },
+    {
+      "type": "county",
+      "slug": "jerome-county-ga"
+    },
+    {
+      "type": "county",
+      "slug": "jerome-county-il"
+    },
+    {
+      "type": "county",
+      "slug": "jerome-county-ks"
+    },
+    {
+      "type": "county",
+      "slug": "jerome-county-ky"
+    },
+    {
+      "type": "county",
+      "slug": "jerome-county-la"
+    },
+    {
+      "type": "county",
+      "slug": "jerome-county-me"
+    },
+    {
+      "type": "county",
+      "slug": "jerome-county-mi"
+    },
+    {
+      "type": "county",
+      "slug": "jerome-county-mn"
+    },
+    {
+      "type": "county",
+      "slug": "jerome-county-mo"
+    },
+    {
+      "type": "county",
+      "slug": "jerome-county-nc"
+    },
+    {
+      "type": "county",
+      "slug": "jerome-county-ne"
+    },
+    {
+      "type": "county",
+      "slug": "jerome-county-oh"
+    },
+    {
+      "type": "county",
+      "slug": "jerome-county-ok"
+    },
+    {
+      "type": "county",
+      "slug": "jerome-county-sc"
+    },
+    {
+      "type": "county",
+      "slug": "jerome-county-tn"
+    },
+    {
+      "type": "county",
+      "slug": "jerome-county-tx"
+    },
+    {
+      "type": "county",
+      "slug": "jerome-county-va"
+    },
+    {
+      "type": "county",
+      "slug": "jerome-county-wa"
+    },
+    {
+      "type": "county",
+      "slug": "jerome-county-wi"
+    },
+    {
+      "type": "county",
+      "slug": "jerome-county-wv"
+    },
+    {
+      "type": "county",
+      "slug": "johnson-county-al"
+    },
+    {
+      "type": "county",
+      "slug": "johnson-county-az"
+    },
+    {
+      "type": "county",
+      "slug": "johnson-county-mi"
+    },
+    {
+      "type": "county",
+      "slug": "johnson-county-mn"
+    },
+    {
+      "type": "county",
+      "slug": "johnson-county-ms"
+    },
+    {
+      "type": "county",
+      "slug": "johnson-county-nc"
+    },
+    {
+      "type": "county",
+      "slug": "johnson-county-nd"
+    },
+    {
+      "type": "county",
+      "slug": "johnson-county-nj"
+    },
+    {
+      "type": "county",
+      "slug": "johnson-county-nm"
+    },
+    {
+      "type": "county",
+      "slug": "johnson-county-oh"
+    },
+    {
+      "type": "county",
+      "slug": "johnson-county-ok"
+    },
+    {
+      "type": "county",
+      "slug": "johnson-county-or"
+    },
+    {
+      "type": "county",
+      "slug": "johnson-county-pa"
+    },
+    {
+      "type": "county",
+      "slug": "johnson-county-ut"
+    },
+    {
+      "type": "county",
+      "slug": "johnson-county-va"
+    },
+    {
+      "type": "county",
+      "slug": "johnson-county-vt"
+    },
+    {
+      "type": "county",
+      "slug": "kane-county-az"
+    },
+    {
+      "type": "county",
+      "slug": "kane-county-fl"
+    },
+    {
+      "type": "county",
+      "slug": "kane-county-ga"
+    },
+    {
+      "type": "county",
+      "slug": "kane-county-ia"
+    },
+    {
+      "type": "county",
+      "slug": "kane-county-in"
+    },
+    {
+      "type": "county",
+      "slug": "kane-county-ks"
+    },
+    {
+      "type": "county",
+      "slug": "kane-county-ky"
+    },
+    {
+      "type": "county",
+      "slug": "kane-county-me"
+    },
+    {
+      "type": "county",
+      "slug": "kane-county-mi"
+    },
+    {
+      "type": "county",
+      "slug": "kane-county-mn"
+    },
+    {
+      "type": "county",
+      "slug": "kane-county-mo"
+    },
+    {
+      "type": "county",
+      "slug": "kane-county-ms"
+    },
+    {
+      "type": "county",
+      "slug": "kane-county-mt"
+    },
+    {
+      "type": "county",
+      "slug": "kane-county-nd"
+    },
+    {
+      "type": "county",
+      "slug": "kane-county-ne"
+    },
+    {
+      "type": "county",
+      "slug": "kane-county-oh"
+    },
+    {
+      "type": "county",
+      "slug": "kane-county-ok"
+    },
+    {
+      "type": "county",
+      "slug": "kane-county-or"
+    },
+    {
+      "type": "county",
+      "slug": "kane-county-sd"
+    },
+    {
+      "type": "county",
+      "slug": "kane-county-tn"
+    },
+    {
+      "type": "county",
+      "slug": "kane-county-tx"
+    },
+    {
+      "type": "county",
+      "slug": "kane-county-va"
+    },
+    {
+      "type": "county",
+      "slug": "kane-county-wv"
+    },
+    {
+      "type": "county",
+      "slug": "kane-county-wy"
+    },
+    {
+      "type": "county",
+      "slug": "keith-county-al"
+    },
+    {
+      "type": "county",
+      "slug": "keith-county-ar"
+    },
+    {
+      "type": "county",
+      "slug": "keith-county-co"
+    },
+    {
+      "type": "county",
+      "slug": "keith-county-fl"
+    },
+    {
+      "type": "county",
+      "slug": "keith-county-ga"
+    },
+    {
+      "type": "county",
+      "slug": "keith-county-ia"
+    },
+    {
+      "type": "county",
+      "slug": "keith-county-id"
+    },
+    {
+      "type": "county",
+      "slug": "keith-county-in"
+    },
+    {
+      "type": "county",
+      "slug": "keith-county-ks"
+    },
+    {
+      "type": "county",
+      "slug": "keith-county-ky"
+    },
+    {
+      "type": "county",
+      "slug": "keith-county-ma"
+    },
+    {
+      "type": "county",
+      "slug": "keith-county-mi"
+    },
+    {
+      "type": "county",
+      "slug": "keith-county-mn"
+    },
+    {
+      "type": "county",
+      "slug": "keith-county-mo"
+    },
+    {
+      "type": "county",
+      "slug": "keith-county-mt"
+    },
+    {
+      "type": "county",
+      "slug": "keith-county-nc"
+    },
+    {
+      "type": "county",
+      "slug": "keith-county-oh"
+    },
+    {
+      "type": "county",
+      "slug": "keith-county-ok"
+    },
+    {
+      "type": "county",
+      "slug": "keith-county-pa"
+    },
+    {
+      "type": "county",
+      "slug": "keith-county-sc"
+    },
+    {
+      "type": "county",
+      "slug": "keith-county-sd"
+    },
+    {
+      "type": "county",
+      "slug": "keith-county-tn"
+    },
+    {
+      "type": "county",
+      "slug": "keith-county-tx"
+    },
+    {
+      "type": "county",
+      "slug": "keith-county-va"
+    },
+    {
+      "type": "county",
+      "slug": "keith-county-wa"
+    },
+    {
+      "type": "county",
+      "slug": "keith-county-wy"
+    },
+    {
+      "type": "county",
+      "slug": "king-county-ar"
+    },
+    {
+      "type": "county",
+      "slug": "king-county-co"
+    },
+    {
+      "type": "county",
+      "slug": "king-county-fl"
+    },
+    {
+      "type": "county",
+      "slug": "king-county-ga"
+    },
+    {
+      "type": "county",
+      "slug": "king-county-ia"
+    },
+    {
+      "type": "county",
+      "slug": "king-county-ks"
+    },
+    {
+      "type": "county",
+      "slug": "king-county-ky"
+    },
+    {
+      "type": "county",
+      "slug": "king-county-mn"
+    },
+    {
+      "type": "county",
+      "slug": "king-county-mo"
+    },
+    {
+      "type": "county",
+      "slug": "king-county-ms"
+    },
+    {
+      "type": "county",
+      "slug": "king-county-mt"
+    },
+    {
+      "type": "county",
+      "slug": "king-county-nc"
+    },
+    {
+      "type": "county",
+      "slug": "king-county-nd"
+    },
+    {
+      "type": "county",
+      "slug": "king-county-ne"
+    },
+    {
+      "type": "county",
+      "slug": "king-county-ny"
+    },
+    {
+      "type": "county",
+      "slug": "king-county-oh"
+    },
+    {
+      "type": "county",
+      "slug": "king-county-ok"
+    },
+    {
+      "type": "county",
+      "slug": "king-county-pa"
+    },
+    {
+      "type": "county",
+      "slug": "king-county-sc"
+    },
+    {
+      "type": "county",
+      "slug": "king-county-tn"
+    },
+    {
+      "type": "county",
+      "slug": "king-county-tx"
+    },
+    {
+      "type": "county",
+      "slug": "king-county-va"
+    },
+    {
+      "type": "county",
+      "slug": "king-county-wi"
+    },
+    {
+      "type": "county",
+      "slug": "king-county-wv"
+    },
+    {
+      "type": "county",
+      "slug": "king-county-wy"
+    },
+    {
+      "type": "county",
+      "slug": "knox-county-ar"
+    },
+    {
+      "type": "county",
+      "slug": "knox-county-co"
+    },
+    {
+      "type": "county",
+      "slug": "knox-county-ga"
+    },
+    {
+      "type": "county",
+      "slug": "knox-county-id"
+    },
+    {
+      "type": "county",
+      "slug": "knox-county-la"
+    },
+    {
+      "type": "county",
+      "slug": "knox-county-ma"
+    },
+    {
+      "type": "county",
+      "slug": "knox-county-mn"
+    },
+    {
+      "type": "county",
+      "slug": "knox-county-ms"
+    },
+    {
+      "type": "county",
+      "slug": "knox-county-mt"
+    },
+    {
+      "type": "county",
+      "slug": "knox-county-nc"
+    },
+    {
+      "type": "county",
+      "slug": "knox-county-nd"
+    },
+    {
+      "type": "county",
+      "slug": "knox-county-nh"
+    },
+    {
+      "type": "county",
+      "slug": "knox-county-ok"
+    },
+    {
+      "type": "county",
+      "slug": "knox-county-pa"
+    },
+    {
+      "type": "county",
+      "slug": "knox-county-sc"
+    },
+    {
+      "type": "county",
+      "slug": "knox-county-sd"
+    },
+    {
+      "type": "county",
+      "slug": "knox-county-va"
+    },
+    {
+      "type": "county",
+      "slug": "knox-county-wi"
+    },
+    {
+      "type": "county",
+      "slug": "lake-county-ak"
+    },
+    {
+      "type": "county",
+      "slug": "lake-county-ar"
+    },
+    {
+      "type": "county",
+      "slug": "lake-county-ga"
+    },
+    {
+      "type": "county",
+      "slug": "lake-county-ia"
+    },
+    {
+      "type": "county",
+      "slug": "lake-county-id"
+    },
+    {
+      "type": "county",
+      "slug": "lake-county-ks"
+    },
+    {
+      "type": "county",
+      "slug": "lake-county-ky"
+    },
+    {
+      "type": "county",
+      "slug": "lake-county-la"
+    },
+    {
+      "type": "county",
+      "slug": "lake-county-ma"
+    },
+    {
+      "type": "county",
+      "slug": "lake-county-mo"
+    },
+    {
+      "type": "county",
+      "slug": "lake-county-ms"
+    },
+    {
+      "type": "county",
+      "slug": "lake-county-nc"
+    },
+    {
+      "type": "county",
+      "slug": "lake-county-nd"
+    },
+    {
+      "type": "county",
+      "slug": "lake-county-ne"
+    },
+    {
+      "type": "county",
+      "slug": "lake-county-ny"
+    },
+    {
+      "type": "county",
+      "slug": "lake-county-oh"
+    },
+    {
+      "type": "county",
+      "slug": "lake-county-ok"
+    },
+    {
+      "type": "county",
+      "slug": "lake-county-pa"
+    },
+    {
+      "type": "county",
+      "slug": "lake-county-tx"
+    },
+    {
+      "type": "county",
+      "slug": "lake-county-va"
+    },
+    {
+      "type": "county",
+      "slug": "lake-county-wi"
+    },
+    {
+      "type": "county",
+      "slug": "lake-county-wv"
+    },
+    {
+      "type": "county",
+      "slug": "lamar-county-ar"
+    },
+    {
+      "type": "county",
+      "slug": "lamar-county-az"
+    },
+    {
+      "type": "county",
+      "slug": "lamar-county-ia"
+    },
+    {
+      "type": "county",
+      "slug": "lamar-county-il"
+    },
+    {
+      "type": "county",
+      "slug": "lamar-county-in"
+    },
+    {
+      "type": "county",
+      "slug": "lamar-county-ks"
+    },
+    {
+      "type": "county",
+      "slug": "lamar-county-ky"
+    },
+    {
+      "type": "county",
+      "slug": "lamar-county-mi"
+    },
+    {
+      "type": "county",
+      "slug": "lamar-county-mn"
+    },
+    {
+      "type": "county",
+      "slug": "lamar-county-mo"
+    },
+    {
+      "type": "county",
+      "slug": "lamar-county-nc"
+    },
+    {
+      "type": "county",
+      "slug": "lamar-county-nd"
+    },
+    {
+      "type": "county",
+      "slug": "lamar-county-ne"
+    },
+    {
+      "type": "county",
+      "slug": "lamar-county-ny"
+    },
+    {
+      "type": "county",
+      "slug": "lamar-county-oh"
+    },
+    {
+      "type": "county",
+      "slug": "lamar-county-ok"
+    },
+    {
+      "type": "county",
+      "slug": "lamar-county-or"
+    },
+    {
+      "type": "county",
+      "slug": "lamar-county-pa"
+    },
+    {
+      "type": "county",
+      "slug": "lamar-county-sd"
+    },
+    {
+      "type": "county",
+      "slug": "lamar-county-tn"
+    },
+    {
+      "type": "county",
+      "slug": "lamar-county-ut"
+    },
+    {
+      "type": "county",
+      "slug": "lamar-county-va"
+    },
+    {
+      "type": "county",
+      "slug": "lamar-county-wi"
+    },
+    {
+      "type": "county",
+      "slug": "lawrence-county-ak"
+    },
+    {
+      "type": "county",
+      "slug": "lawrence-county-ca"
+    },
+    {
+      "type": "county",
+      "slug": "lawrence-county-co"
+    },
+    {
+      "type": "county",
+      "slug": "lawrence-county-fl"
+    },
+    {
+      "type": "county",
+      "slug": "lawrence-county-ga"
+    },
+    {
+      "type": "county",
+      "slug": "lawrence-county-ia"
+    },
+    {
+      "type": "county",
+      "slug": "lawrence-county-ks"
+    },
+    {
+      "type": "county",
+      "slug": "lawrence-county-la"
+    },
+    {
+      "type": "county",
+      "slug": "lawrence-county-mi"
+    },
+    {
+      "type": "county",
+      "slug": "lawrence-county-mn"
+    },
+    {
+      "type": "county",
+      "slug": "lawrence-county-nc"
+    },
+    {
+      "type": "county",
+      "slug": "lawrence-county-nj"
+    },
+    {
+      "type": "county",
+      "slug": "lawrence-county-ok"
+    },
+    {
+      "type": "county",
+      "slug": "lawrence-county-tx"
+    },
+    {
+      "type": "county",
+      "slug": "lawrence-county-va"
+    },
+    {
+      "type": "county",
+      "slug": "lee-county-ca"
+    },
+    {
+      "type": "county",
+      "slug": "lee-county-ks"
+    },
+    {
+      "type": "county",
+      "slug": "lee-county-mi"
+    },
+    {
+      "type": "county",
+      "slug": "lee-county-mo"
+    },
+    {
+      "type": "county",
+      "slug": "lee-county-mt"
+    },
+    {
+      "type": "county",
+      "slug": "lee-county-ne"
+    },
+    {
+      "type": "county",
+      "slug": "lee-county-or"
+    },
+    {
+      "type": "county",
+      "slug": "lee-county-ri"
+    },
+    {
+      "type": "county",
+      "slug": "lee-county-sd"
+    },
+    {
+      "type": "county",
+      "slug": "lee-county-tn"
+    },
+    {
+      "type": "county",
+      "slug": "lee-county-vt"
+    },
+    {
+      "type": "county",
+      "slug": "lee-county-wa"
+    },
+    {
+      "type": "county",
+      "slug": "lee-county-wi"
+    },
+    {
+      "type": "county",
+      "slug": "lee-county-wv"
+    },
+    {
+      "type": "county",
+      "slug": "lewis-county-ar"
+    },
+    {
+      "type": "county",
+      "slug": "lewis-county-fl"
+    },
+    {
+      "type": "county",
+      "slug": "lewis-county-ga"
+    },
+    {
+      "type": "county",
+      "slug": "lewis-county-ia"
+    },
+    {
+      "type": "county",
+      "slug": "lewis-county-il"
+    },
+    {
+      "type": "county",
+      "slug": "lewis-county-in"
+    },
+    {
+      "type": "county",
+      "slug": "lewis-county-ks"
+    },
+    {
+      "type": "county",
+      "slug": "lewis-county-la"
+    },
+    {
+      "type": "county",
+      "slug": "lewis-county-mi"
+    },
+    {
+      "type": "county",
+      "slug": "lewis-county-mt"
+    },
+    {
+      "type": "county",
+      "slug": "lewis-county-nc"
+    },
+    {
+      "type": "county",
+      "slug": "lewis-county-nd"
+    },
+    {
+      "type": "county",
+      "slug": "lewis-county-ne"
+    },
+    {
+      "type": "county",
+      "slug": "lewis-county-nj"
+    },
+    {
+      "type": "county",
+      "slug": "lewis-county-oh"
+    },
+    {
+      "type": "county",
+      "slug": "lewis-county-ok"
+    },
+    {
+      "type": "county",
+      "slug": "lewis-county-pa"
+    },
+    {
+      "type": "county",
+      "slug": "lewis-county-sd"
+    },
+    {
+      "type": "county",
+      "slug": "lewis-county-tx"
+    },
+    {
+      "type": "county",
+      "slug": "lewis-county-va"
+    },
+    {
+      "type": "county",
+      "slug": "lewis-county-wi"
+    },
+    {
+      "type": "county",
+      "slug": "lincoln-county-ak"
+    },
+    {
+      "type": "county",
+      "slug": "lincoln-county-al"
+    },
+    {
+      "type": "county",
+      "slug": "lincoln-county-ca"
+    },
+    {
+      "type": "county",
+      "slug": "lincoln-county-ia"
+    },
+    {
+      "type": "county",
+      "slug": "lincoln-county-in"
+    },
+    {
+      "type": "county",
+      "slug": "lincoln-county-ma"
+    },
+    {
+      "type": "county",
+      "slug": "lincoln-county-nd"
+    },
+    {
+      "type": "county",
+      "slug": "lincoln-county-ny"
+    },
+    {
+      "type": "county",
+      "slug": "lincoln-county-oh"
+    },
+    {
+      "type": "county",
+      "slug": "lincoln-county-pa"
+    },
+    {
+      "type": "county",
+      "slug": "lincoln-county-tx"
+    },
+    {
+      "type": "county",
+      "slug": "lincoln-county-ut"
+    },
+    {
+      "type": "county",
+      "slug": "lincoln-county-va"
+    },
+    {
+      "type": "county",
+      "slug": "logan-county-ca"
+    },
+    {
+      "type": "county",
+      "slug": "logan-county-fl"
+    },
+    {
+      "type": "county",
+      "slug": "logan-county-ga"
+    },
+    {
+      "type": "county",
+      "slug": "logan-county-ia"
+    },
+    {
+      "type": "county",
+      "slug": "logan-county-id"
+    },
+    {
+      "type": "county",
+      "slug": "logan-county-in"
+    },
+    {
+      "type": "county",
+      "slug": "logan-county-la"
+    },
+    {
+      "type": "county",
+      "slug": "logan-county-mi"
+    },
+    {
+      "type": "county",
+      "slug": "logan-county-mn"
+    },
+    {
+      "type": "county",
+      "slug": "logan-county-mo"
+    },
+    {
+      "type": "county",
+      "slug": "logan-county-ms"
+    },
+    {
+      "type": "county",
+      "slug": "logan-county-nc"
+    },
+    {
+      "type": "county",
+      "slug": "logan-county-ny"
+    },
+    {
+      "type": "county",
+      "slug": "logan-county-or"
+    },
+    {
+      "type": "county",
+      "slug": "logan-county-sc"
+    },
+    {
+      "type": "county",
+      "slug": "logan-county-sd"
+    },
+    {
+      "type": "county",
+      "slug": "logan-county-tn"
+    },
+    {
+      "type": "county",
+      "slug": "logan-county-tx"
+    },
+    {
+      "type": "county",
+      "slug": "logan-county-ut"
+    },
+    {
+      "type": "county",
+      "slug": "logan-county-va"
+    },
+    {
+      "type": "county",
+      "slug": "lorain-county-oh"
+    },
+    {
+      "type": "county",
+      "slug": "lyon-county-al"
+    },
+    {
+      "type": "county",
+      "slug": "lyon-county-ga"
+    },
+    {
+      "type": "county",
+      "slug": "lyon-county-il"
+    },
+    {
+      "type": "county",
+      "slug": "lyon-county-in"
+    },
+    {
+      "type": "county",
+      "slug": "lyon-county-mo"
+    },
+    {
+      "type": "county",
+      "slug": "lyon-county-mt"
+    },
+    {
+      "type": "county",
+      "slug": "lyon-county-nc"
+    },
+    {
+      "type": "county",
+      "slug": "lyon-county-ne"
+    },
+    {
+      "type": "county",
+      "slug": "lyon-county-nm"
+    },
+    {
+      "type": "county",
+      "slug": "lyon-county-oh"
+    },
+    {
+      "type": "county",
+      "slug": "lyon-county-ok"
+    },
+    {
+      "type": "county",
+      "slug": "lyon-county-or"
+    },
+    {
+      "type": "county",
+      "slug": "lyon-county-sd"
+    },
+    {
+      "type": "county",
+      "slug": "lyon-county-tn"
+    },
+    {
+      "type": "county",
+      "slug": "lyon-county-tx"
+    },
+    {
+      "type": "county",
+      "slug": "lyon-county-ut"
+    },
+    {
+      "type": "county",
+      "slug": "lyon-county-va"
+    },
+    {
+      "type": "county",
+      "slug": "lyon-county-wi"
+    },
+    {
+      "type": "county",
+      "slug": "macon-county-ak"
+    },
+    {
+      "type": "county",
+      "slug": "macon-county-ar"
+    },
+    {
+      "type": "county",
+      "slug": "macon-county-ia"
+    },
+    {
+      "type": "county",
+      "slug": "macon-county-in"
+    },
+    {
+      "type": "county",
+      "slug": "macon-county-ks"
+    },
+    {
+      "type": "county",
+      "slug": "macon-county-ky"
+    },
+    {
+      "type": "county",
+      "slug": "macon-county-la"
+    },
+    {
+      "type": "county",
+      "slug": "macon-county-mi"
+    },
+    {
+      "type": "county",
+      "slug": "macon-county-mn"
+    },
+    {
+      "type": "county",
+      "slug": "macon-county-ms"
+    },
+    {
+      "type": "county",
+      "slug": "macon-county-mt"
+    },
+    {
+      "type": "county",
+      "slug": "macon-county-ne"
+    },
+    {
+      "type": "county",
+      "slug": "macon-county-ny"
+    },
+    {
+      "type": "county",
+      "slug": "macon-county-oh"
+    },
+    {
+      "type": "county",
+      "slug": "macon-county-ok"
+    },
+    {
+      "type": "county",
+      "slug": "macon-county-or"
+    },
+    {
+      "type": "county",
+      "slug": "macon-county-pa"
+    },
+    {
+      "type": "county",
+      "slug": "macon-county-tx"
+    },
+    {
+      "type": "county",
+      "slug": "macon-county-va"
+    },
+    {
+      "type": "county",
+      "slug": "macon-county-wa"
+    },
+    {
+      "type": "county",
+      "slug": "macon-county-wi"
+    },
+    {
+      "type": "county",
+      "slug": "madison-county-ca"
+    },
+    {
+      "type": "county",
+      "slug": "madison-county-co"
+    },
+    {
+      "type": "county",
+      "slug": "madison-county-ks"
+    },
+    {
+      "type": "county",
+      "slug": "madison-county-mn"
+    },
+    {
+      "type": "county",
+      "slug": "madison-county-nd"
+    },
+    {
+      "type": "county",
+      "slug": "madison-county-nm"
+    },
+    {
+      "type": "county",
+      "slug": "madison-county-nv"
+    },
+    {
+      "type": "county",
+      "slug": "madison-county-ok"
+    },
+    {
+      "type": "county",
+      "slug": "madison-county-sc"
+    },
+    {
+      "type": "county",
+      "slug": "marion-county-ca"
+    },
+    {
+      "type": "county",
+      "slug": "marion-county-co"
+    },
+    {
+      "type": "county",
+      "slug": "marion-county-ct"
+    },
+    {
+      "type": "county",
+      "slug": "marion-county-me"
+    },
+    {
+      "type": "county",
+      "slug": "marion-county-mi"
+    },
+    {
+      "type": "county",
+      "slug": "marion-county-nc"
+    },
+    {
+      "type": "county",
+      "slug": "marion-county-nd"
+    },
+    {
+      "type": "county",
+      "slug": "marion-county-ne"
+    },
+    {
+      "type": "county",
+      "slug": "marion-county-nm"
+    },
+    {
+      "type": "county",
+      "slug": "marion-county-ok"
+    },
+    {
+      "type": "county",
+      "slug": "marion-county-pa"
+    },
+    {
+      "type": "county",
+      "slug": "marion-county-sd"
+    },
+    {
+      "type": "county",
+      "slug": "marion-county-va"
+    },
+    {
+      "type": "county",
+      "slug": "marion-county-vt"
+    },
+    {
+      "type": "county",
+      "slug": "marshall-county-ar"
+    },
+    {
+      "type": "county",
+      "slug": "marshall-county-co"
+    },
+    {
+      "type": "county",
+      "slug": "marshall-county-fl"
+    },
+    {
+      "type": "county",
+      "slug": "marshall-county-ga"
+    },
+    {
+      "type": "county",
+      "slug": "marshall-county-la"
+    },
+    {
+      "type": "county",
+      "slug": "marshall-county-ma"
+    },
+    {
+      "type": "county",
+      "slug": "marshall-county-mi"
+    },
+    {
+      "type": "county",
+      "slug": "marshall-county-mo"
+    },
+    {
+      "type": "county",
+      "slug": "marshall-county-nd"
+    },
+    {
+      "type": "county",
+      "slug": "marshall-county-ne"
+    },
+    {
+      "type": "county",
+      "slug": "marshall-county-nm"
+    },
+    {
+      "type": "county",
+      "slug": "marshall-county-ny"
+    },
+    {
+      "type": "county",
+      "slug": "marshall-county-oh"
+    },
+    {
+      "type": "county",
+      "slug": "marshall-county-tx"
+    },
+    {
+      "type": "county",
+      "slug": "marshall-county-va"
+    },
+    {
+      "type": "county",
+      "slug": "martin-county-ga"
+    },
+    {
+      "type": "county",
+      "slug": "martin-county-ia"
+    },
+    {
+      "type": "county",
+      "slug": "martin-county-id"
+    },
+    {
+      "type": "county",
+      "slug": "martin-county-il"
+    },
+    {
+      "type": "county",
+      "slug": "martin-county-mi"
+    },
+    {
+      "type": "county",
+      "slug": "martin-county-mo"
+    },
+    {
+      "type": "county",
+      "slug": "martin-county-ms"
+    },
+    {
+      "type": "county",
+      "slug": "martin-county-mt"
+    },
+    {
+      "type": "county",
+      "slug": "martin-county-ne"
+    },
+    {
+      "type": "county",
+      "slug": "martin-county-nm"
+    },
+    {
+      "type": "county",
+      "slug": "martin-county-ny"
+    },
+    {
+      "type": "county",
+      "slug": "martin-county-pa"
+    },
+    {
+      "type": "county",
+      "slug": "martin-county-va"
+    },
+    {
+      "type": "county",
+      "slug": "martin-county-vt"
+    },
+    {
+      "type": "county",
+      "slug": "martin-county-wi"
+    },
+    {
+      "type": "county",
+      "slug": "martin-county-wv"
+    },
+    {
+      "type": "county",
+      "slug": "mason-county-al"
+    },
+    {
+      "type": "county",
+      "slug": "mason-county-ar"
+    },
+    {
+      "type": "county",
+      "slug": "mason-county-az"
+    },
+    {
+      "type": "county",
+      "slug": "mason-county-fl"
+    },
+    {
+      "type": "county",
+      "slug": "mason-county-ga"
+    },
+    {
+      "type": "county",
+      "slug": "mason-county-ia"
+    },
+    {
+      "type": "county",
+      "slug": "mason-county-in"
+    },
+    {
+      "type": "county",
+      "slug": "mason-county-ks"
+    },
+    {
+      "type": "county",
+      "slug": "mason-county-mo"
+    },
+    {
+      "type": "county",
+      "slug": "mason-county-ms"
+    },
+    {
+      "type": "county",
+      "slug": "mason-county-nc"
+    },
+    {
+      "type": "county",
+      "slug": "mason-county-ne"
+    },
+    {
+      "type": "county",
+      "slug": "mason-county-nj"
+    },
+    {
+      "type": "county",
+      "slug": "mason-county-oh"
+    },
+    {
+      "type": "county",
+      "slug": "mason-county-ok"
+    },
+    {
+      "type": "county",
+      "slug": "mason-county-sc"
+    },
+    {
+      "type": "county",
+      "slug": "mason-county-sd"
+    },
+    {
+      "type": "county",
+      "slug": "mason-county-tn"
+    },
+    {
+      "type": "county",
+      "slug": "mason-county-tx"
+    },
+    {
+      "type": "county",
+      "slug": "mason-county-ut"
+    },
+    {
+      "type": "county",
+      "slug": "mason-county-va"
+    },
+    {
+      "type": "county",
+      "slug": "mason-county-wi"
+    },
+    {
+      "type": "county",
+      "slug": "mason-county-wy"
+    },
+    {
+      "type": "county",
+      "slug": "mercer-county-al"
+    },
+    {
+      "type": "county",
+      "slug": "mercer-county-ar"
+    },
+    {
+      "type": "county",
+      "slug": "mercer-county-ca"
+    },
+    {
+      "type": "county",
+      "slug": "mercer-county-ga"
+    },
+    {
+      "type": "county",
+      "slug": "mercer-county-ia"
+    },
+    {
+      "type": "county",
+      "slug": "mercer-county-in"
+    },
+    {
+      "type": "county",
+      "slug": "mercer-county-ks"
+    },
+    {
+      "type": "county",
+      "slug": "mercer-county-mi"
+    },
+    {
+      "type": "county",
+      "slug": "mercer-county-mn"
+    },
+    {
+      "type": "county",
+      "slug": "mercer-county-ms"
+    },
+    {
+      "type": "county",
+      "slug": "mercer-county-nc"
+    },
+    {
+      "type": "county",
+      "slug": "mercer-county-ne"
+    },
+    {
+      "type": "county",
+      "slug": "mercer-county-ny"
+    },
+    {
+      "type": "county",
+      "slug": "mercer-county-sd"
+    },
+    {
+      "type": "county",
+      "slug": "mercer-county-tn"
+    },
+    {
+      "type": "county",
+      "slug": "mercer-county-tx"
+    },
+    {
+      "type": "county",
+      "slug": "mercer-county-va"
+    },
+    {
+      "type": "county",
+      "slug": "mercer-county-wa"
+    },
+    {
+      "type": "county",
+      "slug": "mitchell-county-al"
+    },
+    {
+      "type": "county",
+      "slug": "mitchell-county-ar"
+    },
+    {
+      "type": "county",
+      "slug": "mitchell-county-ca"
+    },
+    {
+      "type": "county",
+      "slug": "mitchell-county-il"
+    },
+    {
+      "type": "county",
+      "slug": "mitchell-county-in"
+    },
+    {
+      "type": "county",
+      "slug": "mitchell-county-ky"
+    },
+    {
+      "type": "county",
+      "slug": "mitchell-county-mi"
+    },
+    {
+      "type": "county",
+      "slug": "mitchell-county-mo"
+    },
+    {
+      "type": "county",
+      "slug": "mitchell-county-ms"
+    },
+    {
+      "type": "county",
+      "slug": "mitchell-county-nd"
+    },
+    {
+      "type": "county",
+      "slug": "mitchell-county-ne"
+    },
+    {
+      "type": "county",
+      "slug": "mitchell-county-nh"
+    },
+    {
+      "type": "county",
+      "slug": "mitchell-county-nm"
+    },
+    {
+      "type": "county",
+      "slug": "mitchell-county-oh"
+    },
+    {
+      "type": "county",
+      "slug": "mitchell-county-pa"
+    },
+    {
+      "type": "county",
+      "slug": "mitchell-county-sc"
+    },
+    {
+      "type": "county",
+      "slug": "mitchell-county-tn"
+    },
+    {
+      "type": "county",
+      "slug": "mitchell-county-tx"
+    },
+    {
+      "type": "county",
+      "slug": "mitchell-county-va"
+    },
+    {
+      "type": "county",
+      "slug": "mitchell-county-wa"
+    },
+    {
+      "type": "county",
+      "slug": "mitchell-county-wi"
+    },
+    {
+      "type": "county",
+      "slug": "monroe-county-az"
+    },
+    {
+      "type": "county",
+      "slug": "monroe-county-ks"
+    },
+    {
+      "type": "county",
+      "slug": "monroe-county-la"
+    },
+    {
+      "type": "county",
+      "slug": "monroe-county-mn"
+    },
+    {
+      "type": "county",
+      "slug": "monroe-county-mt"
+    },
+    {
+      "type": "county",
+      "slug": "monroe-county-nd"
+    },
+    {
+      "type": "county",
+      "slug": "monroe-county-or"
+    },
+    {
+      "type": "county",
+      "slug": "monroe-county-sd"
+    },
+    {
+      "type": "county",
+      "slug": "monroe-county-tx"
+    },
+    {
+      "type": "county",
+      "slug": "monroe-county-ut"
+    },
+    {
+      "type": "county",
+      "slug": "monroe-county-va"
+    },
+    {
+      "type": "county",
+      "slug": "monroe-county-wa"
+    },
+    {
+      "type": "county",
+      "slug": "monroe-county-wy"
+    },
+    {
+      "type": "county",
+      "slug": "montgomery-county-co"
+    },
+    {
+      "type": "county",
+      "slug": "montgomery-county-fl"
+    },
+    {
+      "type": "county",
+      "slug": "montgomery-county-mn"
+    },
+    {
+      "type": "county",
+      "slug": "montgomery-county-ne"
+    },
+    {
+      "type": "county",
+      "slug": "montgomery-county-nj"
+    },
+    {
+      "type": "county",
+      "slug": "montgomery-county-ok"
+    },
+    {
+      "type": "county",
+      "slug": "montgomery-county-wa"
+    },
+    {
+      "type": "county",
+      "slug": "montgomery-county-wi"
+    },
+    {
+      "type": "county",
+      "slug": "montgomery-county-wy"
+    },
+    {
+      "type": "county",
+      "slug": "moore-county-ar"
+    },
+    {
+      "type": "county",
+      "slug": "moore-county-co"
+    },
+    {
+      "type": "county",
+      "slug": "moore-county-ga"
+    },
+    {
+      "type": "county",
+      "slug": "moore-county-ia"
+    },
+    {
+      "type": "county",
+      "slug": "moore-county-id"
+    },
+    {
+      "type": "county",
+      "slug": "moore-county-il"
+    },
+    {
+      "type": "county",
+      "slug": "moore-county-in"
+    },
+    {
+      "type": "county",
+      "slug": "moore-county-ks"
+    },
+    {
+      "type": "county",
+      "slug": "moore-county-ky"
+    },
+    {
+      "type": "county",
+      "slug": "moore-county-la"
+    },
+    {
+      "type": "county",
+      "slug": "moore-county-mi"
+    },
+    {
+      "type": "county",
+      "slug": "moore-county-mn"
+    },
+    {
+      "type": "county",
+      "slug": "moore-county-mo"
+    },
+    {
+      "type": "county",
+      "slug": "moore-county-nd"
+    },
+    {
+      "type": "county",
+      "slug": "moore-county-ne"
+    },
+    {
+      "type": "county",
+      "slug": "moore-county-nh"
+    },
+    {
+      "type": "county",
+      "slug": "moore-county-nj"
+    },
+    {
+      "type": "county",
+      "slug": "moore-county-ny"
+    },
+    {
+      "type": "county",
+      "slug": "moore-county-oh"
+    },
+    {
+      "type": "county",
+      "slug": "moore-county-ok"
+    },
+    {
+      "type": "county",
+      "slug": "moore-county-or"
+    },
+    {
+      "type": "county",
+      "slug": "moore-county-sc"
+    },
+    {
+      "type": "county",
+      "slug": "moore-county-sd"
+    },
+    {
+      "type": "county",
+      "slug": "moore-county-va"
+    },
+    {
+      "type": "county",
+      "slug": "moore-county-wa"
+    },
+    {
+      "type": "county",
+      "slug": "morgan-county-ca"
+    },
+    {
+      "type": "county",
+      "slug": "morgan-county-fl"
+    },
+    {
+      "type": "county",
+      "slug": "morgan-county-ia"
+    },
+    {
+      "type": "county",
+      "slug": "morgan-county-la"
+    },
+    {
+      "type": "county",
+      "slug": "morgan-county-mn"
+    },
+    {
+      "type": "county",
+      "slug": "morgan-county-ms"
+    },
+    {
+      "type": "county",
+      "slug": "morgan-county-mt"
+    },
+    {
+      "type": "county",
+      "slug": "morgan-county-nc"
+    },
+    {
+      "type": "county",
+      "slug": "morgan-county-ok"
+    },
+    {
+      "type": "county",
+      "slug": "morgan-county-tx"
+    },
+    {
+      "type": "county",
+      "slug": "morgan-county-va"
+    },
+    {
+      "type": "county",
+      "slug": "morgan-county-wa"
+    },
+    {
+      "type": "county",
+      "slug": "morgan-county-wi"
+    },
+    {
+      "type": "county",
+      "slug": "nash-county-al"
+    },
+    {
+      "type": "county",
+      "slug": "nash-county-ca"
+    },
+    {
+      "type": "county",
+      "slug": "nash-county-co"
+    },
+    {
+      "type": "county",
+      "slug": "nash-county-ga"
+    },
+    {
+      "type": "county",
+      "slug": "nash-county-ia"
+    },
+    {
+      "type": "county",
+      "slug": "nash-county-il"
+    },
+    {
+      "type": "county",
+      "slug": "nash-county-in"
+    },
+    {
+      "type": "county",
+      "slug": "nash-county-ks"
+    },
+    {
+      "type": "county",
+      "slug": "nash-county-ky"
+    },
+    {
+      "type": "county",
+      "slug": "nash-county-la"
+    },
+    {
+      "type": "county",
+      "slug": "nash-county-md"
+    },
+    {
+      "type": "county",
+      "slug": "nash-county-mi"
+    },
+    {
+      "type": "county",
+      "slug": "nash-county-mo"
+    },
+    {
+      "type": "county",
+      "slug": "nash-county-ms"
+    },
+    {
+      "type": "county",
+      "slug": "nash-county-mt"
+    },
+    {
+      "type": "county",
+      "slug": "nash-county-ne"
+    },
+    {
+      "type": "county",
+      "slug": "nash-county-nj"
+    },
+    {
+      "type": "county",
+      "slug": "nash-county-nm"
+    },
+    {
+      "type": "county",
+      "slug": "nash-county-oh"
+    },
+    {
+      "type": "county",
+      "slug": "nash-county-ok"
+    },
+    {
+      "type": "county",
+      "slug": "nash-county-sc"
+    },
+    {
+      "type": "county",
+      "slug": "nash-county-sd"
+    },
+    {
+      "type": "county",
+      "slug": "nash-county-tn"
+    },
+    {
+      "type": "county",
+      "slug": "nash-county-tx"
+    },
+    {
+      "type": "county",
+      "slug": "nash-county-va"
+    },
+    {
+      "type": "county",
+      "slug": "nash-county-wi"
+    },
+    {
+      "type": "county",
+      "slug": "newton-county-ak"
+    },
+    {
+      "type": "county",
+      "slug": "newton-county-ca"
+    },
+    {
+      "type": "county",
+      "slug": "newton-county-ia"
+    },
+    {
+      "type": "county",
+      "slug": "newton-county-id"
+    },
+    {
+      "type": "county",
+      "slug": "newton-county-ky"
+    },
+    {
+      "type": "county",
+      "slug": "newton-county-ma"
+    },
+    {
+      "type": "county",
+      "slug": "newton-county-md"
+    },
+    {
+      "type": "county",
+      "slug": "newton-county-mi"
+    },
+    {
+      "type": "county",
+      "slug": "newton-county-nc"
+    },
+    {
+      "type": "county",
+      "slug": "newton-county-ne"
+    },
+    {
+      "type": "county",
+      "slug": "newton-county-nm"
+    },
+    {
+      "type": "county",
+      "slug": "newton-county-oh"
+    },
+    {
+      "type": "county",
+      "slug": "newton-county-pa"
+    },
+    {
+      "type": "county",
+      "slug": "newton-county-tn"
+    },
+    {
+      "type": "county",
+      "slug": "newton-county-va"
+    },
+    {
+      "type": "county",
+      "slug": "noble-county-al"
+    },
+    {
+      "type": "county",
+      "slug": "noble-county-ar"
+    },
+    {
+      "type": "county",
+      "slug": "noble-county-ga"
+    },
+    {
+      "type": "county",
+      "slug": "noble-county-ia"
+    },
+    {
+      "type": "county",
+      "slug": "noble-county-id"
+    },
+    {
+      "type": "county",
+      "slug": "noble-county-il"
+    },
+    {
+      "type": "county",
+      "slug": "noble-county-ks"
+    },
+    {
+      "type": "county",
+      "slug": "noble-county-ky"
+    },
+    {
+      "type": "county",
+      "slug": "noble-county-mi"
+    },
+    {
+      "type": "county",
+      "slug": "noble-county-mn"
+    },
+    {
+      "type": "county",
+      "slug": "noble-county-mo"
+    },
+    {
+      "type": "county",
+      "slug": "noble-county-ms"
+    },
+    {
+      "type": "county",
+      "slug": "noble-county-mt"
+    },
+    {
+      "type": "county",
+      "slug": "noble-county-nc"
+    },
+    {
+      "type": "county",
+      "slug": "noble-county-ne"
+    },
+    {
+      "type": "county",
+      "slug": "noble-county-sd"
+    },
+    {
+      "type": "county",
+      "slug": "noble-county-tn"
+    },
+    {
+      "type": "county",
+      "slug": "noble-county-tx"
+    },
+    {
+      "type": "county",
+      "slug": "noble-county-va"
+    },
+    {
+      "type": "county",
+      "slug": "noble-county-wi"
+    },
+    {
+      "type": "county",
+      "slug": "noble-county-wv"
+    },
+    {
+      "type": "county",
+      "slug": "orange-county-ar"
+    },
+    {
+      "type": "county",
+      "slug": "orange-county-co"
+    },
+    {
+      "type": "county",
+      "slug": "orange-county-ga"
+    },
+    {
+      "type": "county",
+      "slug": "orange-county-ia"
+    },
+    {
+      "type": "county",
+      "slug": "orange-county-id"
+    },
+    {
+      "type": "county",
+      "slug": "orange-county-il"
+    },
+    {
+      "type": "county",
+      "slug": "orange-county-ks"
+    },
+    {
+      "type": "county",
+      "slug": "orange-county-ky"
+    },
+    {
+      "type": "county",
+      "slug": "orange-county-la"
+    },
+    {
+      "type": "county",
+      "slug": "orange-county-mn"
+    },
+    {
+      "type": "county",
+      "slug": "orange-county-mo"
+    },
+    {
+      "type": "county",
+      "slug": "orange-county-ms"
+    },
+    {
+      "type": "county",
+      "slug": "orange-county-mt"
+    },
+    {
+      "type": "county",
+      "slug": "orange-county-oh"
+    },
+    {
+      "type": "county",
+      "slug": "orange-county-ok"
+    },
+    {
+      "type": "county",
+      "slug": "orange-county-sd"
+    },
+    {
+      "type": "county",
+      "slug": "orange-county-wv"
+    },
+    {
+      "type": "county",
+      "slug": "owen-county-ar"
+    },
+    {
+      "type": "county",
+      "slug": "owen-county-co"
+    },
+    {
+      "type": "county",
+      "slug": "owen-county-fl"
+    },
+    {
+      "type": "county",
+      "slug": "owen-county-ga"
+    },
+    {
+      "type": "county",
+      "slug": "owen-county-ia"
+    },
+    {
+      "type": "county",
+      "slug": "owen-county-id"
+    },
+    {
+      "type": "county",
+      "slug": "owen-county-il"
+    },
+    {
+      "type": "county",
+      "slug": "owen-county-ks"
+    },
+    {
+      "type": "county",
+      "slug": "owen-county-la"
+    },
+    {
+      "type": "county",
+      "slug": "owen-county-mi"
+    },
+    {
+      "type": "county",
+      "slug": "owen-county-mn"
+    },
+    {
+      "type": "county",
+      "slug": "owen-county-mo"
+    },
+    {
+      "type": "county",
+      "slug": "owen-county-ms"
+    },
+    {
+      "type": "county",
+      "slug": "owen-county-nc"
+    },
+    {
+      "type": "county",
+      "slug": "owen-county-ne"
+    },
+    {
+      "type": "county",
+      "slug": "owen-county-oh"
+    },
+    {
+      "type": "county",
+      "slug": "owen-county-sc"
+    },
+    {
+      "type": "county",
+      "slug": "owen-county-sd"
+    },
+    {
+      "type": "county",
+      "slug": "owen-county-tn"
+    },
+    {
+      "type": "county",
+      "slug": "owen-county-tx"
+    },
+    {
+      "type": "county",
+      "slug": "owen-county-va"
+    },
+    {
+      "type": "county",
+      "slug": "owen-county-vt"
+    },
+    {
+      "type": "county",
+      "slug": "owen-county-wi"
+    },
+    {
+      "type": "county",
+      "slug": "parker-county-co"
+    },
+    {
+      "type": "county",
+      "slug": "parker-county-ga"
+    },
+    {
+      "type": "county",
+      "slug": "parker-county-ia"
+    },
+    {
+      "type": "county",
+      "slug": "parker-county-in"
+    },
+    {
+      "type": "county",
+      "slug": "parker-county-ks"
+    },
+    {
+      "type": "county",
+      "slug": "parker-county-ky"
+    },
+    {
+      "type": "county",
+      "slug": "parker-county-mi"
+    },
+    {
+      "type": "county",
+      "slug": "parker-county-mo"
+    },
+    {
+      "type": "county",
+      "slug": "parker-county-ms"
+    },
+    {
+      "type": "county",
+      "slug": "parker-county-mt"
+    },
+    {
+      "type": "county",
+      "slug": "parker-county-ne"
+    },
+    {
+      "type": "county",
+      "slug": "parker-county-nv"
+    },
+    {
+      "type": "county",
+      "slug": "parker-county-ny"
+    },
+    {
+      "type": "county",
+      "slug": "parker-county-oh"
+    },
+    {
+      "type": "county",
+      "slug": "parker-county-ok"
+    },
+    {
+      "type": "county",
+      "slug": "parker-county-or"
+    },
+    {
+      "type": "county",
+      "slug": "parker-county-pa"
+    },
+    {
+      "type": "county",
+      "slug": "parker-county-ri"
+    },
+    {
+      "type": "county",
+      "slug": "parker-county-tn"
+    },
+    {
+      "type": "county",
+      "slug": "parker-county-ut"
+    },
+    {
+      "type": "county",
+      "slug": "parker-county-va"
+    },
+    {
+      "type": "county",
+      "slug": "parker-county-vt"
+    },
+    {
+      "type": "county",
+      "slug": "parker-county-wv"
+    },
+    {
+      "type": "county",
+      "slug": "perry-county-fl"
+    },
+    {
+      "type": "county",
+      "slug": "perry-county-ga"
+    },
+    {
+      "type": "county",
+      "slug": "perry-county-hi"
+    },
+    {
+      "type": "county",
+      "slug": "perry-county-ia"
+    },
+    {
+      "type": "county",
+      "slug": "perry-county-id"
+    },
+    {
+      "type": "county",
+      "slug": "perry-county-ks"
+    },
+    {
+      "type": "county",
+      "slug": "perry-county-md"
+    },
+    {
+      "type": "county",
+      "slug": "perry-county-mi"
+    },
+    {
+      "type": "county",
+      "slug": "perry-county-mn"
+    },
+    {
+      "type": "county",
+      "slug": "perry-county-nc"
+    },
+    {
+      "type": "county",
+      "slug": "perry-county-ne"
+    },
+    {
+      "type": "county",
+      "slug": "perry-county-nj"
+    },
+    {
+      "type": "county",
+      "slug": "perry-county-nv"
+    },
+    {
+      "type": "county",
+      "slug": "perry-county-ok"
+    },
+    {
+      "type": "county",
+      "slug": "perry-county-tx"
+    },
+    {
+      "type": "county",
+      "slug": "perry-county-va"
+    },
+    {
+      "type": "county",
+      "slug": "perry-county-wa"
+    },
+    {
+      "type": "county",
+      "slug": "perry-county-wi"
+    },
+    {
+      "type": "county",
+      "slug": "perry-county-wv"
+    },
+    {
+      "type": "county",
+      "slug": "pike-county-ca"
+    },
+    {
+      "type": "county",
+      "slug": "pike-county-co"
+    },
+    {
+      "type": "county",
+      "slug": "pike-county-ia"
+    },
+    {
+      "type": "county",
+      "slug": "pike-county-ks"
+    },
+    {
+      "type": "county",
+      "slug": "pike-county-la"
+    },
+    {
+      "type": "county",
+      "slug": "pike-county-md"
+    },
+    {
+      "type": "county",
+      "slug": "pike-county-mi"
+    },
+    {
+      "type": "county",
+      "slug": "pike-county-mn"
+    },
+    {
+      "type": "county",
+      "slug": "pike-county-nc"
+    },
+    {
+      "type": "county",
+      "slug": "pike-county-nm"
+    },
+    {
+      "type": "county",
+      "slug": "pike-county-ny"
+    },
+    {
+      "type": "county",
+      "slug": "pike-county-ok"
+    },
+    {
+      "type": "county",
+      "slug": "pike-county-or"
+    },
+    {
+      "type": "county",
+      "slug": "pike-county-sd"
+    },
+    {
+      "type": "county",
+      "slug": "pike-county-tn"
+    },
+    {
+      "type": "county",
+      "slug": "pike-county-tx"
+    },
+    {
+      "type": "county",
+      "slug": "pike-county-ut"
+    },
+    {
+      "type": "county",
+      "slug": "pike-county-va"
+    },
+    {
+      "type": "county",
+      "slug": "pike-county-wa"
+    },
+    {
+      "type": "county",
+      "slug": "pike-county-wi"
+    },
+    {
+      "type": "county",
+      "slug": "pike-county-wv"
+    },
+    {
+      "type": "county",
+      "slug": "polk-county-al"
+    },
+    {
+      "type": "county",
+      "slug": "polk-county-ca"
+    },
+    {
+      "type": "county",
+      "slug": "polk-county-co"
+    },
+    {
+      "type": "county",
+      "slug": "polk-county-id"
+    },
+    {
+      "type": "county",
+      "slug": "polk-county-il"
+    },
+    {
+      "type": "county",
+      "slug": "polk-county-ks"
+    },
+    {
+      "type": "county",
+      "slug": "polk-county-ky"
+    },
+    {
+      "type": "county",
+      "slug": "polk-county-la"
+    },
+    {
+      "type": "county",
+      "slug": "polk-county-me"
+    },
+    {
+      "type": "county",
+      "slug": "polk-county-ms"
+    },
+    {
+      "type": "county",
+      "slug": "polk-county-mt"
+    },
+    {
+      "type": "county",
+      "slug": "polk-county-nv"
+    },
+    {
+      "type": "county",
+      "slug": "polk-county-oh"
+    },
+    {
+      "type": "county",
+      "slug": "polk-county-ok"
+    },
+    {
+      "type": "county",
+      "slug": "polk-county-pa"
+    },
+    {
+      "type": "county",
+      "slug": "polk-county-sd"
+    },
+    {
+      "type": "county",
+      "slug": "polk-county-va"
+    },
+    {
+      "type": "county",
+      "slug": "polk-county-wv"
+    },
+    {
+      "type": "county",
+      "slug": "polk-county-wy"
+    },
+    {
+      "type": "county",
+      "slug": "powell-county-al"
+    },
+    {
+      "type": "county",
+      "slug": "powell-county-az"
+    },
+    {
+      "type": "county",
+      "slug": "powell-county-ca"
+    },
+    {
+      "type": "county",
+      "slug": "powell-county-co"
+    },
+    {
+      "type": "county",
+      "slug": "powell-county-fl"
+    },
+    {
+      "type": "county",
+      "slug": "powell-county-ga"
+    },
+    {
+      "type": "county",
+      "slug": "powell-county-ia"
+    },
+    {
+      "type": "county",
+      "slug": "powell-county-in"
+    },
+    {
+      "type": "county",
+      "slug": "powell-county-ks"
+    },
+    {
+      "type": "county",
+      "slug": "powell-county-la"
+    },
+    {
+      "type": "county",
+      "slug": "powell-county-mi"
+    },
+    {
+      "type": "county",
+      "slug": "powell-county-mn"
+    },
+    {
+      "type": "county",
+      "slug": "powell-county-mo"
+    },
+    {
+      "type": "county",
+      "slug": "powell-county-ms"
+    },
+    {
+      "type": "county",
+      "slug": "powell-county-nc"
+    },
+    {
+      "type": "county",
+      "slug": "powell-county-nd"
+    },
+    {
+      "type": "county",
+      "slug": "powell-county-ny"
+    },
+    {
+      "type": "county",
+      "slug": "powell-county-oh"
+    },
+    {
+      "type": "county",
+      "slug": "powell-county-ok"
+    },
+    {
+      "type": "county",
+      "slug": "powell-county-or"
+    },
+    {
+      "type": "county",
+      "slug": "powell-county-pa"
+    },
+    {
+      "type": "county",
+      "slug": "powell-county-tn"
+    },
+    {
+      "type": "county",
+      "slug": "powell-county-tx"
+    },
+    {
+      "type": "county",
+      "slug": "powell-county-va"
+    },
+    {
+      "type": "county",
+      "slug": "powell-county-wi"
+    },
+    {
+      "type": "county",
+      "slug": "powell-county-wv"
+    },
+    {
+      "type": "county",
+      "slug": "price-county-ar"
+    },
+    {
+      "type": "county",
+      "slug": "price-county-ga"
+    },
+    {
+      "type": "county",
+      "slug": "price-county-ia"
+    },
+    {
+      "type": "county",
+      "slug": "price-county-in"
+    },
+    {
+      "type": "county",
+      "slug": "price-county-ks"
+    },
+    {
+      "type": "county",
+      "slug": "price-county-ky"
+    },
+    {
+      "type": "county",
+      "slug": "price-county-mi"
+    },
+    {
+      "type": "county",
+      "slug": "price-county-mn"
+    },
+    {
+      "type": "county",
+      "slug": "price-county-mo"
+    },
+    {
+      "type": "county",
+      "slug": "price-county-ms"
+    },
+    {
+      "type": "county",
+      "slug": "price-county-nc"
+    },
+    {
+      "type": "county",
+      "slug": "price-county-nd"
+    },
+    {
+      "type": "county",
+      "slug": "price-county-ne"
+    },
+    {
+      "type": "county",
+      "slug": "price-county-or"
+    },
+    {
+      "type": "county",
+      "slug": "price-county-pa"
+    },
+    {
+      "type": "county",
+      "slug": "price-county-sc"
+    },
+    {
+      "type": "county",
+      "slug": "price-county-tn"
+    },
+    {
+      "type": "county",
+      "slug": "price-county-tx"
+    },
+    {
+      "type": "county",
+      "slug": "price-county-va"
+    },
+    {
+      "type": "county",
+      "slug": "price-county-wa"
+    },
+    {
+      "type": "county",
+      "slug": "price-county-wv"
+    },
+    {
+      "type": "county",
+      "slug": "putnam-county-al"
+    },
+    {
+      "type": "county",
+      "slug": "putnam-county-ar"
+    },
+    {
+      "type": "county",
+      "slug": "putnam-county-az"
+    },
+    {
+      "type": "county",
+      "slug": "putnam-county-ia"
+    },
+    {
+      "type": "county",
+      "slug": "putnam-county-id"
+    },
+    {
+      "type": "county",
+      "slug": "putnam-county-ks"
+    },
+    {
+      "type": "county",
+      "slug": "putnam-county-ky"
+    },
+    {
+      "type": "county",
+      "slug": "putnam-county-la"
+    },
+    {
+      "type": "county",
+      "slug": "putnam-county-mi"
+    },
+    {
+      "type": "county",
+      "slug": "putnam-county-mn"
+    },
+    {
+      "type": "county",
+      "slug": "putnam-county-mt"
+    },
+    {
+      "type": "county",
+      "slug": "putnam-county-nc"
+    },
+    {
+      "type": "county",
+      "slug": "putnam-county-ne"
+    },
+    {
+      "type": "county",
+      "slug": "putnam-county-nm"
+    },
+    {
+      "type": "county",
+      "slug": "putnam-county-pa"
+    },
+    {
+      "type": "county",
+      "slug": "putnam-county-tx"
+    },
+    {
+      "type": "county",
+      "slug": "putnam-county-va"
+    },
+    {
+      "type": "county",
+      "slug": "putnam-county-wa"
+    },
+    {
+      "type": "county",
+      "slug": "putnam-county-wi"
+    },
+    {
+      "type": "county",
+      "slug": "quinn-county-ak"
+    },
+    {
+      "type": "county",
+      "slug": "quinn-county-ar"
+    },
+    {
+      "type": "county",
+      "slug": "quinn-county-fl"
+    },
+    {
+      "type": "county",
+      "slug": "quinn-county-ga"
+    },
+    {
+      "type": "county",
+      "slug": "quinn-county-ia"
+    },
+    {
+      "type": "county",
+      "slug": "quinn-county-il"
+    },
+    {
+      "type": "county",
+      "slug": "quinn-county-in"
+    },
+    {
+      "type": "county",
+      "slug": "quinn-county-ks"
+    },
+    {
+      "type": "county",
+      "slug": "quinn-county-ky"
+    },
+    {
+      "type": "county",
+      "slug": "quinn-county-mi"
+    },
+    {
+      "type": "county",
+      "slug": "quinn-county-mn"
+    },
+    {
+      "type": "county",
+      "slug": "quinn-county-mo"
+    },
+    {
+      "type": "county",
+      "slug": "quinn-county-ms"
+    },
+    {
+      "type": "county",
+      "slug": "quinn-county-nc"
+    },
+    {
+      "type": "county",
+      "slug": "quinn-county-ne"
+    },
+    {
+      "type": "county",
+      "slug": "quinn-county-or"
+    },
+    {
+      "type": "county",
+      "slug": "quinn-county-pa"
+    },
+    {
+      "type": "county",
+      "slug": "quinn-county-sd"
+    },
+    {
+      "type": "county",
+      "slug": "quinn-county-tn"
+    },
+    {
+      "type": "county",
+      "slug": "quinn-county-tx"
+    },
+    {
+      "type": "county",
+      "slug": "quinn-county-va"
+    },
+    {
+      "type": "county",
+      "slug": "quinn-county-wa"
+    },
+    {
+      "type": "county",
+      "slug": "quinn-county-wv"
+    },
+    {
+      "type": "county",
+      "slug": "randolph-county-ia"
+    },
+    {
+      "type": "county",
+      "slug": "randolph-county-ks"
+    },
+    {
+      "type": "county",
+      "slug": "randolph-county-ky"
+    },
+    {
+      "type": "county",
+      "slug": "randolph-county-la"
+    },
+    {
+      "type": "county",
+      "slug": "randolph-county-md"
+    },
+    {
+      "type": "county",
+      "slug": "randolph-county-mn"
+    },
+    {
+      "type": "county",
+      "slug": "randolph-county-ms"
+    },
+    {
+      "type": "county",
+      "slug": "randolph-county-mt"
+    },
+    {
+      "type": "county",
+      "slug": "randolph-county-nh"
+    },
+    {
+      "type": "county",
+      "slug": "randolph-county-ny"
+    },
+    {
+      "type": "county",
+      "slug": "randolph-county-oh"
+    },
+    {
+      "type": "county",
+      "slug": "randolph-county-ok"
+    },
+    {
+      "type": "county",
+      "slug": "randolph-county-tn"
+    },
+    {
+      "type": "county",
+      "slug": "randolph-county-tx"
+    },
+    {
+      "type": "county",
+      "slug": "randolph-county-va"
+    },
+    {
+      "type": "county",
+      "slug": "randolph-county-wy"
+    },
+    {
+      "type": "county",
+      "slug": "ray-county-al"
+    },
+    {
+      "type": "county",
+      "slug": "ray-county-ar"
+    },
+    {
+      "type": "county",
+      "slug": "ray-county-ca"
+    },
+    {
+      "type": "county",
+      "slug": "ray-county-co"
+    },
+    {
+      "type": "county",
+      "slug": "ray-county-ga"
+    },
+    {
+      "type": "county",
+      "slug": "ray-county-ia"
+    },
+    {
+      "type": "county",
+      "slug": "ray-county-il"
+    },
+    {
+      "type": "county",
+      "slug": "ray-county-ks"
+    },
+    {
+      "type": "county",
+      "slug": "ray-county-ky"
+    },
+    {
+      "type": "county",
+      "slug": "ray-county-la"
+    },
+    {
+      "type": "county",
+      "slug": "ray-county-mi"
+    },
+    {
+      "type": "county",
+      "slug": "ray-county-mn"
+    },
+    {
+      "type": "county",
+      "slug": "ray-county-nc"
+    },
+    {
+      "type": "county",
+      "slug": "ray-county-nd"
+    },
+    {
+      "type": "county",
+      "slug": "ray-county-ne"
+    },
+    {
+      "type": "county",
+      "slug": "ray-county-ny"
+    },
+    {
+      "type": "county",
+      "slug": "ray-county-ok"
+    },
+    {
+      "type": "county",
+      "slug": "ray-county-sd"
+    },
+    {
+      "type": "county",
+      "slug": "ray-county-tx"
+    },
+    {
+      "type": "county",
+      "slug": "ray-county-va"
+    },
+    {
+      "type": "county",
+      "slug": "ray-county-wi"
+    },
+    {
+      "type": "county",
+      "slug": "reed-county-ar"
+    },
+    {
+      "type": "county",
+      "slug": "reed-county-co"
+    },
+    {
+      "type": "county",
+      "slug": "reed-county-ga"
+    },
+    {
+      "type": "county",
+      "slug": "reed-county-ia"
+    },
+    {
+      "type": "county",
+      "slug": "reed-county-il"
+    },
+    {
+      "type": "county",
+      "slug": "reed-county-ks"
+    },
+    {
+      "type": "county",
+      "slug": "reed-county-ky"
+    },
+    {
+      "type": "county",
+      "slug": "reed-county-la"
+    },
+    {
+      "type": "county",
+      "slug": "reed-county-mn"
+    },
+    {
+      "type": "county",
+      "slug": "reed-county-mo"
+    },
+    {
+      "type": "county",
+      "slug": "reed-county-ms"
+    },
+    {
+      "type": "county",
+      "slug": "reed-county-mt"
+    },
+    {
+      "type": "county",
+      "slug": "reed-county-nh"
+    },
+    {
+      "type": "county",
+      "slug": "reed-county-nj"
+    },
+    {
+      "type": "county",
+      "slug": "reed-county-nm"
+    },
+    {
+      "type": "county",
+      "slug": "reed-county-ny"
+    },
+    {
+      "type": "county",
+      "slug": "reed-county-oh"
+    },
+    {
+      "type": "county",
+      "slug": "reed-county-or"
+    },
+    {
+      "type": "county",
+      "slug": "reed-county-pa"
+    },
+    {
+      "type": "county",
+      "slug": "reed-county-sc"
+    },
+    {
+      "type": "county",
+      "slug": "reed-county-sd"
+    },
+    {
+      "type": "county",
+      "slug": "reed-county-tn"
+    },
+    {
+      "type": "county",
+      "slug": "reed-county-tx"
+    },
+    {
+      "type": "county",
+      "slug": "reed-county-ut"
+    },
+    {
+      "type": "county",
+      "slug": "reed-county-va"
+    },
+    {
+      "type": "county",
+      "slug": "reed-county-wa"
+    },
+    {
+      "type": "county",
+      "slug": "reed-county-wi"
+    },
+    {
+      "type": "county",
+      "slug": "reed-county-wv"
+    },
+    {
+      "type": "county",
+      "slug": "rice-county-ca"
+    },
+    {
+      "type": "county",
+      "slug": "rice-county-ga"
+    },
+    {
+      "type": "county",
+      "slug": "rice-county-ia"
+    },
+    {
+      "type": "county",
+      "slug": "rice-county-in"
+    },
+    {
+      "type": "county",
+      "slug": "rice-county-ky"
+    },
+    {
+      "type": "county",
+      "slug": "rice-county-mi"
+    },
+    {
+      "type": "county",
+      "slug": "rice-county-mo"
+    },
+    {
+      "type": "county",
+      "slug": "rice-county-ms"
+    },
+    {
+      "type": "county",
+      "slug": "rice-county-mt"
+    },
+    {
+      "type": "county",
+      "slug": "rice-county-nc"
+    },
+    {
+      "type": "county",
+      "slug": "rice-county-ne"
+    },
+    {
+      "type": "county",
+      "slug": "rice-county-oh"
+    },
+    {
+      "type": "county",
+      "slug": "rice-county-ok"
+    },
+    {
+      "type": "county",
+      "slug": "rice-county-sd"
+    },
+    {
+      "type": "county",
+      "slug": "rice-county-tn"
+    },
+    {
+      "type": "county",
+      "slug": "rice-county-tx"
+    },
+    {
+      "type": "county",
+      "slug": "rice-county-ut"
+    },
+    {
+      "type": "county",
+      "slug": "rice-county-va"
+    },
+    {
+      "type": "county",
+      "slug": "rice-county-wi"
+    },
+    {
+      "type": "county",
+      "slug": "ross-county-al"
+    },
+    {
+      "type": "county",
+      "slug": "ross-county-ar"
+    },
+    {
+      "type": "county",
+      "slug": "ross-county-co"
+    },
+    {
+      "type": "county",
+      "slug": "ross-county-ga"
+    },
+    {
+      "type": "county",
+      "slug": "ross-county-id"
+    },
+    {
+      "type": "county",
+      "slug": "ross-county-il"
+    },
+    {
+      "type": "county",
+      "slug": "ross-county-in"
+    },
+    {
+      "type": "county",
+      "slug": "ross-county-ks"
+    },
+    {
+      "type": "county",
+      "slug": "ross-county-ky"
+    },
+    {
+      "type": "county",
+      "slug": "ross-county-la"
+    },
+    {
+      "type": "county",
+      "slug": "ross-county-mi"
+    },
+    {
+      "type": "county",
+      "slug": "ross-county-mn"
+    },
+    {
+      "type": "county",
+      "slug": "ross-county-mo"
+    },
+    {
+      "type": "county",
+      "slug": "ross-county-mt"
+    },
+    {
+      "type": "county",
+      "slug": "ross-county-nc"
+    },
+    {
+      "type": "county",
+      "slug": "ross-county-nd"
+    },
+    {
+      "type": "county",
+      "slug": "ross-county-ne"
+    },
+    {
+      "type": "county",
+      "slug": "ross-county-nm"
+    },
+    {
+      "type": "county",
+      "slug": "ross-county-ok"
+    },
+    {
+      "type": "county",
+      "slug": "ross-county-sc"
+    },
+    {
+      "type": "county",
+      "slug": "ross-county-sd"
+    },
+    {
+      "type": "county",
+      "slug": "ross-county-tn"
+    },
+    {
+      "type": "county",
+      "slug": "ross-county-tx"
+    },
+    {
+      "type": "county",
+      "slug": "ross-county-va"
+    },
+    {
+      "type": "county",
+      "slug": "ross-county-wi"
+    },
+    {
+      "type": "county",
+      "slug": "rush-county-ar"
+    },
+    {
+      "type": "county",
+      "slug": "rush-county-co"
+    },
+    {
+      "type": "county",
+      "slug": "rush-county-fl"
+    },
+    {
+      "type": "county",
+      "slug": "rush-county-ga"
+    },
+    {
+      "type": "county",
+      "slug": "rush-county-ia"
+    },
+    {
+      "type": "county",
+      "slug": "rush-county-il"
+    },
+    {
+      "type": "county",
+      "slug": "rush-county-ky"
+    },
+    {
+      "type": "county",
+      "slug": "rush-county-mi"
+    },
+    {
+      "type": "county",
+      "slug": "rush-county-mo"
+    },
+    {
+      "type": "county",
+      "slug": "rush-county-ms"
+    },
+    {
+      "type": "county",
+      "slug": "rush-county-nc"
+    },
+    {
+      "type": "county",
+      "slug": "rush-county-nd"
+    },
+    {
+      "type": "county",
+      "slug": "rush-county-ne"
+    },
+    {
+      "type": "county",
+      "slug": "rush-county-nm"
+    },
+    {
+      "type": "county",
+      "slug": "rush-county-ny"
+    },
+    {
+      "type": "county",
+      "slug": "rush-county-ok"
+    },
+    {
+      "type": "county",
+      "slug": "rush-county-or"
+    },
+    {
+      "type": "county",
+      "slug": "rush-county-pa"
+    },
+    {
+      "type": "county",
+      "slug": "rush-county-tn"
+    },
+    {
+      "type": "county",
+      "slug": "rush-county-tx"
+    },
+    {
+      "type": "county",
+      "slug": "rush-county-va"
+    },
+    {
+      "type": "county",
+      "slug": "rush-county-wi"
+    },
+    {
+      "type": "county",
+      "slug": "rush-county-wv"
+    },
+    {
+      "type": "county",
+      "slug": "russell-county-ak"
+    },
+    {
+      "type": "county",
+      "slug": "russell-county-ar"
+    },
+    {
+      "type": "county",
+      "slug": "russell-county-fl"
+    },
+    {
+      "type": "county",
+      "slug": "russell-county-ga"
+    },
+    {
+      "type": "county",
+      "slug": "russell-county-ia"
+    },
+    {
+      "type": "county",
+      "slug": "russell-county-id"
+    },
+    {
+      "type": "county",
+      "slug": "russell-county-il"
+    },
+    {
+      "type": "county",
+      "slug": "russell-county-in"
+    },
+    {
+      "type": "county",
+      "slug": "russell-county-la"
+    },
+    {
+      "type": "county",
+      "slug": "russell-county-md"
+    },
+    {
+      "type": "county",
+      "slug": "russell-county-mi"
+    },
+    {
+      "type": "county",
+      "slug": "russell-county-mn"
+    },
+    {
+      "type": "county",
+      "slug": "russell-county-mo"
+    },
+    {
+      "type": "county",
+      "slug": "russell-county-ms"
+    },
+    {
+      "type": "county",
+      "slug": "russell-county-mt"
+    },
+    {
+      "type": "county",
+      "slug": "russell-county-nc"
+    },
+    {
+      "type": "county",
+      "slug": "russell-county-nd"
+    },
+    {
+      "type": "county",
+      "slug": "russell-county-ne"
+    },
+    {
+      "type": "county",
+      "slug": "russell-county-nj"
+    },
+    {
+      "type": "county",
+      "slug": "russell-county-nm"
+    },
+    {
+      "type": "county",
+      "slug": "russell-county-ny"
+    },
+    {
+      "type": "county",
+      "slug": "russell-county-ok"
+    },
+    {
+      "type": "county",
+      "slug": "russell-county-sc"
+    },
+    {
+      "type": "county",
+      "slug": "russell-county-tn"
+    },
+    {
+      "type": "county",
+      "slug": "russell-county-tx"
+    },
+    {
+      "type": "county",
+      "slug": "russell-county-ut"
+    },
+    {
+      "type": "county",
+      "slug": "russell-county-vt"
+    },
+    {
+      "type": "county",
+      "slug": "russell-county-wi"
+    },
+    {
+      "type": "county",
+      "slug": "russell-county-wy"
+    },
+    {
+      "type": "county",
+      "slug": "scott-county-co"
+    },
+    {
+      "type": "county",
+      "slug": "scott-county-ct"
+    },
+    {
+      "type": "county",
+      "slug": "scott-county-ga"
+    },
+    {
+      "type": "county",
+      "slug": "scott-county-hi"
+    },
+    {
+      "type": "county",
+      "slug": "scott-county-ks"
+    },
+    {
+      "type": "county",
+      "slug": "scott-county-mi"
+    },
+    {
+      "type": "county",
+      "slug": "scott-county-ne"
+    },
+    {
+      "type": "county",
+      "slug": "scott-county-ny"
+    },
+    {
+      "type": "county",
+      "slug": "scott-county-ok"
+    },
+    {
+      "type": "county",
+      "slug": "scott-county-pa"
+    },
+    {
+      "type": "county",
+      "slug": "scott-county-tx"
+    },
+    {
+      "type": "county",
+      "slug": "scott-county-wa"
+    },
+    {
+      "type": "county",
+      "slug": "scott-county-wy"
+    },
+    {
+      "type": "county",
+      "slug": "sharp-county-ak"
+    },
+    {
+      "type": "county",
+      "slug": "sharp-county-al"
+    },
+    {
+      "type": "county",
+      "slug": "sharp-county-co"
+    },
+    {
+      "type": "county",
+      "slug": "sharp-county-ct"
+    },
+    {
+      "type": "county",
+      "slug": "sharp-county-fl"
+    },
+    {
+      "type": "county",
+      "slug": "sharp-county-ga"
+    },
+    {
+      "type": "county",
+      "slug": "sharp-county-ia"
+    },
+    {
+      "type": "county",
+      "slug": "sharp-county-il"
+    },
+    {
+      "type": "county",
+      "slug": "sharp-county-in"
+    },
+    {
+      "type": "county",
+      "slug": "sharp-county-ks"
+    },
+    {
+      "type": "county",
+      "slug": "sharp-county-ky"
+    },
+    {
+      "type": "county",
+      "slug": "sharp-county-md"
+    },
+    {
+      "type": "county",
+      "slug": "sharp-county-mi"
+    },
+    {
+      "type": "county",
+      "slug": "sharp-county-mn"
+    },
+    {
+      "type": "county",
+      "slug": "sharp-county-mo"
+    },
+    {
+      "type": "county",
+      "slug": "sharp-county-ms"
+    },
+    {
+      "type": "county",
+      "slug": "sharp-county-mt"
+    },
+    {
+      "type": "county",
+      "slug": "sharp-county-nc"
+    },
+    {
+      "type": "county",
+      "slug": "sharp-county-nd"
+    },
+    {
+      "type": "county",
+      "slug": "sharp-county-ne"
+    },
+    {
+      "type": "county",
+      "slug": "sharp-county-oh"
+    },
+    {
+      "type": "county",
+      "slug": "sharp-county-ok"
+    },
+    {
+      "type": "county",
+      "slug": "sharp-county-or"
+    },
+    {
+      "type": "county",
+      "slug": "sharp-county-pa"
+    },
+    {
+      "type": "county",
+      "slug": "sharp-county-sc"
+    },
+    {
+      "type": "county",
+      "slug": "sharp-county-sd"
+    },
+    {
+      "type": "county",
+      "slug": "sharp-county-tx"
+    },
+    {
+      "type": "county",
+      "slug": "sharp-county-va"
+    },
+    {
+      "type": "county",
+      "slug": "sharp-county-vt"
+    },
+    {
+      "type": "county",
+      "slug": "sharp-county-wa"
+    },
+    {
+      "type": "county",
+      "slug": "shelby-county-ar"
+    },
+    {
+      "type": "county",
+      "slug": "shelby-county-co"
+    },
+    {
+      "type": "county",
+      "slug": "shelby-county-ga"
+    },
+    {
+      "type": "county",
+      "slug": "shelby-county-id"
+    },
+    {
+      "type": "county",
+      "slug": "shelby-county-ks"
+    },
+    {
+      "type": "county",
+      "slug": "shelby-county-la"
+    },
+    {
+      "type": "county",
+      "slug": "shelby-county-md"
+    },
+    {
+      "type": "county",
+      "slug": "shelby-county-me"
+    },
+    {
+      "type": "county",
+      "slug": "shelby-county-mn"
+    },
+    {
+      "type": "county",
+      "slug": "shelby-county-ms"
+    },
+    {
+      "type": "county",
+      "slug": "shelby-county-nc"
+    },
+    {
+      "type": "county",
+      "slug": "shelby-county-nd"
+    },
+    {
+      "type": "county",
+      "slug": "shelby-county-ne"
+    },
+    {
+      "type": "county",
+      "slug": "shelby-county-ny"
+    },
+    {
+      "type": "county",
+      "slug": "shelby-county-ok"
+    },
+    {
+      "type": "county",
+      "slug": "shelby-county-pa"
+    },
+    {
+      "type": "county",
+      "slug": "shelby-county-sd"
+    },
+    {
+      "type": "county",
+      "slug": "shelby-county-va"
+    },
+    {
+      "type": "county",
+      "slug": "shelby-county-wa"
+    },
+    {
+      "type": "county",
+      "slug": "smith-county-al"
+    },
+    {
+      "type": "county",
+      "slug": "smith-county-ar"
+    },
+    {
+      "type": "county",
+      "slug": "smith-county-co"
+    },
+    {
+      "type": "county",
+      "slug": "smith-county-de"
+    },
+    {
+      "type": "county",
+      "slug": "smith-county-ga"
+    },
+    {
+      "type": "county",
+      "slug": "smith-county-ia"
+    },
+    {
+      "type": "county",
+      "slug": "smith-county-il"
+    },
+    {
+      "type": "county",
+      "slug": "smith-county-in"
+    },
+    {
+      "type": "county",
+      "slug": "smith-county-ky"
+    },
+    {
+      "type": "county",
+      "slug": "smith-county-mi"
+    },
+    {
+      "type": "county",
+      "slug": "smith-county-mn"
+    },
+    {
+      "type": "county",
+      "slug": "smith-county-mo"
+    },
+    {
+      "type": "county",
+      "slug": "smith-county-mt"
+    },
+    {
+      "type": "county",
+      "slug": "smith-county-nc"
+    },
+    {
+      "type": "county",
+      "slug": "smith-county-ne"
+    },
+    {
+      "type": "county",
+      "slug": "smith-county-ny"
+    },
+    {
+      "type": "county",
+      "slug": "smith-county-oh"
+    },
+    {
+      "type": "county",
+      "slug": "smith-county-ok"
+    },
+    {
+      "type": "county",
+      "slug": "smith-county-pa"
+    },
+    {
+      "type": "county",
+      "slug": "smith-county-sd"
+    },
+    {
+      "type": "county",
+      "slug": "smith-county-va"
+    },
+    {
+      "type": "county",
+      "slug": "smith-county-wi"
+    },
+    {
+      "type": "county",
+      "slug": "smith-county-wy"
+    },
+    {
+      "type": "county",
+      "slug": "stark-county-al"
+    },
+    {
+      "type": "county",
+      "slug": "stark-county-ar"
+    },
+    {
+      "type": "county",
+      "slug": "stark-county-co"
+    },
+    {
+      "type": "county",
+      "slug": "stark-county-ga"
+    },
+    {
+      "type": "county",
+      "slug": "stark-county-ks"
+    },
+    {
+      "type": "county",
+      "slug": "stark-county-ky"
+    },
+    {
+      "type": "county",
+      "slug": "stark-county-ma"
+    },
+    {
+      "type": "county",
+      "slug": "stark-county-mn"
+    },
+    {
+      "type": "county",
+      "slug": "stark-county-mo"
+    },
+    {
+      "type": "county",
+      "slug": "stark-county-ms"
+    },
+    {
+      "type": "county",
+      "slug": "stark-county-nc"
+    },
+    {
+      "type": "county",
+      "slug": "stark-county-ne"
+    },
+    {
+      "type": "county",
+      "slug": "stark-county-ny"
+    },
+    {
+      "type": "county",
+      "slug": "stark-county-ok"
+    },
+    {
+      "type": "county",
+      "slug": "stark-county-sd"
+    },
+    {
+      "type": "county",
+      "slug": "stark-county-tx"
+    },
+    {
+      "type": "county",
+      "slug": "stark-county-va"
+    },
+    {
+      "type": "county",
+      "slug": "stark-county-wi"
+    },
+    {
+      "type": "county",
+      "slug": "stone-county-al"
+    },
+    {
+      "type": "county",
+      "slug": "stone-county-az"
+    },
+    {
+      "type": "county",
+      "slug": "stone-county-co"
+    },
+    {
+      "type": "county",
+      "slug": "stone-county-fl"
+    },
+    {
+      "type": "county",
+      "slug": "stone-county-ga"
+    },
+    {
+      "type": "county",
+      "slug": "stone-county-il"
+    },
+    {
+      "type": "county",
+      "slug": "stone-county-in"
+    },
+    {
+      "type": "county",
+      "slug": "stone-county-ky"
+    },
+    {
+      "type": "county",
+      "slug": "stone-county-la"
+    },
+    {
+      "type": "county",
+      "slug": "stone-county-mi"
+    },
+    {
+      "type": "county",
+      "slug": "stone-county-mn"
+    },
+    {
+      "type": "county",
+      "slug": "stone-county-nd"
+    },
+    {
+      "type": "county",
+      "slug": "stone-county-ne"
+    },
+    {
+      "type": "county",
+      "slug": "stone-county-nj"
+    },
+    {
+      "type": "county",
+      "slug": "stone-county-nm"
+    },
+    {
+      "type": "county",
+      "slug": "stone-county-ok"
+    },
+    {
+      "type": "county",
+      "slug": "stone-county-or"
+    },
+    {
+      "type": "county",
+      "slug": "stone-county-pa"
+    },
+    {
+      "type": "county",
+      "slug": "stone-county-sc"
+    },
+    {
+      "type": "county",
+      "slug": "stone-county-sd"
+    },
+    {
+      "type": "county",
+      "slug": "stone-county-tn"
+    },
+    {
+      "type": "county",
+      "slug": "stone-county-tx"
+    },
+    {
+      "type": "county",
+      "slug": "stone-county-va"
+    },
+    {
+      "type": "county",
+      "slug": "stone-county-vt"
+    },
+    {
+      "type": "county",
+      "slug": "sullivan-county-al"
+    },
+    {
+      "type": "county",
+      "slug": "sullivan-county-ga"
+    },
+    {
+      "type": "county",
+      "slug": "sullivan-county-ia"
+    },
+    {
+      "type": "county",
+      "slug": "sullivan-county-il"
+    },
+    {
+      "type": "county",
+      "slug": "sullivan-county-ks"
+    },
+    {
+      "type": "county",
+      "slug": "sullivan-county-ky"
+    },
+    {
+      "type": "county",
+      "slug": "sullivan-county-la"
+    },
+    {
+      "type": "county",
+      "slug": "sullivan-county-mn"
+    },
+    {
+      "type": "county",
+      "slug": "sullivan-county-ms"
+    },
+    {
+      "type": "county",
+      "slug": "sullivan-county-mt"
+    },
+    {
+      "type": "county",
+      "slug": "sullivan-county-oh"
+    },
+    {
+      "type": "county",
+      "slug": "sullivan-county-ok"
+    },
+    {
+      "type": "county",
+      "slug": "sullivan-county-sc"
+    },
+    {
+      "type": "county",
+      "slug": "sullivan-county-tx"
+    },
+    {
+      "type": "county",
+      "slug": "sullivan-county-ut"
+    },
+    {
+      "type": "county",
+      "slug": "sullivan-county-va"
+    },
+    {
+      "type": "county",
+      "slug": "sullivan-county-wi"
+    },
+    {
+      "type": "county",
+      "slug": "sullivan-county-wv"
+    },
+    {
+      "type": "county",
+      "slug": "sullivan-county-wy"
+    },
+    {
+      "type": "county",
+      "slug": "summit-county-al"
+    },
+    {
+      "type": "county",
+      "slug": "summit-county-ca"
+    },
+    {
+      "type": "county",
+      "slug": "summit-county-fl"
+    },
+    {
+      "type": "county",
+      "slug": "summit-county-ga"
+    },
+    {
+      "type": "county",
+      "slug": "summit-county-ia"
+    },
+    {
+      "type": "county",
+      "slug": "summit-county-in"
+    },
+    {
+      "type": "county",
+      "slug": "summit-county-ky"
+    },
+    {
+      "type": "county",
+      "slug": "summit-county-la"
+    },
+    {
+      "type": "county",
+      "slug": "summit-county-mi"
+    },
+    {
+      "type": "county",
+      "slug": "summit-county-mn"
+    },
+    {
+      "type": "county",
+      "slug": "summit-county-mo"
+    },
+    {
+      "type": "county",
+      "slug": "summit-county-nc"
+    },
+    {
+      "type": "county",
+      "slug": "summit-county-nd"
+    },
+    {
+      "type": "county",
+      "slug": "summit-county-ne"
+    },
+    {
+      "type": "county",
+      "slug": "summit-county-ny"
+    },
+    {
+      "type": "county",
+      "slug": "summit-county-ok"
+    },
+    {
+      "type": "county",
+      "slug": "summit-county-or"
+    },
+    {
+      "type": "county",
+      "slug": "summit-county-sd"
+    },
+    {
+      "type": "county",
+      "slug": "summit-county-tn"
+    },
+    {
+      "type": "county",
+      "slug": "summit-county-tx"
+    },
+    {
+      "type": "county",
+      "slug": "summit-county-va"
+    },
+    {
+      "type": "county",
+      "slug": "summit-county-wa"
+    },
+    {
+      "type": "county",
+      "slug": "taylor-county-al"
+    },
+    {
+      "type": "county",
+      "slug": "taylor-county-ar"
+    },
+    {
+      "type": "county",
+      "slug": "taylor-county-co"
+    },
+    {
+      "type": "county",
+      "slug": "taylor-county-hi"
+    },
+    {
+      "type": "county",
+      "slug": "taylor-county-il"
+    },
+    {
+      "type": "county",
+      "slug": "taylor-county-in"
+    },
+    {
+      "type": "county",
+      "slug": "taylor-county-ks"
+    },
+    {
+      "type": "county",
+      "slug": "taylor-county-md"
+    },
+    {
+      "type": "county",
+      "slug": "taylor-county-mi"
+    },
+    {
+      "type": "county",
+      "slug": "taylor-county-mn"
+    },
+    {
+      "type": "county",
+      "slug": "taylor-county-mo"
+    },
+    {
+      "type": "county",
+      "slug": "taylor-county-ms"
+    },
+    {
+      "type": "county",
+      "slug": "taylor-county-mt"
+    },
+    {
+      "type": "county",
+      "slug": "taylor-county-nd"
+    },
+    {
+      "type": "county",
+      "slug": "taylor-county-ne"
+    },
+    {
+      "type": "county",
+      "slug": "taylor-county-oh"
+    },
+    {
+      "type": "county",
+      "slug": "taylor-county-sd"
+    },
+    {
+      "type": "county",
+      "slug": "taylor-county-tn"
+    },
+    {
+      "type": "county",
+      "slug": "taylor-county-va"
+    },
+    {
+      "type": "county",
+      "slug": "todd-county-al"
+    },
+    {
+      "type": "county",
+      "slug": "todd-county-ar"
+    },
+    {
+      "type": "county",
+      "slug": "todd-county-ga"
+    },
+    {
+      "type": "county",
+      "slug": "todd-county-il"
+    },
+    {
+      "type": "county",
+      "slug": "todd-county-in"
+    },
+    {
+      "type": "county",
+      "slug": "todd-county-ks"
+    },
+    {
+      "type": "county",
+      "slug": "todd-county-mi"
+    },
+    {
+      "type": "county",
+      "slug": "todd-county-mo"
+    },
+    {
+      "type": "county",
+      "slug": "todd-county-nc"
+    },
+    {
+      "type": "county",
+      "slug": "todd-county-ne"
+    },
+    {
+      "type": "county",
+      "slug": "todd-county-oh"
+    },
+    {
+      "type": "county",
+      "slug": "todd-county-pa"
+    },
+    {
+      "type": "county",
+      "slug": "todd-county-tn"
+    },
+    {
+      "type": "county",
+      "slug": "todd-county-tx"
+    },
+    {
+      "type": "county",
+      "slug": "todd-county-va"
+    },
+    {
+      "type": "county",
+      "slug": "todd-county-wa"
+    },
+    {
+      "type": "county",
+      "slug": "todd-county-wi"
+    },
+    {
+      "type": "county",
+      "slug": "todd-county-wv"
+    },
+    {
+      "type": "county",
+      "slug": "turner-county-ar"
+    },
+    {
+      "type": "county",
+      "slug": "turner-county-ca"
+    },
+    {
+      "type": "county",
+      "slug": "turner-county-co"
+    },
+    {
+      "type": "county",
+      "slug": "turner-county-ia"
+    },
+    {
+      "type": "county",
+      "slug": "turner-county-il"
+    },
+    {
+      "type": "county",
+      "slug": "turner-county-ks"
+    },
+    {
+      "type": "county",
+      "slug": "turner-county-ky"
+    },
+    {
+      "type": "county",
+      "slug": "turner-county-la"
+    },
+    {
+      "type": "county",
+      "slug": "turner-county-md"
+    },
+    {
+      "type": "county",
+      "slug": "turner-county-mi"
+    },
+    {
+      "type": "county",
+      "slug": "turner-county-mo"
+    },
+    {
+      "type": "county",
+      "slug": "turner-county-ms"
+    },
+    {
+      "type": "county",
+      "slug": "turner-county-mt"
+    },
+    {
+      "type": "county",
+      "slug": "turner-county-nc"
+    },
+    {
+      "type": "county",
+      "slug": "turner-county-nd"
+    },
+    {
+      "type": "county",
+      "slug": "turner-county-ne"
+    },
+    {
+      "type": "county",
+      "slug": "turner-county-nm"
+    },
+    {
+      "type": "county",
+      "slug": "turner-county-nv"
+    },
+    {
+      "type": "county",
+      "slug": "turner-county-oh"
+    },
+    {
+      "type": "county",
+      "slug": "turner-county-ok"
+    },
+    {
+      "type": "county",
+      "slug": "turner-county-sc"
+    },
+    {
+      "type": "county",
+      "slug": "turner-county-tn"
+    },
+    {
+      "type": "county",
+      "slug": "turner-county-tx"
+    },
+    {
+      "type": "county",
+      "slug": "turner-county-ut"
+    },
+    {
+      "type": "county",
+      "slug": "turner-county-va"
+    },
+    {
+      "type": "county",
+      "slug": "turner-county-wa"
+    },
+    {
+      "type": "county",
+      "slug": "turner-county-wy"
+    },
+    {
+      "type": "county",
+      "slug": "tyler-county-ak"
+    },
+    {
+      "type": "county",
+      "slug": "tyler-county-al"
+    },
+    {
+      "type": "county",
+      "slug": "tyler-county-ar"
+    },
+    {
+      "type": "county",
+      "slug": "tyler-county-ga"
+    },
+    {
+      "type": "county",
+      "slug": "tyler-county-ia"
+    },
+    {
+      "type": "county",
+      "slug": "tyler-county-id"
+    },
+    {
+      "type": "county",
+      "slug": "tyler-county-il"
+    },
+    {
+      "type": "county",
+      "slug": "tyler-county-in"
+    },
+    {
+      "type": "county",
+      "slug": "tyler-county-ks"
+    },
+    {
+      "type": "county",
+      "slug": "tyler-county-ky"
+    },
+    {
+      "type": "county",
+      "slug": "tyler-county-la"
+    },
+    {
+      "type": "county",
+      "slug": "tyler-county-mi"
+    },
+    {
+      "type": "county",
+      "slug": "tyler-county-mn"
+    },
+    {
+      "type": "county",
+      "slug": "tyler-county-mo"
+    },
+    {
+      "type": "county",
+      "slug": "tyler-county-ms"
+    },
+    {
+      "type": "county",
+      "slug": "tyler-county-nc"
+    },
+    {
+      "type": "county",
+      "slug": "tyler-county-ne"
+    },
+    {
+      "type": "county",
+      "slug": "tyler-county-nm"
+    },
+    {
+      "type": "county",
+      "slug": "tyler-county-ny"
+    },
+    {
+      "type": "county",
+      "slug": "tyler-county-oh"
+    },
+    {
+      "type": "county",
+      "slug": "tyler-county-ok"
+    },
+    {
+      "type": "county",
+      "slug": "tyler-county-pa"
+    },
+    {
+      "type": "county",
+      "slug": "tyler-county-tn"
+    },
+    {
+      "type": "county",
+      "slug": "tyler-county-va"
+    },
+    {
+      "type": "county",
+      "slug": "tyler-county-wa"
+    },
+    {
+      "type": "county",
+      "slug": "tyler-county-wi"
+    },
+    {
+      "type": "county",
+      "slug": "tyler-county-wy"
+    },
+    {
+      "type": "county",
+      "slug": "union-county-al"
+    },
+    {
+      "type": "county",
+      "slug": "union-county-az"
+    },
+    {
+      "type": "county",
+      "slug": "union-county-ca"
+    },
+    {
+      "type": "county",
+      "slug": "union-county-id"
+    },
+    {
+      "type": "county",
+      "slug": "union-county-ks"
+    },
+    {
+      "type": "county",
+      "slug": "union-county-mn"
+    },
+    {
+      "type": "county",
+      "slug": "union-county-mo"
+    },
+    {
+      "type": "county",
+      "slug": "union-county-ne"
+    },
+    {
+      "type": "county",
+      "slug": "union-county-ok"
+    },
+    {
+      "type": "county",
+      "slug": "union-county-tx"
+    },
+    {
+      "type": "county",
+      "slug": "union-county-va"
+    },
+    {
+      "type": "county",
+      "slug": "union-county-vt"
+    },
+    {
+      "type": "county",
+      "slug": "union-county-wa"
+    },
+    {
+      "type": "county",
+      "slug": "union-county-wi"
+    },
+    {
+      "type": "county",
+      "slug": "union-county-wv"
+    },
+    {
+      "type": "county",
+      "slug": "vance-county-ak"
+    },
+    {
+      "type": "county",
+      "slug": "vance-county-al"
+    },
+    {
+      "type": "county",
+      "slug": "vance-county-az"
+    },
+    {
+      "type": "county",
+      "slug": "vance-county-ca"
+    },
+    {
+      "type": "county",
+      "slug": "vance-county-ga"
+    },
+    {
+      "type": "county",
+      "slug": "vance-county-ia"
+    },
+    {
+      "type": "county",
+      "slug": "vance-county-id"
+    },
+    {
+      "type": "county",
+      "slug": "vance-county-il"
+    },
+    {
+      "type": "county",
+      "slug": "vance-county-in"
+    },
+    {
+      "type": "county",
+      "slug": "vance-county-ks"
+    },
+    {
+      "type": "county",
+      "slug": "vance-county-ky"
+    },
+    {
+      "type": "county",
+      "slug": "vance-county-la"
+    },
+    {
+      "type": "county",
+      "slug": "vance-county-mn"
+    },
+    {
+      "type": "county",
+      "slug": "vance-county-mo"
+    },
+    {
+      "type": "county",
+      "slug": "vance-county-ms"
+    },
+    {
+      "type": "county",
+      "slug": "vance-county-nd"
+    },
+    {
+      "type": "county",
+      "slug": "vance-county-oh"
+    },
+    {
+      "type": "county",
+      "slug": "vance-county-ok"
+    },
+    {
+      "type": "county",
+      "slug": "vance-county-or"
+    },
+    {
+      "type": "county",
+      "slug": "vance-county-sd"
+    },
+    {
+      "type": "county",
+      "slug": "vance-county-tn"
+    },
+    {
+      "type": "county",
+      "slug": "vance-county-tx"
+    },
+    {
+      "type": "county",
+      "slug": "vance-county-va"
+    },
+    {
+      "type": "county",
+      "slug": "vance-county-wi"
+    },
+    {
+      "type": "county",
+      "slug": "walker-county-ak"
+    },
+    {
+      "type": "county",
+      "slug": "walker-county-ar"
+    },
+    {
+      "type": "county",
+      "slug": "walker-county-ca"
+    },
+    {
+      "type": "county",
+      "slug": "walker-county-co"
+    },
+    {
+      "type": "county",
+      "slug": "walker-county-fl"
+    },
+    {
+      "type": "county",
+      "slug": "walker-county-hi"
+    },
+    {
+      "type": "county",
+      "slug": "walker-county-ia"
+    },
+    {
+      "type": "county",
+      "slug": "walker-county-il"
+    },
+    {
+      "type": "county",
+      "slug": "walker-county-ks"
+    },
+    {
+      "type": "county",
+      "slug": "walker-county-ky"
+    },
+    {
+      "type": "county",
+      "slug": "walker-county-la"
+    },
+    {
+      "type": "county",
+      "slug": "walker-county-mi"
+    },
+    {
+      "type": "county",
+      "slug": "walker-county-mn"
+    },
+    {
+      "type": "county",
+      "slug": "walker-county-mo"
+    },
+    {
+      "type": "county",
+      "slug": "walker-county-ms"
+    },
+    {
+      "type": "county",
+      "slug": "walker-county-mt"
+    },
+    {
+      "type": "county",
+      "slug": "walker-county-nc"
+    },
+    {
+      "type": "county",
+      "slug": "walker-county-nd"
+    },
+    {
+      "type": "county",
+      "slug": "walker-county-ne"
+    },
+    {
+      "type": "county",
+      "slug": "walker-county-oh"
+    },
+    {
+      "type": "county",
+      "slug": "walker-county-tn"
+    },
+    {
+      "type": "county",
+      "slug": "walker-county-va"
+    },
+    {
+      "type": "county",
+      "slug": "walker-county-wi"
+    },
+    {
+      "type": "county",
+      "slug": "warren-county-al"
+    },
+    {
+      "type": "county",
+      "slug": "warren-county-ar"
+    },
+    {
+      "type": "county",
+      "slug": "warren-county-hi"
+    },
+    {
+      "type": "county",
+      "slug": "warren-county-ks"
+    },
+    {
+      "type": "county",
+      "slug": "warren-county-la"
+    },
+    {
+      "type": "county",
+      "slug": "warren-county-mi"
+    },
+    {
+      "type": "county",
+      "slug": "warren-county-mn"
+    },
+    {
+      "type": "county",
+      "slug": "warren-county-nd"
+    },
+    {
+      "type": "county",
+      "slug": "warren-county-ne"
+    },
+    {
+      "type": "county",
+      "slug": "warren-county-ok"
+    },
+    {
+      "type": "county",
+      "slug": "warren-county-sc"
+    },
+    {
+      "type": "county",
+      "slug": "warren-county-sd"
+    },
+    {
+      "type": "county",
+      "slug": "warren-county-tx"
+    },
+    {
+      "type": "county",
+      "slug": "warren-county-wi"
+    },
+    {
+      "type": "county",
+      "slug": "warren-county-wv"
+    },
+    {
+      "type": "county",
+      "slug": "washington-county-ct"
+    },
+    {
+      "type": "county",
+      "slug": "washington-county-mi"
+    },
+    {
+      "type": "county",
+      "slug": "washington-county-mt"
+    },
+    {
+      "type": "county",
+      "slug": "washington-county-nh"
+    },
+    {
+      "type": "county",
+      "slug": "washington-county-nm"
+    },
+    {
+      "type": "county",
+      "slug": "washington-county-wv"
+    },
+    {
+      "type": "county",
+      "slug": "wayne-county-al"
+    },
+    {
+      "type": "county",
+      "slug": "wayne-county-ar"
+    },
+    {
+      "type": "county",
+      "slug": "wayne-county-ca"
+    },
+    {
+      "type": "county",
+      "slug": "wayne-county-ks"
+    },
+    {
+      "type": "county",
+      "slug": "wayne-county-la"
+    },
+    {
+      "type": "county",
+      "slug": "wayne-county-nd"
+    },
+    {
+      "type": "county",
+      "slug": "wayne-county-nj"
+    },
+    {
+      "type": "county",
+      "slug": "wayne-county-ok"
+    },
+    {
+      "type": "county",
+      "slug": "wayne-county-sc"
+    },
+    {
+      "type": "county",
+      "slug": "wayne-county-tx"
+    },
+    {
+      "type": "county",
+      "slug": "wayne-county-va"
+    },
+    {
+      "type": "county",
+      "slug": "wayne-county-wi"
+    },
+    {
+      "type": "county",
+      "slug": "wells-county-al"
+    },
+    {
+      "type": "county",
+      "slug": "wells-county-ca"
+    },
+    {
+      "type": "county",
+      "slug": "wells-county-co"
+    },
+    {
+      "type": "county",
+      "slug": "wells-county-ga"
+    },
+    {
+      "type": "county",
+      "slug": "wells-county-ia"
+    },
+    {
+      "type": "county",
+      "slug": "wells-county-il"
+    },
+    {
+      "type": "county",
+      "slug": "wells-county-ks"
+    },
+    {
+      "type": "county",
+      "slug": "wells-county-ky"
+    },
+    {
+      "type": "county",
+      "slug": "wells-county-la"
+    },
+    {
+      "type": "county",
+      "slug": "wells-county-ma"
+    },
+    {
+      "type": "county",
+      "slug": "wells-county-md"
+    },
+    {
+      "type": "county",
+      "slug": "wells-county-mi"
+    },
+    {
+      "type": "county",
+      "slug": "wells-county-mn"
+    },
+    {
+      "type": "county",
+      "slug": "wells-county-mo"
+    },
+    {
+      "type": "county",
+      "slug": "wells-county-ms"
+    },
+    {
+      "type": "county",
+      "slug": "wells-county-nc"
+    },
+    {
+      "type": "county",
+      "slug": "wells-county-ne"
+    },
+    {
+      "type": "county",
+      "slug": "wells-county-ok"
+    },
+    {
+      "type": "county",
+      "slug": "wells-county-pa"
+    },
+    {
+      "type": "county",
+      "slug": "wells-county-sd"
+    },
+    {
+      "type": "county",
+      "slug": "wells-county-tn"
+    },
+    {
+      "type": "county",
+      "slug": "wells-county-tx"
+    },
+    {
+      "type": "county",
+      "slug": "wells-county-ut"
+    },
+    {
+      "type": "county",
+      "slug": "wells-county-va"
+    },
+    {
+      "type": "county",
+      "slug": "wells-county-wy"
+    },
+    {
+      "type": "county",
+      "slug": "white-county-al"
+    },
+    {
+      "type": "county",
+      "slug": "white-county-ca"
+    },
+    {
+      "type": "county",
+      "slug": "white-county-co"
+    },
+    {
+      "type": "county",
+      "slug": "white-county-ia"
+    },
+    {
+      "type": "county",
+      "slug": "white-county-ks"
+    },
+    {
+      "type": "county",
+      "slug": "white-county-ky"
+    },
+    {
+      "type": "county",
+      "slug": "white-county-me"
+    },
+    {
+      "type": "county",
+      "slug": "white-county-mi"
+    },
+    {
+      "type": "county",
+      "slug": "white-county-mn"
+    },
+    {
+      "type": "county",
+      "slug": "white-county-mo"
+    },
+    {
+      "type": "county",
+      "slug": "white-county-ms"
+    },
+    {
+      "type": "county",
+      "slug": "white-county-mt"
+    },
+    {
+      "type": "county",
+      "slug": "white-county-nc"
+    },
+    {
+      "type": "county",
+      "slug": "white-county-ne"
+    },
+    {
+      "type": "county",
+      "slug": "white-county-nh"
+    },
+    {
+      "type": "county",
+      "slug": "white-county-ny"
+    },
+    {
+      "type": "county",
+      "slug": "white-county-sd"
+    },
+    {
+      "type": "county",
+      "slug": "white-county-tx"
+    },
+    {
+      "type": "county",
+      "slug": "white-county-va"
+    },
+    {
+      "type": "county",
+      "slug": "white-county-wa"
+    },
+    {
+      "type": "county",
+      "slug": "white-county-wi"
+    },
+    {
+      "type": "county",
+      "slug": "wilson-county-al"
+    },
+    {
+      "type": "county",
+      "slug": "wilson-county-ar"
+    },
+    {
+      "type": "county",
+      "slug": "wilson-county-az"
+    },
+    {
+      "type": "county",
+      "slug": "wilson-county-fl"
+    },
+    {
+      "type": "county",
+      "slug": "wilson-county-ga"
+    },
+    {
+      "type": "county",
+      "slug": "wilson-county-id"
+    },
+    {
+      "type": "county",
+      "slug": "wilson-county-il"
+    },
+    {
+      "type": "county",
+      "slug": "wilson-county-in"
+    },
+    {
+      "type": "county",
+      "slug": "wilson-county-ky"
+    },
+    {
+      "type": "county",
+      "slug": "wilson-county-la"
+    },
+    {
+      "type": "county",
+      "slug": "wilson-county-mi"
+    },
+    {
+      "type": "county",
+      "slug": "wilson-county-mn"
+    },
+    {
+      "type": "county",
+      "slug": "wilson-county-mo"
+    },
+    {
+      "type": "county",
+      "slug": "wilson-county-ms"
+    },
+    {
+      "type": "county",
+      "slug": "wilson-county-mt"
+    },
+    {
+      "type": "county",
+      "slug": "wilson-county-ne"
+    },
+    {
+      "type": "county",
+      "slug": "wilson-county-ny"
+    },
+    {
+      "type": "county",
+      "slug": "wilson-county-oh"
+    },
+    {
+      "type": "county",
+      "slug": "wilson-county-ok"
+    },
+    {
+      "type": "county",
+      "slug": "wilson-county-or"
+    },
+    {
+      "type": "county",
+      "slug": "wilson-county-pa"
+    },
+    {
+      "type": "county",
+      "slug": "wilson-county-sc"
+    },
+    {
+      "type": "county",
+      "slug": "wilson-county-sd"
+    },
+    {
+      "type": "county",
+      "slug": "wilson-county-ut"
+    },
+    {
+      "type": "county",
+      "slug": "wilson-county-va"
+    },
+    {
+      "type": "county",
+      "slug": "wilson-county-wi"
+    },
+    {
+      "type": "county",
+      "slug": "wilson-county-wv"
+    },
+    {
+      "type": "county",
+      "slug": "wood-county-ar"
+    },
+    {
+      "type": "county",
+      "slug": "wood-county-co"
+    },
+    {
+      "type": "county",
+      "slug": "wood-county-fl"
+    },
+    {
+      "type": "county",
+      "slug": "wood-county-ga"
+    },
+    {
+      "type": "county",
+      "slug": "wood-county-ia"
+    },
+    {
+      "type": "county",
+      "slug": "wood-county-id"
+    },
+    {
+      "type": "county",
+      "slug": "wood-county-in"
+    },
+    {
+      "type": "county",
+      "slug": "wood-county-ks"
+    },
+    {
+      "type": "county",
+      "slug": "wood-county-ky"
+    },
+    {
+      "type": "county",
+      "slug": "wood-county-la"
+    },
+    {
+      "type": "county",
+      "slug": "wood-county-md"
+    },
+    {
+      "type": "county",
+      "slug": "wood-county-mo"
+    },
+    {
+      "type": "county",
+      "slug": "wood-county-mt"
+    },
+    {
+      "type": "county",
+      "slug": "wood-county-nc"
+    },
+    {
+      "type": "county",
+      "slug": "wood-county-ne"
+    },
+    {
+      "type": "county",
+      "slug": "wood-county-ok"
+    },
+    {
+      "type": "county",
+      "slug": "wood-county-pa"
+    },
+    {
+      "type": "county",
+      "slug": "wood-county-tn"
+    },
+    {
+      "type": "county",
+      "slug": "wood-county-va"
+    },
+    {
+      "type": "county",
+      "slug": "york-county-ak"
+    },
+    {
+      "type": "county",
+      "slug": "york-county-ar"
+    },
+    {
+      "type": "county",
+      "slug": "york-county-co"
+    },
+    {
+      "type": "county",
+      "slug": "york-county-ga"
+    },
+    {
+      "type": "county",
+      "slug": "york-county-ia"
+    },
+    {
+      "type": "county",
+      "slug": "york-county-il"
+    },
+    {
+      "type": "county",
+      "slug": "york-county-in"
+    },
+    {
+      "type": "county",
+      "slug": "york-county-ks"
+    },
+    {
+      "type": "county",
+      "slug": "york-county-ky"
+    },
+    {
+      "type": "county",
+      "slug": "york-county-mi"
+    },
+    {
+      "type": "county",
+      "slug": "york-county-mn"
+    },
+    {
+      "type": "county",
+      "slug": "york-county-mo"
+    },
+    {
+      "type": "county",
+      "slug": "york-county-mt"
+    },
+    {
+      "type": "county",
+      "slug": "york-county-nc"
+    },
+    {
+      "type": "county",
+      "slug": "york-county-nd"
+    },
+    {
+      "type": "county",
+      "slug": "york-county-ok"
+    },
+    {
+      "type": "county",
+      "slug": "york-county-or"
+    },
+    {
+      "type": "county",
+      "slug": "york-county-sd"
+    },
+    {
+      "type": "county",
+      "slug": "york-county-tn"
+    },
+    {
+      "type": "county",
+      "slug": "york-county-tx"
+    },
+    {
+      "type": "county",
+      "slug": "york-county-ut"
+    },
+    {
+      "type": "county",
+      "slug": "york-county-wi"
+    },
+    {
+      "type": "county",
+      "slug": "york-county-wv"
+    },
+    {
+      "type": "metro",
+      "slug": "athens-clarke-county"
+    },
+    {
+      "type": "metro",
+      "slug": "atlanta-sandy-springs-alpharetta"
+    },
+    {
+      "type": "metro",
+      "slug": "augusta-richmond-county"
+    },
+    {
+      "type": "metro",
+      "slug": "austin-round-rock-georgetown"
+    },
+    {
+      "type": "metro",
+      "slug": "bakersfield"
+    },
+    {
+      "type": "metro",
+      "slug": "birmingham-hoover"
+    },
+    {
+      "type": "metro",
+      "slug": "blacksburg-christiansburg"
+    },
+    {
+      "type": "metro",
+      "slug": "bridgeport-stamford-norwalk"
+    },
+    {
+      "type": "metro",
+      "slug": "cleveland-elyria"
+    },
+    {
+      "type": "metro",
+      "slug": "coeur-dalene"
+    },
+    {
+      "type": "metro",
+      "slug": "columbus-ga"
+    },
+    {
+      "type": "metro",
+      "slug": "concord"
+    },
+    {
+      "type": "metro",
+      "slug": "dayton-kettering"
+    },
+    {
+      "type": "metro",
+      "slug": "deltona-daytona-beach"
+    },
+    {
+      "type": "metro",
+      "slug": "denver-aurora-lakewood"
+    },
+    {
+      "type": "metro",
+      "slug": "fort-collins"
+    },
+    {
+      "type": "metro",
+      "slug": "grand-rapids-kentwood"
+    },
+    {
+      "type": "metro",
+      "slug": "greenville-anderson"
+    },
+    {
+      "type": "metro",
+      "slug": "hartford-east-hartford-middletown"
+    },
+    {
+      "type": "metro",
+      "slug": "helena"
+    },
+    {
+      "type": "metro",
+      "slug": "hilton-head-island-bluffton"
+    },
+    {
+      "type": "metro",
+      "slug": "honolulu"
+    },
+    {
+      "type": "metro",
+      "slug": "houston-the-woodlands-sugar-land"
+    },
+    {
+      "type": "metro",
+      "slug": "indianapolis-carmel-anderson"
+    },
+    {
+      "type": "metro",
+      "slug": "las-vegas-henderson-paradise"
+    },
+    {
+      "type": "metro",
+      "slug": "little-rock-north-little-rock"
+    },
+    {
+      "type": "metro",
+      "slug": "macon-bibb-county"
+    },
+    {
+      "type": "metro",
+      "slug": "madera"
+    },
+    {
+      "type": "metro",
+      "slug": "miami-fort-lauderdale-pompano-beach"
+    },
+    {
+      "type": "metro",
+      "slug": "nashville-davidson-murfreesboro"
+    },
+    {
+      "type": "metro",
+      "slug": "new-haven-milford"
+    },
+    {
+      "type": "metro",
+      "slug": "north-port-sarasota-bradenton"
+    },
+    {
+      "type": "metro",
+      "slug": "ogden-clearfield"
+    },
+    {
+      "type": "metro",
+      "slug": "omaha-council-bluffs"
+    },
+    {
+      "type": "metro",
+      "slug": "panama-city"
+    },
+    {
+      "type": "metro",
+      "slug": "provo-orem"
+    },
+    {
+      "type": "metro",
+      "slug": "racine"
+    },
+    {
+      "type": "metro",
+      "slug": "salt-lake-city"
+    },
+    {
+      "type": "metro",
+      "slug": "san-francisco-oakland-berkeley"
+    },
+    {
+      "type": "metro",
+      "slug": "san-luis-obispo"
+    },
+    {
+      "type": "metro",
+      "slug": "springfield-il"
+    },
+    {
+      "type": "metro",
+      "slug": "stockton"
+    },
+    {
+      "type": "metro",
+      "slug": "twin-falls"
+    },
+    {
+      "type": "metro",
+      "slug": "virginia-beach-norfolk-newport-news"
+    }
+  ]
+}

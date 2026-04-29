@@ -1,65 +1,115 @@
 import type { StateRow } from './db';
 
-function fmtCurrency(n: number): string {
+function fmtCurrency(n: number | null | undefined): string {
+  if (n === null || n === undefined) return '—';
   return '$' + n.toLocaleString('en-US', { maximumFractionDigits: 0 });
 }
 
+/**
+ * Generate state insights from real ACS + HUD + NLIHC data. Each insight
+ * guards on the fields it needs; missing fields drop the insight rather
+ * than producing zeros or fabricated context. Inputs are the new schema:
+ *   - state.fmr_2br        → NLIHC's 2-BR FMR (HUD-derived)
+ *   - state.acs_*          → ACS 2023 5-Year for income/rent burden/renter %
+ *   - state.nlihc_*        → NLIHC OOR 2025 housing wage + rank
+ */
 export function generateStateInsights(state: StateRow, allStates: StateRow[]): string[] {
   const insights: string[] = [];
   const total = allStates.length;
 
-  // 1. Rent rank
-  const sortedByRent = [...allStates].sort((a, b) => b.avg_rent_2br - a.avg_rent_2br);
-  const rank = sortedByRent.findIndex(s => s.slug === state.slug) + 1;
-  const avgRent2br = Math.round(allStates.reduce((s, st) => s + st.avg_rent_2br, 0) / total);
-  const diffPct = ((state.avg_rent_2br - avgRent2br) / avgRent2br) * 100;
-
-  if (rank <= 5) {
-    insights.push(`${state.state} ranks #${rank} out of ${total} states for the highest average 2-bedroom fair market rent at ${fmtCurrency(state.avg_rent_2br)}/month — ${Math.abs(diffPct).toFixed(0)}% above the national average of ${fmtCurrency(avgRent2br)}.`);
-  } else if (rank > total - 5) {
-    insights.push(`With an average 2BR rent of ${fmtCurrency(state.avg_rent_2br)}/month, ${state.state} ranks #${rank} out of ${total} states — one of the most affordable rental markets at ${Math.abs(diffPct).toFixed(0)}% below the national average of ${fmtCurrency(avgRent2br)}.`);
-  } else {
-    insights.push(`${state.state}'s average 2-bedroom fair market rent of ${fmtCurrency(state.avg_rent_2br)}/month ranks #${rank} out of ${total} states, sitting ${Math.abs(diffPct).toFixed(0)}% ${diffPct > 0 ? 'above' : 'below'} the national average of ${fmtCurrency(avgRent2br)}.`);
+  // 1. NLIHC housing-wage rank — the canonical "what would you need to earn" stat.
+  if (
+    state.nlihc_housing_wage_2br !== null &&
+    state.nlihc_housing_wage_rank !== null
+  ) {
+    const wage = state.nlihc_housing_wage_2br.toFixed(2);
+    const rank = state.nlihc_housing_wage_rank;
+    const usAvg = (
+      allStates.reduce((s, st) => s + (st.nlihc_housing_wage_2br ?? 0), 0) /
+      Math.max(1, allStates.filter(s => s.nlihc_housing_wage_2br !== null).length)
+    ).toFixed(2);
+    if (rank <= 5) {
+      insights.push(
+        `${state.state} ranks #${rank} of ${total} for the highest 2-bedroom housing wage in the country: a renter would need to earn $${wage}/hour to afford the FY25 fair market rent without being cost-burdened, well above the national average of $${usAvg}/hour (NLIHC Out of Reach 2025).`,
+      );
+    } else if (rank > total - 5) {
+      insights.push(
+        `${state.state} ranks #${rank} of ${total} for housing wage — at $${wage}/hour to afford a 2-bedroom at FMR, it is one of the most affordable rental markets relative to the national average of $${usAvg}/hour (NLIHC Out of Reach 2025).`,
+      );
+    } else {
+      insights.push(
+        `A renter in ${state.state} needs to earn $${wage}/hour to afford a 2-bedroom at fair market rent, ranking #${rank} of ${total} states. The national average is $${usAvg}/hour (NLIHC Out of Reach 2025).`,
+      );
+    }
   }
 
-  // 2. Affordability / 30% rule
-  const affordableRent = Math.round(state.median_income * 0.3 / 12);
-  const isAffordable = affordableRent >= state.avg_rent_2br;
-  const surplus = affordableRent - state.avg_rent_2br;
-  if (isAffordable) {
-    insights.push(`At the median household income of ${fmtCurrency(state.median_income)}, the 30% affordability rule allows up to ${fmtCurrency(affordableRent)}/month on rent — ${fmtCurrency(surplus)} above the average 2BR FMR, meaning rent is generally within reach for median earners.`);
-  } else {
-    insights.push(`At the median household income of ${fmtCurrency(state.median_income)}, the 30% affordability rule allows only ${fmtCurrency(affordableRent)}/month — ${fmtCurrency(Math.abs(surplus))} short of the average 2BR FMR of ${fmtCurrency(state.avg_rent_2br)}, indicating a rent burden for typical households.`);
+  // 2. NLIHC mean renter wage vs. housing wage — the affordability gap.
+  if (
+    state.nlihc_housing_wage_2br !== null &&
+    state.nlihc_mean_renter_wage !== null
+  ) {
+    const need = state.nlihc_housing_wage_2br;
+    const earn = state.nlihc_mean_renter_wage;
+    const gap = need - earn;
+    if (gap > 0) {
+      insights.push(
+        `The mean renter in ${state.state} earns $${earn.toFixed(2)}/hour — $${gap.toFixed(2)}/hour short of the $${need.toFixed(2)} needed to afford a 2-bedroom at FMR. To close the gap, a typical renter would need to work about ${Math.round(((need / earn) * 40))} hours per week at the current wage.`,
+      );
+    } else {
+      insights.push(
+        `The mean renter wage in ${state.state} is $${earn.toFixed(2)}/hour, exceeding the $${need.toFixed(2)} housing wage needed for a 2-bedroom at FMR by $${Math.abs(gap).toFixed(2)}/hour — typical renters here have a small affordability cushion against fair market rent.`,
+      );
+    }
   }
 
-  // 3. 1BR vs 2BR spread
-  const spread = state.avg_rent_2br - state.avg_rent_1br;
-  const avgSpread = Math.round(allStates.reduce((s, st) => s + (st.avg_rent_2br - st.avg_rent_1br), 0) / total);
-  insights.push(`The gap between 1-bedroom (${fmtCurrency(state.avg_rent_1br)}) and 2-bedroom (${fmtCurrency(state.avg_rent_2br)}) rents in ${state.state} is ${fmtCurrency(spread)}/month — ${spread > avgSpread ? 'wider' : 'narrower'} than the national average spread of ${fmtCurrency(avgSpread)}, reflecting local market dynamics for families needing extra space.`);
-
-  // 4. Renter percentage context
-  const avgRenterPct = allStates.reduce((s, st) => s + st.renter_pct, 0) / total;
-  if (state.renter_pct > avgRenterPct + 5) {
-    insights.push(`An unusually high ${state.renter_pct.toFixed(1)}% of households in ${state.state} are renters (national average: ${avgRenterPct.toFixed(1)}%), making rental market conditions particularly impactful for the state's population.`);
-  } else if (state.renter_pct < avgRenterPct - 5) {
-    insights.push(`Only ${state.renter_pct.toFixed(1)}% of households in ${state.state} are renters — well below the ${avgRenterPct.toFixed(1)}% national average, reflecting higher homeownership rates.`);
-  } else {
-    insights.push(`${state.renter_pct.toFixed(1)}% of households in ${state.state} are renters, close to the national average of ${avgRenterPct.toFixed(1)}%.`);
+  // 3. Rent burden — share of cost-burdened renters from ACS B25070.
+  if (state.acs_rent_burdened_pct !== null) {
+    const valid = allStates.filter((s) => s.acs_rent_burdened_pct !== null);
+    const usAvg = valid.reduce((s, st) => s + (st.acs_rent_burdened_pct ?? 0), 0) / Math.max(1, valid.length);
+    const pct = state.acs_rent_burdened_pct;
+    if (pct >= usAvg + 3) {
+      insights.push(
+        `${pct.toFixed(1)}% of renter households in ${state.state} pay 30% or more of their income on housing — above the national average of ${usAvg.toFixed(1)}% (ACS 2023 5-Year, B25070). This places ${state.state}'s renters among the more cost-burdened populations.`,
+      );
+    } else if (pct <= usAvg - 3) {
+      insights.push(
+        `${pct.toFixed(1)}% of renter households in ${state.state} are cost-burdened, below the national average of ${usAvg.toFixed(1)}% (ACS 2023 5-Year, B25070). Renters here have somewhat more income flexibility than the typical state.`,
+      );
+    } else {
+      insights.push(
+        `${pct.toFixed(1)}% of ${state.state} renters are cost-burdened (paying 30%+ of income on rent), close to the national average of ${usAvg.toFixed(1)}% (ACS 2023 5-Year, B25070).`,
+      );
+    }
   }
 
-  // 5. Tenant rights score
-  if (state.tenant_rights_score >= 7) {
-    insights.push(`${state.state} scores ${state.tenant_rights_score}/10 on tenant protections — among the strongest in the nation, with robust eviction protections, rent stabilization, or security deposit limits that benefit renters.`);
-  } else if (state.tenant_rights_score <= 3) {
-    insights.push(`${state.state}'s tenant rights score of ${state.tenant_rights_score}/10 is among the lowest nationally, offering minimal statutory protections for renters in areas like eviction notice periods and security deposit limits.`);
-  } else {
-    insights.push(`With a tenant rights score of ${state.tenant_rights_score}/10, ${state.state} offers moderate protections for renters — not the strongest, but better than many Sun Belt and rural states.`);
+  // 4. Renter-share of population context.
+  if (state.acs_renter_pct !== null) {
+    const valid = allStates.filter((s) => s.acs_renter_pct !== null);
+    const usAvg = valid.reduce((s, st) => s + (st.acs_renter_pct ?? 0), 0) / Math.max(1, valid.length);
+    const pct = state.acs_renter_pct;
+    if (pct > usAvg + 5) {
+      insights.push(
+        `${pct.toFixed(1)}% of households in ${state.state} are renters (national average: ${usAvg.toFixed(1)}%). Rental conditions are unusually consequential here, affecting a larger share of the population than in most states.`,
+      );
+    } else if (pct < usAvg - 5) {
+      insights.push(
+        `Only ${pct.toFixed(1)}% of households in ${state.state} are renters — well below the ${usAvg.toFixed(1)}% national average — reflecting a homeownership-heavy housing market.`,
+      );
+    } else {
+      insights.push(
+        `${pct.toFixed(1)}% of ${state.state} households rent, close to the national average of ${usAvg.toFixed(1)}% (ACS 2023 5-Year).`,
+      );
+    }
   }
 
-  // 6. Annual rent burden in dollars
-  const annualRent = state.avg_rent_2br * 12;
-  const rentToIncome = (annualRent / state.median_income) * 100;
-  insights.push(`A household renting a typical 2-bedroom in ${state.state} spends approximately ${fmtCurrency(annualRent)}/year on rent, consuming ${rentToIncome.toFixed(1)}% of the median household income — ${rentToIncome > 30 ? 'exceeding the widely recommended 30% threshold' : 'within the recommended 30% affordability guideline'}.`);
+  // 5. Annual rent burden in dollars for a 2BR at FMR.
+  if (state.fmr_2br !== null && state.acs_median_household_income !== null) {
+    const annualRent = state.fmr_2br * 12;
+    const rentToIncome = (annualRent / state.acs_median_household_income) * 100;
+    insights.push(
+      `A household paying the FY25 2-BR fair market rent of ${fmtCurrency(state.fmr_2br)}/month in ${state.state} spends about ${fmtCurrency(annualRent)}/year on rent — ${rentToIncome.toFixed(1)}% of the median household income, ${rentToIncome > 30 ? 'exceeding' : 'within'} the 30% affordability guideline.`,
+    );
+  }
 
   return insights;
 }

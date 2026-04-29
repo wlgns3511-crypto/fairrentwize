@@ -31,10 +31,24 @@ function slugify(text: string): string {
     .slice(0, 60);
 }
 
+// HCU 2026-04-24: CWV showed CLS 0.701 (Poor) on tariffpeek /code/* pages
+// traced to this component. The fix: reserve vertical space during SSR /
+// pre-mount so the page doesn't reflow when entries populate. `mounted` flips
+// after the first client render; until then we render an invisible block of
+// the expected height. If the scan finds <3 h2s we also keep the reserved
+// space instead of collapsing — keeps above-and-below content stable either
+// way.
+const RESERVED_MIN_HEIGHT = 180;
+
 export function TableOfContents() {
   const [entries, setEntries] = useState<TocEntry[]>([]);
   const [activeId, setActiveId] = useState<string>("");
+  const [mounted, setMounted] = useState(false);
   const navRef = useRef<HTMLElement>(null);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   useEffect(() => {
     // Find all h2 elements in the page content
@@ -84,7 +98,21 @@ export function TableOfContents() {
     return () => observer.disconnect();
   }, []);
 
-  if (entries.length === 0) return null;
+  // Reserve the same vertical footprint during SSR + pre-mount + empty-TOC
+  // states so page content below never reflows. Bounded by minHeight only —
+  // when a real TOC renders it may be taller and that is fine (growth from
+  // the bottom of this block doesn't push user-visible content on first
+  // paint since h2 scanning happens synchronously after hydration).
+  if (!mounted || entries.length === 0) {
+    return (
+      <div
+        aria-hidden
+        data-upgrade="table-of-contents-placeholder"
+        className="not-prose my-6"
+        style={{ minHeight: RESERVED_MIN_HEIGHT, contain: "layout" }}
+      />
+    );
+  }
 
   return (
     <nav
@@ -92,6 +120,7 @@ export function TableOfContents() {
       data-upgrade="table-of-contents"
       aria-label="Table of contents"
       className="not-prose my-6 rounded-xl border border-slate-200 bg-white/80 p-4"
+      style={{ minHeight: RESERVED_MIN_HEIGHT, contain: "layout" }}
     >
       <p className="flex items-center gap-2 text-xs font-bold text-slate-600 uppercase tracking-wide mb-2">
         <svg

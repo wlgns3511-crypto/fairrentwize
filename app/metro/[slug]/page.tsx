@@ -1,6 +1,6 @@
-import { getAllMetroSlugs, getMetroBySlug, getStateByAbbr, getTopMetrosByRent } from '@/lib/db';
+import { getAllMetroSlugs, getMetroBySlug, getStateByAbbr, getTopMetrosByRent, type Metro } from '@/lib/db';
 import { buildDbPageRobots, buildTrustUpdatedLabel, getDataVintageLabel, getDbPageGate, getReviewedAt, getReviewedBy, METHODOLOGY_URL } from '@/lib/db-page';
-import { formatCurrency, formatPercent, getDataYear } from '@/lib/format';
+import { formatCurrency, getDataYear } from '@/lib/format';
 import { breadcrumbSchema, faqSchema, generateMetroFAQs } from '@/lib/schema';
 import { AdSlot } from '@/components/AdSlot';
 import { AuthorBox } from '@/components/AuthorBox';
@@ -15,8 +15,19 @@ interface Props { params: Promise<{ slug: string }> }
 
 export const dynamicParams = false;
 
-function buildMetroTopAnswer(metro: NonNullable<ReturnType<typeof getMetroBySlug>>, affordableRent: number, rentBurden: string) {
-  return `${metro.metro_name} has a 2-bedroom fair market rent of ${formatCurrency(metro.fmr_2br)}/month against a median household income of ${formatCurrency(metro.median_income)}/year. That puts the metro at roughly ${rentBurden} rent burden on the HUD 2-bedroom benchmark, which is the quickest way to tell whether this market is within the 30% affordability rule or already above it.`;
+const NATIONAL_AVG_2BR = 1727; // FY2025 HUD national average 2-bedroom FMR
+
+function buildMetroTopAnswer(metro: Metro): string {
+  const parts: string[] = [];
+  if (metro.fmr_2br !== null) {
+    const diff = metro.fmr_2br - NATIONAL_AVG_2BR;
+    const pctDiff = Math.round((diff / NATIONAL_AVG_2BR) * 100);
+    parts.push(`${metro.metro_name} has a HUD 2-bedroom Fair Market Rent of ${formatCurrency(metro.fmr_2br)}/month`);
+    parts.push(`That is ${Math.abs(pctDiff)}% ${diff >= 0 ? 'above' : 'below'} the national 2BR FMR average of ${formatCurrency(NATIONAL_AVG_2BR)}/mo, a useful benchmark for whether this metro is a comparatively expensive or affordable rental market in FY ${getDataYear()}.`);
+  } else {
+    parts.push(`${metro.metro_name} HUD Fair Market Rent data for FY ${getDataYear()}.`);
+  }
+  return parts.join(' — ');
 }
 
 export async function generateStaticParams() {
@@ -28,15 +39,13 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const metro = getMetroBySlug(slug);
   if (!metro) return {};
   const year = getDataYear();
-  const affordableRent = Math.round(metro.median_income * 0.3 / 12);
-  const rentBurden = ((metro.fmr_2br * 12) / metro.median_income * 100).toFixed(1);
-  const description = buildMetroTopAnswer(metro, affordableRent, rentBurden);
+  const description = buildMetroTopAnswer(metro);
   const gate = getDbPageGate({
     alternativeLinkCount: 4,
     topAnswer: description,
   });
   return {
-    title: `${metro.metro_name} Fair Market Rent ${year} - Rental Costs & Affordability`,
+    title: `${metro.metro_name} Fair Market Rent ${year} - Rental Costs by Bedroom`,
     description,
     alternates: { canonical: `/metro/${slug}/` },
     openGraph: { url: `/metro/${slug}/` },
@@ -50,14 +59,20 @@ export default async function MetroPage({ params }: Props) {
   if (!metro) notFound();
   const year = getDataYear();
 
-  const state = getStateByAbbr(metro.state);
+  const state = getStateByAbbr(metro.state_abbr);
   const faqs = generateMetroFAQs(metro);
   const allMetros = getTopMetrosByRent(20);
+  const topAnswer = buildMetroTopAnswer(metro);
 
-  const affordableRent = Math.round(metro.median_income * 0.3 / 12);
-  const rentBurden = ((metro.fmr_2br * 12) / metro.median_income * 100).toFixed(1);
-  const isBurdened = parseFloat(rentBurden) >= 30;
-  const topAnswer = buildMetroTopAnswer(metro, affordableRent, rentBurden);
+  // Use state-level median income for the affordability frame (metros span multiple counties).
+  const stateMedianIncome = state?.acs_median_household_income ?? null;
+  const affordableRent = stateMedianIncome !== null ? Math.round(stateMedianIncome * 0.3 / 12) : null;
+  const rentBurden = (metro.fmr_2br !== null && stateMedianIncome !== null)
+    ? ((metro.fmr_2br * 12) / stateMedianIncome * 100).toFixed(1)
+    : null;
+  const isBurdened = rentBurden !== null && parseFloat(rentBurden) >= 30;
+  const vsNational = metro.fmr_2br !== null ? metro.fmr_2br - NATIONAL_AVG_2BR : null;
+  const vsNationalPct = vsNational !== null ? Math.round((vsNational / NATIONAL_AVG_2BR) * 100) : null;
 
   const bedroomData = [
     { label: 'Studio', value: metro.fmr_studio },
@@ -66,13 +81,14 @@ export default async function MetroPage({ params }: Props) {
     { label: '3 Bedroom', value: metro.fmr_3br },
     { label: '4 Bedroom', value: metro.fmr_4br },
   ];
-  const maxRent = Math.max(...bedroomData.map(d => d.value));
+  const validValues = bedroomData.map(d => d.value).filter((v): v is number => v !== null);
+  const maxRent = validValues.length > 0 ? Math.max(...validValues) : 1;
 
   return (
     <>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema([
         { name: 'Home', url: '/' },
-        { name: state?.state || metro.state, url: `/state/${state?.slug || ''}/` },
+        { name: state?.state || metro.state_abbr, url: `/state/${state?.slug || ''}/` },
         { name: metro.metro_name, url: `/metro/${slug}/` },
       ])) }} />
       {faqs.length > 0 && <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema(faqs)) }} />}
@@ -88,8 +104,14 @@ export default async function MetroPage({ params }: Props) {
         subtitle={`HUD FMR ${year}`}
         tagline={topAnswer}
         badges={[
-          { label: `${rentBurden}% rent burden`, tone: isBurdened ? "amber" as const : "emerald" as const },
-          { label: `${metro.vacancy_rate}% vacancy`, tone: "indigo" as const },
+          ...(vsNationalPct !== null ? [{
+            label: `${vsNationalPct >= 0 ? '+' : ''}${vsNationalPct}% vs national`,
+            tone: (vsNationalPct >= 10 ? "amber" : vsNationalPct <= -10 ? "emerald" : "indigo") as "amber" | "emerald" | "indigo",
+          }] : []),
+          ...(rentBurden !== null ? [{
+            label: `${rentBurden}% of state median income`,
+            tone: (isBurdened ? "amber" : "emerald") as "amber" | "emerald",
+          }] : []),
         ]}
         alternatives={allMetros.filter(m => m.slug !== slug).slice(0, 3).map(m => ({
           label: m.metro_name,
@@ -127,17 +149,26 @@ export default async function MetroPage({ params }: Props) {
           <p className="text-xl font-bold text-indigo-700">{formatCurrency(metro.fmr_2br)}/mo</p>
         </div>
         <div className="bg-indigo-50 rounded-lg p-4">
-          <p className="text-sm text-slate-600">Median Income</p>
-          <p className="text-xl font-bold text-indigo-700">{formatCurrency(metro.median_income)}</p>
+          <p className="text-sm text-slate-600">1BR FMR</p>
+          <p className="text-xl font-bold text-indigo-700">{formatCurrency(metro.fmr_1br)}/mo</p>
         </div>
         <div className="bg-indigo-50 rounded-lg p-4">
-          <p className="text-sm text-slate-600">Vacancy Rate</p>
-          <p className="text-xl font-bold text-indigo-700">{metro.vacancy_rate}%</p>
+          <p className="text-sm text-slate-600">vs National Avg</p>
+          <p className="text-xl font-bold text-indigo-700">
+            {vsNationalPct !== null ? `${vsNationalPct >= 0 ? '+' : ''}${vsNationalPct}%` : '—'}
+          </p>
         </div>
-        <div className={`rounded-lg p-4 ${isBurdened ? 'bg-red-50' : 'bg-green-50'}`}>
-          <p className="text-sm text-slate-600">Rent Burden</p>
-          <p className={`text-xl font-bold ${isBurdened ? 'text-red-700' : 'text-green-700'}`}>{rentBurden}%</p>
-        </div>
+        {rentBurden !== null ? (
+          <div className={`rounded-lg p-4 ${isBurdened ? 'bg-red-50' : 'bg-green-50'}`}>
+            <p className="text-sm text-slate-600">2BR vs State Income</p>
+            <p className={`text-xl font-bold ${isBurdened ? 'text-red-700' : 'text-green-700'}`}>{rentBurden}%</p>
+          </div>
+        ) : (
+          <div className="bg-indigo-50 rounded-lg p-4">
+            <p className="text-sm text-slate-600">Studio FMR</p>
+            <p className="text-xl font-bold text-indigo-700">{formatCurrency(metro.fmr_studio)}/mo</p>
+          </div>
+        )}
       </div>
 
       {/* Rent by Bedroom */}
@@ -148,55 +179,62 @@ export default async function MetroPage({ params }: Props) {
             <div key={d.label}>
               <div className="flex justify-between text-sm mb-1">
                 <span>{d.label}</span>
-                <span className="font-semibold">{formatCurrency(d.value)}/mo</span>
+                <span className="font-semibold">{d.value !== null ? `${formatCurrency(d.value)}/mo` : '—'}</span>
               </div>
               <div className="w-full bg-slate-100 rounded-full h-6">
-                <div className="bg-indigo-500 h-6 rounded-full" style={{ width: `${(d.value / maxRent * 100).toFixed(0)}%` }} />
+                <div className="bg-indigo-500 h-6 rounded-full" style={{ width: d.value !== null ? `${(d.value / maxRent * 100).toFixed(0)}%` : '0%' }} />
               </div>
             </div>
           ))}
         </div>
       </section>
 
-      {/* Affordability */}
-      <section className="mb-8">
-        <h2 className="text-xl font-bold mb-4">Affordability Analysis</h2>
-        <div className="bg-slate-50 rounded-lg p-4">
-          <p className="text-sm text-slate-700 mb-2">
-            Based on the 30% rule, a household earning the median income of {formatCurrency(metro.median_income)}/year
-            can afford up to <strong>{formatCurrency(affordableRent)}/mo</strong> in rent.
-          </p>
-          <p className="text-sm text-slate-700">
-            The 2BR FMR of {formatCurrency(metro.fmr_2br)}/mo represents <strong>{rentBurden}%</strong> of median income,
-            {isBurdened ? ' which exceeds the 30% affordability threshold.' : ' which is within the 30% affordability threshold.'}
-          </p>
-        </div>
-      </section>
+      {/* Affordability — frames against state-level median income */}
+      {state && stateMedianIncome !== null && affordableRent !== null && metro.fmr_2br !== null && rentBurden !== null && (
+        <section className="mb-8">
+          <h2 className="text-xl font-bold mb-4">Affordability vs. {state.state} state median</h2>
+          <div className="bg-slate-50 rounded-lg p-4">
+            <p className="text-sm text-slate-700 mb-2">
+              Using the {state.state} state median household income of {formatCurrency(stateMedianIncome)}/year (ACS 2023 5-Year, B19013), the 30% rule allows up to <strong>{formatCurrency(affordableRent)}/mo</strong> on rent.
+            </p>
+            <p className="text-sm text-slate-700">
+              The 2BR FMR in {metro.metro_name} of {formatCurrency(metro.fmr_2br)}/mo represents <strong>{rentBurden}%</strong> of state median income —
+              {isBurdened ? ' above' : ' within'} the 30% affordability threshold for the typical state household.
+              Within-metro income may differ from the state aggregate; see the county pages below for a tighter view.
+            </p>
+          </div>
+        </section>
+      )}
 
       <AdSlot id="metro-mid" />
 
-      {/* Vacancy Rate Context */}
-      <section className="mb-8">
-        <h2 className="text-xl font-bold mb-4">Rental Market Conditions</h2>
-        <p className="text-sm text-slate-600">
-          The vacancy rate of {metro.vacancy_rate}% in {metro.metro_name} indicates a
-          {metro.vacancy_rate < 5 ? ' tight' : metro.vacancy_rate < 7 ? ' moderate' : ' loose'} rental market.
-          {metro.vacancy_rate < 5 ? ' Low vacancy means more competition for available units and potential upward pressure on rents.' :
-           metro.vacancy_rate < 7 ? ' A balanced market with reasonable availability for renters.' :
-           ' Higher vacancy gives renters more options and potential leverage on pricing.'}
-        </p>
-      </section>
+      {/* National benchmark context */}
+      {metro.fmr_2br !== null && vsNational !== null && vsNationalPct !== null && (
+        <section className="mb-8">
+          <h2 className="text-xl font-bold mb-4">How {metro.metro_name} compares nationally</h2>
+          <p className="text-sm text-slate-600">
+            The {metro.metro_name} 2BR FMR of {formatCurrency(metro.fmr_2br)}/mo runs {Math.abs(vsNationalPct)}% {vsNational >= 0 ? 'above' : 'below'} the national 2-bedroom FMR average of {formatCurrency(NATIONAL_AVG_2BR)}/mo.
+            {Math.abs(vsNationalPct) < 10
+              ? ' Rents here track the US norm closely — voucher payment standards in this metro will look similar to most US metros.'
+              : vsNationalPct > 0
+                ? ' This metro sits in the higher-cost portion of the US rental market, which translates to higher voucher payment standards and tighter affordability for unsubsidized renters.'
+                : ' This metro is comparatively affordable on the national scale, which often means voucher recipients have a wider pool of qualifying units to choose from.'}
+          </p>
+        </section>
+      )}
 
       {/* FAQs */}
-      <section className="mb-8">
-        <h2 className="text-xl font-bold mb-4">Frequently Asked Questions</h2>
-        {faqs.map((faq, i) => (
-          <div key={i} className="mb-4">
-            <h3 className="font-semibold text-slate-900">{faq.question}</h3>
-            <p className="text-sm text-slate-600 mt-1">{faq.answer}</p>
-          </div>
-        ))}
-      </section>
+      {faqs.length > 0 && (
+        <section className="mb-8">
+          <h2 className="text-xl font-bold mb-4">Frequently Asked Questions</h2>
+          {faqs.map((faq, i) => (
+            <div key={i} className="mb-4">
+              <h3 className="font-semibold text-slate-900">{faq.question}</h3>
+              <p className="text-sm text-slate-600 mt-1">{faq.answer}</p>
+            </div>
+          ))}
+        </section>
+      )}
 
       {/* Other Metros */}
       <section className="mb-8">
@@ -211,7 +249,7 @@ export default async function MetroPage({ params }: Props) {
         </div>
       </section>
 
-      {/* Why this matters — US renter context */}
+      {/* Why this matters */}
       <section className="mb-8 mt-6" data-upgrade="why-it-matters">
         <h2 className="text-xl font-bold mb-3">
           Why fair market rent in {metro.metro_name} matters
@@ -234,14 +272,16 @@ export default async function MetroPage({ params }: Props) {
             you see online are far above FMR, you&apos;re looking at the
             top of the market &mdash; widen the search.
           </p>
-          <p>
-            The standard US rule of thumb: housing should not exceed 30%
-            of gross household income. At {formatCurrency(metro.median_income)}
-            /year median income in {metro.metro_name}, that ceiling is
-            {" "}{formatCurrency(affordableRent)}/month. The 2BR FMR of
-            {" "}{formatCurrency(metro.fmr_2br)} is {rentBurden}% of
-            median &mdash; {isBurdened ? "above" : "within"} the 30% rule.
-          </p>
+          {state && stateMedianIncome !== null && affordableRent !== null && metro.fmr_2br !== null && rentBurden !== null && (
+            <p>
+              The standard US rule of thumb: housing should not exceed 30%
+              of gross household income. At {formatCurrency(stateMedianIncome)}
+              /year median income for {state.state}, that ceiling is
+              {" "}{formatCurrency(affordableRent)}/month. The 2BR FMR of
+              {" "}{formatCurrency(metro.fmr_2br)} is {rentBurden}% of
+              the state median &mdash; {isBurdened ? "above" : "within"} the 30% rule for a typical state household.
+            </p>
+          )}
           <p className="text-sm text-slate-500">
             HUD updates FMRs every October for the federal fiscal year
             beginning October 1. Source: HUD User FMR documentation.
