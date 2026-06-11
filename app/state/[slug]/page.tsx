@@ -2,7 +2,7 @@ import { getAllStates, getStateBySlug, getCountiesByState, getMetrosByState, typ
 import { buildDbPageRobots, buildTrustUpdatedLabel, getDataVintageLabel, getDbPageGate, getReviewedAt, getReviewedBy, METHODOLOGY_URL } from '@/lib/db-page';
 import { generateStateInsights } from '@/lib/state-insights';
 import { formatCurrency, formatPercent, getDataYear } from '@/lib/format';
-import { breadcrumbSchema, faqSchema, generateStateFAQs } from '@/lib/schema';
+import { breadcrumbSchema, faqSchema, generateStateFAQs, statePageJsonLd } from '@/lib/schema';
 import { AdSlot } from '@/components/AdSlot';
 import { CiteButton } from '@/components/CiteButton';
 import { FreshnessTag } from '@/components/FreshnessTag';
@@ -10,15 +10,30 @@ import { EditorNote } from '@/components/EditorNote';
 import { DidYouKnow } from '@/components/DidYouKnow';
 import { DataSourceBadge } from '@/components/DataSourceBadge';
 import { CrossSiteLinks } from '@/components/CrossSiteLinks';
+import { AuthorBox } from '@/components/AuthorBox';
+import { STATE_VINTAGE } from '@/lib/authorship';
 import { FeedbackButton } from "@/components/FeedbackButton";
 import { TrustBlock } from '@/components/upgrades/TrustBlock';
-import RentCalculator from '@/components/RentCalculator';
+import { RentAffordabilityCheck } from '@/components/tools/RentAffordabilityCheck';
 import { notFound } from 'next/navigation';
 import type { Metadata } from 'next';
 import { StateRich } from '@/components/state/StateRich';
 import { DataSuppressedNotice } from '@/components/DataSuppressedNotice';
 import { getAllStateCommentary } from '@/lib/rent-commentary';
 import { getNationalContext, getWageGap } from '@/lib/state-facts';
+import { classifyRentBurdenTier } from '@/lib/rent-burden-tier';
+import { classifyStateOorMultiple } from '@/lib/oor-housing-wage-multiple';
+import { classifyStateFmrVariance } from '@/lib/fmr-county-variance-tier';
+import { getFairRentInterpretation } from '@/lib/fairrent-interpretation';
+import { FairRentInterpretation } from '@/components/FairRentInterpretation';
+import { SOURCE_AUTHORITIES, PUBLISHER, EDITORIAL_TEAM } from '@/lib/authorship';
+import { datasetSchema } from '@/lib/schema';
+import { decodeStateCrosswalk, trimEntityForTitle, fairRentMultiCreatorDatasetSchema } from '@/lib/crosswalk-rent';
+import { CrosswalkBridge } from '@/components/upgrades/CrosswalkBridge';
+import { decodeFmrMarketGap } from '@/lib/fmr-market-gap';
+import { FmrMarketGapBlock } from '@/components/upgrades/FmrMarketGapBlock';
+import { StateHeroImage } from '@/components/StateHeroImage';
+import { getStateImageByName } from '@/lib/state-images';
 
 interface Props { params: Promise<{ slug: string }> }
 
@@ -49,7 +64,6 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
   const state = getStateBySlug(slug);
   if (!state) return {};
-  const year = getDataYear();
   const affordableRent = state.acs_median_household_income !== null
     ? Math.round(state.acs_median_household_income * 0.3 / 12)
     : null;
@@ -58,8 +72,15 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     alternativeLinkCount: 4,
     topAnswer: description,
   });
+  // P1 verdict-in-title: `{StateShort} {Score}/100 — {VerdictShort}` ≤60 chars.
+  // Use title.absolute to bypass layout template "%s | FairRentWize" suffix
+  // (canonical URL carries the brand; verdict + score is the SERP signal).
+  const crosswalk = decodeStateCrosswalk(state.abbr);
+  const title = crosswalk
+    ? { absolute: `${trimEntityForTitle(state.state)} ${crosswalk.composedScore}/100 — ${crosswalk.verdictShort}` }
+    : `${state.state} Fair Market Rents ${getDataYear()} - Average Rent by County`;
   return {
-    title: `${state.state} Fair Market Rents ${year} - Average Rent by County`,
+    title,
     description,
     alternates: { canonical: `/state/${slug}/` },
     openGraph: { url: `/state/${slug}/` },
@@ -89,6 +110,22 @@ export default async function StatePage({ params }: Props) {
   const nationalCtx = getNationalContext(allStates);
   const wageGap = getWageGap(state);
 
+  const burdenTier = classifyRentBurdenTier({
+    fmr2br: state.fmr_2br,
+    medianHouseholdIncome: state.acs_median_household_income,
+    geographyName: state.state,
+    geographyKind: 'state',
+  });
+
+  // PSU 1차 2026-05-12 — three-lever composite. OOR Multiple +
+  // FMR County Variance + FairRent Interpretation surface atop
+  // the 0차 RentBurdenTier baseline.
+  const oorMultiple = classifyStateOorMultiple(state.abbr);
+  const fmrVariance = classifyStateFmrVariance(state.abbr);
+  const fairRentInterp = getFairRentInterpretation(state.abbr);
+  // Phase 7 P0 wrapper — single source of truth for verdict score + multi-creator schema.
+  const crosswalk = decodeStateCrosswalk(state.abbr);
+
   const stateSuppressedReasons: string[] = [];
   if (state.fmr_2br === null) stateSuppressedReasons.push('state-aggregate 2BR FMR');
   if (state.acs_median_household_income === null) stateSuppressedReasons.push('median household income');
@@ -96,23 +133,13 @@ export default async function StatePage({ params }: Props) {
 
   return (
     <>
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{
-          __html: JSON.stringify({
-            "@context": "https://schema.org",
-            "@type": "Dataset",
-            "name": `${state.state} Fair Market Rents ${year}`,
-            "description": `HUD Fair Market Rent data for ${state.state} by county and metro area. State-aggregate 2BR FMR: ${state.fmr_2br !== null ? formatCurrency(state.fmr_2br) + '/mo' : 'unavailable'}.`,
-            "url": `https://fairrentwize.com/state/${slug}/`,
-            "license": "https://creativecommons.org/publicdomain/zero/1.0/",
-            "creator": { "@type": "Organization", "name": "DataPeek Facts", "url": "https://datapeekfacts.com" },
-            "author": { "@type": "Organization", "name": "DataPeek" },
-            "temporalCoverage": String(year),
-            "distribution": { "@type": "DataDownload", "encodingFormat": "text/html", "contentUrl": `https://fairrentwize.com/state/${slug}/` }
-          })
-        }}
-      />
+      {statePageJsonLd(state).map((node, i) => (
+        <script
+          key={`state-jsonld-${i}`}
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(node) }}
+        />
+      ))}
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema([
         { name: 'Home', url: '/' },
         { name: state.state, url: `/state/${slug}/` },
@@ -122,6 +149,8 @@ export default async function StatePage({ params }: Props) {
       <nav className="text-sm text-slate-500 mb-4">
         <a href="/" className="hover:text-indigo-600">Home</a> &raquo; <span>{state.state}</span>
       </nav>
+
+      {(() => { const stateImage = getStateImageByName(state.state); return stateImage ? <StateHeroImage img={stateImage} /> : null; })()}
 
       <h1 className="text-3xl font-bold mb-2">{state.state} Fair Market Rents {year}</h1>
       <p className="text-slate-600 mb-3">{topAnswer}</p>
@@ -143,6 +172,173 @@ export default async function StatePage({ params }: Props) {
         updated={buildTrustUpdatedLabel()}
         reviewedBy={getReviewedBy()}
         methodologyUrl={METHODOLOGY_URL}
+      />
+
+      {/* Per-lever dataset JSON-LD (Trap #105 per-call creator override). */}
+      {oorMultiple && oorMultiple.confidence === 'high' && (
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify(datasetSchema({
+              title: `NLIHC Housing Wage Multiple — ${state.state}`,
+              description: `NLIHC Out of Reach 2025 housing wage ($${oorMultiple.housingWage2BR.toFixed(2)}/hr) compared to mean renter wage ($${oorMultiple.meanRenterWage.toFixed(2)}/hr) for ${state.state}. 5-tier classifier indicates how far the renter sub-population's wage covers HUD FY 2025 FMR 2BR within the HUD 30% cost-burden threshold.`,
+              url: `/state/${state.slug}/#fairrent-interpretation`,
+              reviewedAt: STATE_VINTAGE,
+              spatialName: state.state,
+              creator: { name: 'National Low Income Housing Coalition', url: 'https://nlihc.org/oor' },
+              variableMeasured: [
+                'NLIHC OOR 2025 Housing Wage 2BR (USD/hour)',
+                'NLIHC OOR 2025 Mean Renter Wage (USD/hour)',
+                'Housing Wage / Mean Renter Wage Multiple',
+                'OOR Multiple Tier (A–E)',
+              ],
+            })),
+          }}
+        />
+      )}
+      {fmrVariance && fmrVariance.confidence === 'high' && (
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify(datasetSchema({
+              title: `FMR County Variance — ${state.state}`,
+              description: `Within-state coefficient of variation of HUD FY 2025 Fair Market Rent 2BR across ${fmrVariance.countyCount} counties of ${state.state}. 5-tier classifier indicates whether the state-level FMR aggregate hides a coastal/metro vs. balance-of-state split.`,
+              url: `/state/${state.slug}/#fairrent-interpretation`,
+              reviewedAt: STATE_VINTAGE,
+              spatialName: state.state,
+              creator: { name: SOURCE_AUTHORITIES[0].name, url: SOURCE_AUTHORITIES[0].url },
+              variableMeasured: [
+                'HUD FY 2025 FMR 2BR (USD, county-level)',
+                'Within-State FMR 2BR Coefficient of Variation (%)',
+                'Min/Max/Mean FMR 2BR (USD)',
+                'FMR Variance Tier (A–E)',
+              ],
+              backedRowCount: fmrVariance.countyCount,
+            })),
+          }}
+        />
+      )}
+      {fairRentInterp && (
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify(datasetSchema({
+              title: `FairRent Composite Verdict — ${state.state}`,
+              description: `Three-lever composite verdict for ${state.state}: RentBurdenTier ${fairRentInterp.inputs.rentBurdenTier} × OOR Multiple ${fairRentInterp.inputs.oorMultipleTier} × FMR County Variance ${fairRentInterp.inputs.fmrVarianceTier}, classified into one of six mutually exclusive DominantSignal categories.`,
+              url: `/state/${state.slug}/#fairrent-interpretation`,
+              reviewedAt: STATE_VINTAGE,
+              spatialName: state.state,
+              creator: { name: SOURCE_AUTHORITIES[0].name, url: SOURCE_AUTHORITIES[0].url },
+              variableMeasured: [
+                'RentBurdenTier (A–E)',
+                'OOR Housing Wage Multiple Tier (A–E)',
+                'FMR County Variance Tier (A–E)',
+                'FairRent DominantSignal Category',
+              ],
+            })),
+          }}
+        />
+      )}
+
+      {/* RentBurdenTier — composing HUD FMR 2BR × ACS B19013 median income */}
+      {burdenTier.confidence !== 'insufficient-data' && (
+        <section
+          className="mb-6 rounded-xl border border-emerald-200 bg-emerald-50/60 p-5"
+          data-upgrade="rent-burden-tier"
+        >
+          <div className="flex flex-wrap items-baseline justify-between gap-2 mb-2">
+            <h2 className="text-lg font-bold text-emerald-900">
+              {state.state} RentBurdenTier: <span className="font-mono">Tier {burdenTier.tier}</span> &mdash; {burdenTier.label}
+            </h2>
+            <span className="text-sm font-semibold text-emerald-700">
+              {burdenTier.burdenPct.toFixed(1)}% of median income
+            </span>
+          </div>
+          <p className="text-sm leading-7 text-slate-700">{burdenTier.rationale}</p>
+          <p className="mt-3 text-xs text-slate-600">
+            Cutoffs: A &lt;18% &middot; B 18&ndash;22% &middot; C 22&ndash;26% &middot; D 26&ndash;30% &middot; E &ge;30% (HUD federal cost-burden threshold, 24 CFR 5.628 / 42 USC 1437a).{' '}
+            Read the RentBurdenTier methodology &rarr;
+          </p>
+        </section>
+      )}
+
+      {(() => {
+        const fmrGap = decodeFmrMarketGap(state.fmr_2br, state.acs_median_rent_2br);
+        return fmrGap ? <FmrMarketGapBlock result={fmrGap} areaName={state.state} /> : null;
+      })()}
+
+      {/* OOR Housing Wage Multiple — NLIHC OOR 2025 labor-market gap */}
+      {oorMultiple && oorMultiple.confidence === 'high' && (
+        <section
+          className="mb-6 rounded-xl border border-indigo-200 bg-indigo-50/60 p-5"
+          data-upgrade="oor-housing-wage-multiple"
+        >
+          <div className="flex flex-wrap items-baseline justify-between gap-2 mb-2">
+            <h2 className="text-lg font-bold text-indigo-900">
+              {state.state} OOR Multiple: <span className="font-mono">Tier {oorMultiple.tier}</span> &mdash; {oorMultiple.label}
+            </h2>
+            <span className="text-sm font-semibold text-indigo-700">
+              {oorMultiple.multiple.toFixed(2)}× &middot; {oorMultiple.hoursPerWeekAt40} hrs/wk at mean renter wage
+            </span>
+          </div>
+          <p className="text-sm leading-7 text-slate-700">{oorMultiple.rationale}</p>
+          <p className="mt-3 text-xs text-slate-600">
+            Cutoffs: A &lt;1.10× &middot; B 1.10&ndash;1.25× &middot; C 1.25&ndash;1.45× &middot; D 1.45&ndash;1.65× &middot; E &ge;1.65× (NLIHC Out of Reach 2025; DOL FLSA federal min wage $7.25/hr at {oorMultiple.hoursPerWeekAtFedMinWage} hrs/wk).{' '}
+            Read the OOR Multiple methodology &rarr;
+          </p>
+        </section>
+      )}
+
+      {/* FMR County Variance — within-state HUD FMR 2BR CoV */}
+      {fmrVariance && fmrVariance.confidence === 'high' && (
+        <section
+          className="mb-6 rounded-xl border border-sky-200 bg-sky-50/60 p-5"
+          data-upgrade="fmr-county-variance"
+        >
+          <div className="flex flex-wrap items-baseline justify-between gap-2 mb-2">
+            <h2 className="text-lg font-bold text-sky-900">
+              {state.state} FMR Variance: <span className="font-mono">Tier {fmrVariance.tier}</span> &mdash; {fmrVariance.label}
+            </h2>
+            <span className="text-sm font-semibold text-sky-700">
+              CoV {fmrVariance.covPct.toFixed(1)}% &middot; {fmrVariance.countyCount} counties &middot; ${fmrVariance.minFmr2br.toLocaleString()}&ndash;${fmrVariance.maxFmr2br.toLocaleString()}
+            </span>
+          </div>
+          <p className="text-sm leading-7 text-slate-700">{fmrVariance.dispersionRationale}</p>
+          <p className="mt-3 text-xs text-slate-600">
+            Cutoffs: A &lt;11% &middot; B 11&ndash;15% &middot; C 15&ndash;20% &middot; D 20&ndash;28% &middot; E &ge;28% (HUD FY 2025 FMR-2BR coefficient of variation within state, ≥3 counties required).{' '}
+            Read the FMR County Variance methodology &rarr;
+          </p>
+        </section>
+      )}
+
+      {/* FairRent composite verdict — atop the three levers above */}
+      {fairRentInterp && <FairRentInterpretation interpretation={fairRentInterp} />}
+
+      {/* Phase 7 P4 multi-creator dataset schema — HUD + Census + NLIHC + Congress */}
+      {crosswalk && (
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify(
+              fairRentMultiCreatorDatasetSchema({
+                name: `FairRent Crosswalk — ${state.state}`,
+                description: crosswalk.decoderNotes,
+                url: `/state/${state.slug}/`,
+                spatialName: state.state,
+                reviewedAt: STATE_VINTAGE,
+                composedScore: crosswalk.composedScore,
+                verdict: crosswalk.verdictShort,
+              }),
+            ),
+          }}
+        />
+      )}
+
+      {/* Phase 7 P5 cross-walk bridge — county-FIPS join cohort */}
+      <CrosswalkBridge
+        entityName={state.state}
+        entitySlug={slug}
+        entityKind="state"
       />
 
       {/* Layer 2: status-aware intro */}
@@ -349,7 +545,26 @@ export default async function StatePage({ params }: Props) {
         </a>
       </section>
 
-      <RentCalculator />
+      {/* Tool surface v2 (2026-06-11): the old RentCalculator carried a
+          hardcoded synthetic state-level FMR table — retired. This is the
+          county-page affordability/voucher tool in state mode, fed by the
+          REAL per-bedroom HUD FY2025 county FMRs already loaded above. */}
+      <RentAffordabilityCheck
+        stateName={state.state}
+        counties={counties
+          .filter((c) => c.fmr_studio && c.fmr_1br && c.fmr_2br && c.fmr_3br && c.fmr_4br)
+          .map((c) => ({
+            name: c.county_name,
+            slug: c.slug,
+            fmr: {
+              studio: c.fmr_studio as number,
+              br1: c.fmr_1br as number,
+              br2: c.fmr_2br as number,
+              br3: c.fmr_3br as number,
+              br4: c.fmr_4br as number,
+            },
+          }))}
+      />
 
       {/* Counties */}
       <section className="mb-8">
@@ -417,6 +632,8 @@ export default async function StatePage({ params }: Props) {
       <CrossSiteLinks current="FairRentWize" />
 
       <StateRich slug={slug} state={state} />
+
+      <AuthorBox vintage={STATE_VINTAGE} source={`${state.state} state aggregates: HUD FY2025 FMR rolled up + ACS 2019-2023 5-Year (median rent + rent burden) + NLIHC OOR 2025 (housing wage).`} />
 
     </>
   );

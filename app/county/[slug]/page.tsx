@@ -1,10 +1,9 @@
 import { getAllCountySlugs, getCountyBySlug, getRelatedCounties, getStateByAbbr, type County } from '@/lib/db';
 import { buildDbPageRobots, buildTrustUpdatedLabel, getDataVintageLabel, getDbPageGate, getReviewedAt, getReviewedBy, METHODOLOGY_URL } from '@/lib/db-page';
 import { formatCurrency, formatPercent, formatNumber, getDataYear } from '@/lib/format';
-import { breadcrumbSchema, faqSchema } from '@/lib/schema';
+import { breadcrumbSchema, faqSchema, countyPageJsonLd } from '@/lib/schema';
 import { generateAutoFaqs } from '@/lib/auto-faqs';
 import { AdSlot } from '@/components/AdSlot';
-import RentCalculator from '@/components/RentCalculator';
 import { RentAffordabilityCheck } from '@/components/tools/RentAffordabilityCheck';
 import { notFound } from 'next/navigation';
 import type { Metadata } from 'next';
@@ -12,11 +11,19 @@ import { FreshnessTag } from '@/components/FreshnessTag';
 import { TrustBlock } from '@/components/upgrades/TrustBlock';
 import { InsightBlock } from '@/components/upgrades/InsightBlock';
 import { RelatedEntities } from '@/components/upgrades/RelatedEntities';
+import { AuthorBox } from '@/components/AuthorBox';
+import { ENTITY_VINTAGE } from '@/lib/authorship';
 import { getCountyInsights } from '@/lib/insights';
 import { TableOfContents } from '@/components/upgrades/TableOfContents';
 import { DataSuppressedNotice } from '@/components/DataSuppressedNotice';
 import { getAllCountyCommentary } from '@/lib/rent-commentary';
 import { getCountyVsNational, getMoeFlag, NATIONAL_AVG_2BR } from '@/lib/county-facts';
+import { classifyRentBurdenTier } from '@/lib/rent-burden-tier';
+import { decodeCountyCrosswalk, trimEntityForTitle, fairRentMultiCreatorDatasetSchema } from '@/lib/crosswalk-rent';
+import { CrosswalkBridge } from '@/components/upgrades/CrosswalkBridge';
+import { decodeFmrMarketGap } from '@/lib/fmr-market-gap';
+import { FmrMarketGapBlock } from '@/components/upgrades/FmrMarketGapBlock';
+import { ENTITY_VINTAGE as STATE_VINTAGE_FOR_COUNTY } from '@/lib/authorship';
 
 interface Props { params: Promise<{ slug: string }> }
 
@@ -57,17 +64,27 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const range = (low !== null && high !== null)
     ? `: $${low.toLocaleString()}–$${high.toLocaleString()}/mo`
     : '';
-  const title = `${county.county_name}, ${county.state_abbr} Fair Market Rent ${year}${range}`;
   const description = buildCountyTopAnswer(county, affordableRent);
   const gate = getDbPageGate({
     alternativeLinkCount: 4,
     topAnswer: description,
   });
+  // P1 verdict-in-title: `{County Short} {Score}/100 — {VerdictShort}` ≤60 chars.
+  // Use title.absolute to bypass layout template "%s | FairRentWize" suffix.
+  const crosswalk = decodeCountyCrosswalk({
+    countyName: county.county_name,
+    stateAbbr: county.state_abbr,
+    fmr2br: county.fmr_2br,
+    medianHouseholdIncome: county.acs_median_household_income,
+  });
+  const verdictTitle = crosswalk
+    ? `${trimEntityForTitle(`${county.county_name}, ${county.state_abbr}`)} ${crosswalk.composedScore}/100 — ${crosswalk.verdictShort}`
+    : `${county.county_name}, ${county.state_abbr} Fair Market Rent ${year}${range}`;
   return {
-    title,
+    title: crosswalk ? { absolute: verdictTitle } : verdictTitle,
     description,
     alternates: { canonical: `/county/${slug}/` },
-    openGraph: { title, description, url: `/county/${slug}/` },
+    openGraph: { title: verdictTitle, description, url: `/county/${slug}/` },
     robots: buildDbPageRobots(gate.pass),
   };
 }
@@ -103,6 +120,21 @@ export default async function CountyPage({ params }: Props) {
   const vsNational = getCountyVsNational(county);
   const moe = getMoeFlag(county);
 
+  const burdenTier = classifyRentBurdenTier({
+    fmr2br: county.fmr_2br,
+    medianHouseholdIncome: county.acs_median_household_income,
+    geographyName: `${county.county_name}, ${county.state_abbr}`,
+    geographyKind: 'county',
+  });
+
+  // Phase 7 P0 wrapper — multi-creator schema + cross-walk bridge consume this.
+  const crosswalk = decodeCountyCrosswalk({
+    countyName: county.county_name,
+    stateAbbr: county.state_abbr,
+    fmr2br: county.fmr_2br,
+    medianHouseholdIncome: county.acs_median_household_income,
+  });
+
   // Layer 3: build the suppressed-fields list (only when truly missing — not just thin)
   const suppressedReasons: string[] = [];
   if (county.fmr_2br === null) suppressedReasons.push('2-bedroom HUD FMR');
@@ -119,6 +151,13 @@ export default async function CountyPage({ params }: Props) {
 
   return (
     <>
+      {countyPageJsonLd(county, state?.state || county.state_abbr).map((node, i) => (
+        <script
+          key={`county-jsonld-${i}`}
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(node) }}
+        />
+      ))}
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema([
         { name: 'Home', url: '/' },
         { name: state?.state || county.state_abbr, url: `/state/${state?.slug || ''}/` },
@@ -148,6 +187,62 @@ export default async function CountyPage({ params }: Props) {
         {county.acs_total_occupied_units !== null && ` Occupied housing units: ${formatNumber(county.acs_total_occupied_units)}.`}
         {county.acs_median_household_income !== null && ` Median household income: ${formatCurrency(county.acs_median_household_income)}/year.`}
       </p>
+
+      {/* Phase 7 P4 multi-creator dataset schema — HUD + Census + NLIHC + Congress */}
+      {crosswalk && (
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify(
+              fairRentMultiCreatorDatasetSchema({
+                name: `FairRent Crosswalk — ${county.county_name}, ${county.state_abbr}`,
+                description: crosswalk.decoderNotes,
+                url: `/county/${slug}/`,
+                spatialName: `${county.county_name}, ${state?.state ?? county.state_abbr}`,
+                reviewedAt: STATE_VINTAGE_FOR_COUNTY,
+                composedScore: crosswalk.composedScore,
+                verdict: crosswalk.verdictShort,
+              }),
+            ),
+          }}
+        />
+      )}
+
+      {/* RentBurdenTier — composing HUD FMR 2BR × ACS B19013 median income */}
+      {burdenTier.confidence !== 'insufficient-data' && (
+        <section
+          className="mb-6 rounded-xl border border-emerald-200 bg-emerald-50/60 p-5"
+          data-upgrade="rent-burden-tier"
+        >
+          <div className="flex flex-wrap items-baseline justify-between gap-2 mb-2">
+            <h2 className="text-lg font-bold text-emerald-900">
+              {county.county_name}, {county.state_abbr} RentBurdenTier: <span className="font-mono">Tier {burdenTier.tier}</span> &mdash; {burdenTier.label}
+            </h2>
+            <span className="text-sm font-semibold text-emerald-700">
+              {burdenTier.burdenPct.toFixed(1)}% of median income
+            </span>
+          </div>
+          <p className="text-sm leading-7 text-slate-700">{burdenTier.rationale}</p>
+          <p className="mt-3 text-xs text-slate-600">
+            Cutoffs: A &lt;18% &middot; B 18&ndash;22% &middot; C 22&ndash;26% &middot; D 26&ndash;30% &middot; E &ge;30% (HUD federal cost-burden threshold, 24 CFR 5.628 / 42 USC 1437a).{' '}
+            How RentBurdenTier is computed &rarr;
+          </p>
+        </section>
+      )}
+
+      {/* Phase 7 P5 cross-walk bridge — county-FIPS join cohort */}
+      <CrosswalkBridge
+        entityName={`${county.county_name}, ${county.state_abbr}`}
+        entitySlug={slug}
+        entityKind="county"
+      />
+
+      {(() => {
+        const fmrGap = decodeFmrMarketGap(county.fmr_2br, county.acs_median_rent_2br);
+        return fmrGap ? (
+          <FmrMarketGapBlock result={fmrGap} areaName={`${county.county_name}, ${county.state_abbr}`} />
+        ) : null;
+      })()}
 
       {/* Layer 2: status × slot × variant intro */}
       <section className="mb-6 rounded-xl border border-slate-200 bg-slate-50/40 p-5">
@@ -242,7 +337,6 @@ export default async function CountyPage({ params }: Props) {
         }}
       />
 
-      <RentCalculator />
 
       {/* Income Needed */}
       <section className="mb-8">
@@ -331,6 +425,8 @@ export default async function CountyPage({ params }: Props) {
           <p>Check <a href="https://costbycity.com" className="underline">local cost of living data</a></p>
         </div>
       </div>
+
+      <AuthorBox vintage={ENTITY_VINTAGE} source={`${county.county_name}, ${county.state_abbr}: HUD FY2025 FMR (${county.hud_source_kind ?? 'NCNTY'} record) + ACS 2019-2023 5-Year median gross rent + rent burden share.`} />
     </>
   );
 }

@@ -1,6 +1,34 @@
 "use client";
 
-import { useState } from "react";
+import { useMemo, useState } from "react";
+
+/**
+ * RentAffordabilityCheck v2 (2026-06-11, tool-surface #2).
+ *
+ * v1 was the county-page income slider vs the county's REAL per-bedroom HUD
+ * FY2025 FMRs. v2 keeps that intact and adds:
+ *
+ *  1. State mode — pass `counties` (+`stateName`) and the same tool gets a
+ *     county selector, replacing the retired components/RentCalculator.tsx
+ *     (which carried a hardcoded synthetic state-level FMR table — round
+ *     numbers, identical vectors across states — contradicting the real
+ *     county FMRs rendered on the same pages).
+ *  2. Housing Choice Voucher math — the site's whole identity is the voucher
+ *     reality check, so the tool now computes what the federal rules actually
+ *     prescribe from the SAME real FMR row:
+ *       · payment standard basic range = 90–110% of FMR (24 CFR 982.503)
+ *       · tenant share ≈ 30% of monthly adjusted income (TTP, 24 CFR 982.515)
+ *       · voucher covers ≈ payment standard − tenant share
+ *       · initial lease-up cap: tenant payment may not exceed 40% of adjusted
+ *         monthly income (24 CFR 982.508)
+ *     Utility allowances are PHA-specific and deliberately NOT estimated
+ *     (v1's hub page carried fabricated utility numbers — retired with it).
+ *
+ * Honesty: every dollar figure derives from the county's HUD FY2025 FMR
+ * passed in as props + the user's own income input. Income is taken as GROSS;
+ * TTP uses ADJUSTED income, so voucher figures are labelled estimates.
+ * SSR: defaults (income $4,500, 2BR, first county) render full content.
+ */
 
 interface FmrData {
   studio: number;
@@ -10,23 +38,57 @@ interface FmrData {
   br4: number;
 }
 
-interface Props {
-  countyName: string;
+interface CountyOption {
+  name: string;
+  slug: string;
   fmr: FmrData;
+}
+
+interface Props {
+  /** County mode (county pages): fixed county. */
+  countyName?: string;
+  fmr?: FmrData;
+  /** State mode (state pages): selector over the state's counties. */
+  stateName?: string;
+  counties?: CountyOption[];
 }
 
 const BEDROOM_LABELS = ["Studio", "1 BR", "2 BR", "3 BR", "4 BR"];
 
 function fmt(n: number) {
-  return "$" + n.toLocaleString("en-US");
+  return "$" + Math.round(n).toLocaleString("en-US");
 }
 
-export function RentAffordabilityCheck({ countyName, fmr }: Props) {
+export function RentAffordabilityCheck({ countyName, fmr, stateName, counties }: Props) {
   const [monthlyIncome, setMonthlyIncome] = useState(4500);
+  const [countyIdx, setCountyIdx] = useState(0);
+  const [bedroomIdx, setBedroomIdx] = useState(2);
 
-  const fmrValues = [fmr.studio, fmr.br1, fmr.br2, fmr.br3, fmr.br4];
+  const stateMode = !!counties && counties.length > 0;
+  const activeName = stateMode ? counties[countyIdx]?.name ?? "" : countyName ?? "";
+  const activeFmr: FmrData | undefined = stateMode ? counties[countyIdx]?.fmr : fmr;
+
+  const fmrValues = useMemo(
+    () =>
+      activeFmr
+        ? [activeFmr.studio, activeFmr.br1, activeFmr.br2, activeFmr.br3, activeFmr.br4]
+        : [0, 0, 0, 0, 0],
+    [activeFmr],
+  );
+
+  if (!activeFmr) return null;
+
   const affordableRent = Math.round(monthlyIncome * 0.3);
   const maxBar = Math.max(...fmrValues, affordableRent);
+
+  // Housing Choice Voucher math (federal basic range, estimates)
+  const selectedFmr = fmrValues[bedroomIdx];
+  const psLow = selectedFmr * 0.9;
+  const psHigh = selectedFmr * 1.1;
+  const tenantShare = monthlyIncome * 0.3;
+  const coverLow = Math.max(0, psLow - tenantShare);
+  const coverHigh = Math.max(0, psHigh - tenantShare);
+  const initialCap = monthlyIncome * 0.4;
 
   return (
     <section className="bg-gradient-to-br from-indigo-50 to-slate-50 border border-indigo-200 rounded-xl p-6 my-8">
@@ -35,8 +97,36 @@ export function RentAffordabilityCheck({ countyName, fmr }: Props) {
       </h2>
       <p className="text-sm text-slate-600 mb-5">
         Slide to your monthly gross income and see which unit sizes in{" "}
-        {countyName} fit the 30% affordability rule.
+        {activeName} fit the 30% affordability rule — then what a Housing
+        Choice Voucher would actually cover there.
       </p>
+
+      {/* County selector (state mode) */}
+      {stateMode && (
+        <div className="mb-5">
+          <label className="block text-sm font-medium text-slate-700 mb-1">
+            County in {stateName}
+          </label>
+          <select
+            value={countyIdx}
+            onChange={(e) => setCountyIdx(Number(e.target.value))}
+            className="w-full px-4 py-2 border border-slate-300 rounded-lg bg-white focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
+          >
+            {counties.map((c, i) => (
+              <option key={c.slug} value={i}>
+                {c.name}
+              </option>
+            ))}
+          </select>
+          <p className="text-xs text-slate-400 mt-1">
+            HUD sets FMRs at the county/metro level — state averages hide the
+            spread, so pick your county.{" "}
+            <a href={`/county/${counties[countyIdx]?.slug}/`} className="text-indigo-600 hover:underline">
+              Full {activeName} rent data →
+            </a>
+          </p>
+        </div>
+      )}
 
       {/* Slider */}
       <div className="mb-6">
@@ -97,12 +187,10 @@ export function RentAffordabilityCheck({ countyName, fmr }: Props) {
                 </div>
               </div>
               <div className="relative w-full bg-slate-100 rounded-full h-5">
-                {/* FMR bar */}
                 <div
                   className={`${barColor} h-5 rounded-full transition-all duration-300`}
                   style={{ width: `${Math.min((rent / maxBar) * 100, 100).toFixed(1)}%` }}
                 />
-                {/* Affordable limit line */}
                 <div
                   className="absolute top-0 h-5 border-r-2 border-dashed border-indigo-600"
                   style={{ left: `${Math.min((affordableRent / maxBar) * 100, 100).toFixed(1)}%` }}
@@ -123,13 +211,13 @@ export function RentAffordabilityCheck({ countyName, fmr }: Props) {
       {/* Summary sentence */}
       <div className="mt-5 bg-white rounded-lg border border-slate-200 p-4 text-sm text-slate-700 leading-relaxed">
         {(() => {
-          const twobrRent = fmr.br2;
+          const twobrRent = activeFmr.br2;
           const isOk = twobrRent <= affordableRent;
           return (
             <p>
               On <strong>{fmt(monthlyIncome)}/mo</strong>, you can afford up to{" "}
               <strong>{fmt(affordableRent)}</strong> in rent. A 2-bedroom in{" "}
-              {countyName} at <strong>{fmt(twobrRent)}/mo</strong> is{" "}
+              {activeName} at <strong>{fmt(twobrRent)}/mo</strong> is{" "}
               <span className={isOk ? "text-emerald-700 font-semibold" : "text-red-600 font-semibold"}>
                 {isOk ? "affordable" : "unaffordable"}
               </span>
@@ -144,8 +232,90 @@ export function RentAffordabilityCheck({ countyName, fmr }: Props) {
         })()}
       </div>
 
+      {/* Housing Choice Voucher math */}
+      <div className="mt-6 bg-white rounded-xl border border-indigo-200 p-5">
+        <h3 className="text-base font-bold text-indigo-900 mb-1">
+          What would a Housing Choice Voucher cover in {activeName}?
+        </h3>
+        <p className="text-xs text-slate-500 mb-4">
+          Federal math on the HUD FY2025 FMR for your unit size — your local
+          PHA sets the exact payment standard inside the 90–110% basic range
+          (24 CFR 982.503).
+        </p>
+
+        <div className="flex flex-wrap gap-2 mb-4">
+          {BEDROOM_LABELS.map((label, i) => (
+            <button
+              key={label}
+              type="button"
+              onClick={() => setBedroomIdx(i)}
+              className={`px-3 py-1.5 rounded-lg border text-sm ${
+                bedroomIdx === i
+                  ? "bg-indigo-700 text-white border-indigo-700"
+                  : "bg-white text-slate-700 border-slate-300 hover:border-indigo-400"
+              }`}
+            >
+              {label}
+            </button>
+          ))}
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-3 text-center">
+          <div className="bg-indigo-50 border border-indigo-100 rounded-lg p-3">
+            <div className="text-xs text-slate-500 uppercase tracking-wide">
+              Payment standard range
+            </div>
+            <div className="text-lg font-bold text-indigo-800 mt-0.5">
+              {fmt(psLow)}–{fmt(psHigh)}
+            </div>
+            <div className="text-[11px] text-slate-400">
+              90–110% of the {fmt(selectedFmr)} FMR
+            </div>
+          </div>
+          <div className="bg-slate-50 border border-slate-200 rounded-lg p-3">
+            <div className="text-xs text-slate-500 uppercase tracking-wide">
+              Your share (≈30% of income)
+            </div>
+            <div className="text-lg font-bold text-slate-800 mt-0.5">
+              {fmt(tenantShare)}/mo
+            </div>
+            <div className="text-[11px] text-slate-400">
+              TTP uses adjusted income — estimate
+            </div>
+          </div>
+          <div className="bg-emerald-50 border border-emerald-100 rounded-lg p-3">
+            <div className="text-xs text-slate-500 uppercase tracking-wide">
+              Voucher covers (est.)
+            </div>
+            <div className="text-lg font-bold text-emerald-700 mt-0.5">
+              {coverHigh <= 0 ? "$0" : `${fmt(coverLow)}–${fmt(coverHigh)}`}/mo
+            </div>
+            <div className="text-[11px] text-slate-400">
+              payment standard − your share
+            </div>
+          </div>
+        </div>
+
+        <ul className="mt-4 text-xs text-slate-500 space-y-1 list-disc pl-4">
+          <li>
+            At initial lease-up your total payment may not exceed{" "}
+            <strong>{fmt(initialCap)}/mo</strong> (40% of adjusted monthly
+            income, 24 CFR 982.508) — renting above the payment standard comes
+            out of your pocket up to that cap.
+          </li>
+          <li>
+            Utility allowances are set by each PHA and are <strong>not</strong>{" "}
+            included here — ask your PHA for the allowance schedule.
+          </li>
+          <li>
+            Figures are screening estimates from published HUD FY2025 FMRs, not
+            an eligibility determination — your PHA&apos;s numbers control.
+          </li>
+        </ul>
+      </div>
+
       <p className="text-xs text-slate-400 mt-4">
-        Based on HUD FY2026 Fair Market Rents for {countyName}. The 30% rule is
+        Based on HUD FY2025 Fair Market Rents for {activeName}. The 30% rule is
         a widely used guideline — not a strict limit.
       </p>
     </section>
