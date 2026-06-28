@@ -1,8 +1,20 @@
-import { getReviewedAt, getDataVintageLabel } from "@/lib/db-page";
-import { EDITORIAL_TEAM, PUBLISHER } from "@/lib/authorship";
+import { getDataVintageLabel } from "@/lib/db-page";
+import {
+  EDITORIAL_TEAM,
+  PUBLISHER,
+  ENTITY_VINTAGE,
+  SOURCE_AUTHORITY_LINES,
+  REVIEWER_DISCLAIMER,
+} from "@/lib/authorship";
 
-export function AuthorBox() {
-  const reviewedAt = getReviewedAt();
+interface AuthorBoxProps {
+  /** ISO date string the page is anchored to (entity, methodology, about, blog updatedAt, etc.). Defaults to ENTITY_VINTAGE. */
+  vintage?: string;
+  /** Short, page-specific source line shown beneath the citation list. Optional. */
+  source?: string;
+}
+
+export function AuthorBox({ vintage = ENTITY_VINTAGE, source }: AuthorBoxProps = {}) {
   const dataVintage = getDataVintageLabel();
 
   return (
@@ -16,7 +28,7 @@ export function AuthorBox() {
         </div>
         <div className="flex-1 min-w-0">
           <div className="font-semibold text-slate-900 text-sm">
-            Data verified by {EDITORIAL_TEAM.name}
+            Reviewed by {EDITORIAL_TEAM.name}
           </div>
           <div className="text-xs text-slate-500 mt-0.5">
             Part of the <a href={PUBLISHER.url} className="text-slate-700 hover:underline" rel="noopener">{PUBLISHER.name}</a>
@@ -24,15 +36,24 @@ export function AuthorBox() {
         </div>
       </div>
       <p className="text-xs text-slate-600 leading-relaxed mb-3">
-        FairRentWize is maintained by an editorial workflow that audits public data sources and verifies dates, values, and methodology on every page. We publish as an organization — no individual bylines — and disclose our data vintage and review dates openly.
+        Rent estimates on this page draw on three primary public datasets, audited by the editorial team against the cited primary sources before publication:
+      </p>
+      <ul className="text-xs text-slate-600 leading-relaxed mb-3 list-disc pl-5 space-y-1">
+        {SOURCE_AUTHORITY_LINES.map((line) => (
+          <li key={line}>{line}</li>
+        ))}
+      </ul>
+      {source ? (
+        <p className="text-xs text-slate-600 leading-relaxed mb-3">
+          <span className="font-medium text-slate-700">This page:</span> {source}
+        </p>
+      ) : null}
+      <p className="text-[11px] text-slate-500 leading-relaxed mb-3 italic">
+        {REVIEWER_DISCLAIMER}
       </p>
       <div className="flex flex-wrap items-center gap-2 text-xs text-slate-500">
-        {reviewedAt && (
-          <>
-            <span>Last verified: <time dateTime={reviewedAt}>{reviewedAt}</time></span>
-            <span className="text-slate-300">·</span>
-          </>
-        )}
+        <span>Last reviewed: <time dateTime={vintage}>{vintage}</time></span>
+        <span className="text-slate-300">·</span>
         <span>Data vintage: {dataVintage}</span>
         <span className="text-slate-300">·</span>
         <a href="https://datapeekfacts.com/editorial-policy/" className="underline underline-offset-2 hover:text-slate-900" rel="noopener">Editorial policy</a>

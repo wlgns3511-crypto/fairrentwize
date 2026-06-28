@@ -3,6 +3,8 @@ Allow: /
 Disallow: /api/
 Disallow: /_next/
 Disallow: /embed/
+Disallow: /search/
+Disallow: /search
 
 # ── SEO scraper tools (zero user-facing traffic) ──
 User-Agent: AhrefsBot

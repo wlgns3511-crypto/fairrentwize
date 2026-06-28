@@ -14,6 +14,10 @@ import { AuthorBox } from '@/components/AuthorBox';
 import { STATE_VINTAGE } from '@/lib/authorship';
 import { FeedbackButton } from "@/components/FeedbackButton";
 import { TrustBlock } from '@/components/upgrades/TrustBlock';
+import { TableOfContents } from '@/components/upgrades/TableOfContents';
+import { InsightBlock } from '@/components/upgrades/InsightBlock';
+import { LivePoll } from '@/components/upgrades/LivePoll';
+import { FeedbackButton as CorrectionButton } from '@/components/upgrades/FeedbackButton';
 import { RentAffordabilityCheck } from '@/components/tools/RentAffordabilityCheck';
 import { notFound } from 'next/navigation';
 import type { Metadata } from 'next';
@@ -32,6 +36,7 @@ import { decodeStateCrosswalk, trimEntityForTitle, fairRentMultiCreatorDatasetSc
 import { CrosswalkBridge } from '@/components/upgrades/CrosswalkBridge';
 import { decodeFmrMarketGap } from '@/lib/fmr-market-gap';
 import { FmrMarketGapBlock } from '@/components/upgrades/FmrMarketGapBlock';
+import { RentSynthesisMethodologyNote } from '@/components/upgrades/RentSynthesisMethodologyNote';
 import { StateHeroImage } from '@/components/StateHeroImage';
 import { getStateImageByName } from '@/lib/state-images';
 
@@ -146,33 +151,38 @@ export default async function StatePage({ params }: Props) {
       ])) }} />
       {faqs.length > 0 && <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema(faqs)) }} />}
 
-      <nav className="text-sm text-slate-500 mb-4">
-        <a href="/" className="hover:text-indigo-600">Home</a> &raquo; <span>{state.state}</span>
-      </nav>
+      <main data-toc-root className="w-full">
+        <nav className="text-sm text-slate-500 mb-4">
+          <a href="/" className="hover:text-indigo-600">Home</a> &raquo; <span>{state.state}</span>
+        </nav>
 
-      {(() => { const stateImage = getStateImageByName(state.state); return stateImage ? <StateHeroImage img={stateImage} /> : null; })()}
+        {(() => { const stateImage = getStateImageByName(state.state); return stateImage ? <StateHeroImage img={stateImage} /> : null; })()}
 
-      <h1 className="text-3xl font-bold mb-2">{state.state} Fair Market Rents {year}</h1>
-      <p className="text-slate-600 mb-3">{topAnswer}</p>
+        <h1 className="text-3xl font-bold mb-2">{state.state} Fair Market Rents {year}</h1>
+        <p className="text-slate-600 mb-3">{topAnswer}</p>
 
-      <FreshnessTag
-        source="HUD Fair Market Rents"
-        updated={getReviewedAt()}
-        reviewedBy={getReviewedBy()}
-        dataVintage={getDataVintageLabel()}
-        methodologyUrl={METHODOLOGY_URL}
-      />
+        <FreshnessTag
+          source="HUD Fair Market Rents"
+          updated={getReviewedAt()}
+          reviewedBy={getReviewedBy()}
+          dataVintage={getDataVintageLabel()}
+          methodologyUrl={METHODOLOGY_URL}
+        />
 
-      <TrustBlock
-        sources={[
-          { name: "HUD Fair Market Rents", url: "https://www.huduser.gov/portal/datasets/fmr.html" },
-          { name: "Census ACS 2023 5-Year (B25008/B25070/B19013)", url: "https://www.census.gov/topics/housing.html" },
-          { name: "NLIHC Out of Reach 2025", url: "https://nlihc.org/oor" },
-        ]}
-        updated={buildTrustUpdatedLabel()}
-        reviewedBy={getReviewedBy()}
-        methodologyUrl={METHODOLOGY_URL}
-      />
+        <TrustBlock
+          sources={[
+            { name: "HUD Fair Market Rents", url: "https://www.huduser.gov/portal/datasets/fmr.html" },
+            { name: "Census ACS 2023 5-Year (B25008/B25070/B19013)", url: "https://www.census.gov/topics/housing.html" },
+            { name: "NLIHC Out of Reach 2025", url: "https://nlihc.org/oor" },
+          ]}
+          updated={buildTrustUpdatedLabel()}
+          reviewedBy={getReviewedBy()}
+          methodologyUrl={METHODOLOGY_URL}
+        />
+
+        <TableOfContents />
+      <LivePoll entityName={state.state} />
+        <InsightBlock entityName={state.state} insights={insights.map((text) => ({ text, sentiment: 'neutral' }))} />
 
       {/* Per-lever dataset JSON-LD (Trap #105 per-call creator override). */}
       {oorMultiple && oorMultiple.confidence === 'high' && (
@@ -238,6 +248,14 @@ export default async function StatePage({ params }: Props) {
             })),
           }}
         />
+      )}
+
+      {/* AEO Experience (2026-06-17): first-person "how we modeled this" note
+          narrating the genuine HUD×Census×NLIHC synthesis below in our own
+          voice. Every figure interpolated from burdenTier / oorMultiple / the
+          recomputed FMR-vs-market gap — zero hardcoded numbers. */}
+      {burdenTier.confidence !== 'insufficient-data' && (
+        <RentSynthesisMethodologyNote state={state} burdenTier={burdenTier} oorMultiple={oorMultiple} />
       )}
 
       {/* RentBurdenTier — composing HUD FMR 2BR × ACS B19013 median income */}
@@ -626,6 +644,7 @@ export default async function StatePage({ params }: Props) {
       <div className="flex items-center gap-4 mt-4">
         <CiteButton title={`${state.state} Fair Market Rents`} url={`https://fairrentwize.com/state/${slug}/`} source="FairRentWize (HUD + ACS + NLIHC)" />
       </div>
+      </main>
 
       <FeedbackButton pageId={slug} />
 
@@ -633,6 +652,7 @@ export default async function StatePage({ params }: Props) {
 
       <StateRich slug={slug} state={state} />
 
+            <CorrectionButton />
       <AuthorBox vintage={STATE_VINTAGE} source={`${state.state} state aggregates: HUD FY2025 FMR rolled up + ACS 2019-2023 5-Year (median rent + rent burden) + NLIHC OOR 2025 (housing wage).`} />
 
     </>

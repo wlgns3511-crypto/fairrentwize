@@ -29,7 +29,7 @@ export function buildDbPageRobots(index: boolean): NonNullable<Metadata["robots"
 }
 
 export function buildTrustUpdatedLabel(dataVintage = getDataVintageLabel()): string {
-  return `Data verified ${DB_UPDATED} · data vintage ${dataVintage}`;
+  return `Reviewed ${DB_UPDATED} · data vintage ${dataVintage}`;
 }
 
 export function getDbPageGate({

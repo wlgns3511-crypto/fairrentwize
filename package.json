@@ -8,7 +8,10 @@
     "build:sitemap": "tsx scripts/build-sitemap.ts",
     "start": "next start",
     "lint": "eslint",
-    "build-db": "python3 scripts/build-db.py"
+    "build-db": "tsx scripts/build-db.ts",
+    "refresh:hud": "tsx scripts/refresh-from-hud.ts",
+    "refresh:acs": "tsx scripts/refresh-from-acs.ts",
+    "refresh:nlihc": "tsx scripts/refresh-from-nlihc.ts"
   },
   "dependencies": {
     "better-sqlite3": "^12.8.0",

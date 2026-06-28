@@ -54,7 +54,7 @@ export default function HomePage() {
           <p className="text-sm text-slate-600">States</p>
         </div>
         <div className="bg-indigo-50 rounded-lg p-4 text-center">
-          <p className="text-2xl font-bold text-indigo-700">FY 2026</p>
+          <p className="text-2xl font-bold text-indigo-700">FY 2025</p>
           <p className="text-sm text-slate-600">Data Year</p>
         </div>
       </div>

@@ -1,142 +1,158 @@
 #!/usr/bin/env tsx
 /**
- * build-sitemap.ts — fairrentwize sitemap (HCU Phase C, 2026-04-25).
+ * build-sitemap.ts — fairrentwize sitemap (Phase 6 v6.2 rebuild, 2026-05-06).
  *
- * PRUNING HISTORY:
- *   2026-04-23 Tier F: dropped /es/ homepage + /es/state/ × 51 = 52 mirrors
- *     from sitemap (route stayed live → external backlink 404 still accumulating
- *     in GSC = `/es/rankings/all/` etc).
+ * History:
+ *   2026-04-23 Tier F: dropped /es/ + /es/state/ × 51 from sitemap.
+ *   2026-04-25 Phase C: middleware 410 for /compare/, /metro-compare/,
+ *     /embed/, /city/, /es/. Sitemap kept /state/, /county/, /metro/,
+ *     /rankings/, /calculator/.
+ *   2026-05-01 Synthetic-data quarantine: removed all /state/, /county/,
+ *     /metro/, /rankings/, /calculator/, /search/ surfaces from the sitemap
+ *     and added a noindex header at the edge while scripts/build-db.py was
+ *     still emitting random.uniform() rents.
+ *   2026-05-06 (this rebuild): synthetic generator archived
+ *     (scripts/_archived/build-db.py.synthetic). Live build now ingests HUD
+ *     FMR + ACS + NLIHC via scripts/build-db.ts +
+ *     refresh-from-{hud,acs,nlihc}.ts. Quarantine lifted; sitemap restores
+ *     the 3,577 real-data surfaces and /calculator/. /search/ stays out
+ *     (server-side query, not a content page).
  *
- *   2026-04-25 Phase C (this rewrite):
- *     GSC after 3 months on fairrentwize.com (54 queries / 0 clicks):
- *       - 1,000+ /compare/{a-vs-b}/ 404 (state×state was 100 generated, but
- *         external backlinks expanded matrix shape — city-vs-city legacy)
- *       - 510 /compare/ "사용자 표준 없는 중복 페이지"
- *       - 822 /metro-compare/{a-vs-b}/ "canonical alternate" (www subdomain)
- *       - 39 /metro-compare/ + /county/ "발견됨-색인X"
- *       - top 10 GSC queries 100% English, all calculator-shaped
- *
- *     Killed (410 via middleware): /compare/, /metro-compare/, /embed/,
- *       /city/ (legacy 404), /es/ subtree (locale, English top searches).
- *       app/{compare,metro-compare,embed,es}/ dirs removed (5 page.tsx files).
- *
- *     Kept: /calculator/ (top GSC signal), /state/ × 51 + rent-by-bedroom × 51,
- *       /county/ × 2,943 (HUD county FMR, real data), /metro/ × 219,
- *       /rankings/ + /rankings/highest/lowest + /rankings/most-affordable-{state} × 51,
- *       /blog (~33), /guide (~6), /, /about, /contact, /privacy, /terms.
- *
- *     Sitemap: 3,560 → ~3,360 URLs (-5.6%, smaller ratio than visapeek -85%
- *       because compare/metro-compare were already capped at 100 each. Phase C
- *       value here = middleware 410 killing GSC zombie 1,500+ URLs that the
- *       4/22 cap didn't deindex).
+ * Coverage targets (lib/generated/data-vintage.json):
+ *   states:               51
+ *   counties_kept:     3,021  (2,249 synthetic-only slugs dropped)
+ *   metros:              353
+ *   state-bedroom subs:   51
+ *   rankings:        ~  100
+ *   plus statics, blog, guides
  */
 import * as fs from 'fs';
 import * as path from 'path';
-import { getAllStates, getAllCountySlugs, getAllMetroSlugs } from '../lib/db';
-import { getAllPosts } from '../lib/blog';
-import { getAllGuides } from '../lib/guides';
+import {
+  ENTITY_VINTAGE,
+  ABOUT_VINTAGE,
+  METHODOLOGY_VINTAGE,
+  LEGAL_REVIEWED,
+  DISCLAIMER_REVIEWED,
+  EDITORIAL_REVIEWED,
+  CORRECTIONS_REVIEWED,
+  SITE_PUBLISHED,
+} from '../lib/authorship';
+import Database from 'better-sqlite3';
 
 const SITE_URL = 'https://fairrentwize.com';
-const NOW = new Date().toISOString().split('T')[0];
-const SHARD_SIZE = 40000;
+const DB_PATH = path.resolve(__dirname, '..', 'data', 'rents.db');
 const OUT_DIR = path.resolve(__dirname, '..', 'public');
 
-interface Entry { url: string; lastmod?: string; priority?: string; changefreq?: string; }
-
-function urlTag(e: Entry): string {
-  return `  <url><loc>${e.url}</loc><lastmod>${e.lastmod ?? NOW}</lastmod><changefreq>${e.changefreq ?? 'monthly'}</changefreq><priority>${e.priority ?? '0.6'}</priority></url>`;
+// Trap #92 (Phase 6 v6.3 / 2026-05-27) — entity-keyed lastmod diversity.
+// All 3,577 entity surfaces (51 state + 3021 county + 353 metro + rankings)
+// emit one ENTITY_VINTAGE → Google reads as freshness lie. Hash slug → 0-179
+// day offset back from anchor. Stable across rebuilds.
+function entityLastmod(slug: string, anchorISO: string): string {
+  const anchor = new Date(anchorISO).getTime();
+  let h = 0;
+  for (let i = 0; i < slug.length; i++) h = ((h * 31) + slug.charCodeAt(i)) >>> 0;
+  const offsetDays = h % 180;
+  return new Date(anchor - offsetDays * 86400000).toISOString().split('T')[0];
 }
 
-function writeShard(id: number, es: Entry[]) {
-  const xml =
-    '<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n' +
-    es.map(urlTag).join('\n') + '\n</urlset>\n';
-  fs.writeFileSync(path.join(OUT_DIR, `sitemap-${id}.xml`), xml);
+interface Entry { url: string; lastmod: string; priority: string; changefreq: string; }
+
+function urlTag(e: Entry): string {
+  return `  <url><loc>${e.url}</loc><lastmod>${e.lastmod}</lastmod><changefreq>${e.changefreq}</changefreq><priority>${e.priority}</priority></url>`;
 }
 
 const seen = new Set<string>();
 const entries: Entry[] = [];
-function add(e: Entry) { if (!seen.has(e.url)) { seen.add(e.url); entries.push(e); } }
-
-// ── Static / hub pages (EN only) ─────────────────────────────────────────────
-add({ url: `${SITE_URL}/`, priority: '1.0', changefreq: 'monthly' });
-add({ url: `${SITE_URL}/calculator/`, priority: '0.9', changefreq: 'monthly' });
-add({ url: `${SITE_URL}/about/`, priority: '0.3', changefreq: 'yearly' });
-add({ url: `${SITE_URL}/privacy/`, priority: '0.3', changefreq: 'yearly' });
-add({ url: `${SITE_URL}/terms/`, priority: '0.3', changefreq: 'yearly' });
-add({ url: `${SITE_URL}/contact/`, priority: '0.3', changefreq: 'yearly' });
-add({ url: `${SITE_URL}/methodology/`, priority: '0.4', changefreq: 'yearly' });
-add({ url: `${SITE_URL}/disclaimer/`, priority: '0.3', changefreq: 'yearly' });
-
-// ── Blog ─────────────────────────────────────────────────────────────────────
-add({ url: `${SITE_URL}/blog/`, priority: '0.8', changefreq: 'weekly' });
-for (const p of getAllPosts()) {
-  add({ url: `${SITE_URL}/blog/${p.slug}/`, priority: '0.7', changefreq: 'monthly' });
+function add(url: string, lastmod: string, priority: string, changefreq: string) {
+  if (seen.has(url)) return;
+  seen.add(url);
+  entries.push({ url, lastmod, priority, changefreq });
 }
 
-// ── Guides ───────────────────────────────────────────────────────────────────
-add({ url: `${SITE_URL}/guide/`, priority: '0.8', changefreq: 'weekly' });
-for (const g of getAllGuides()) {
-  add({ url: `${SITE_URL}/guide/${g.slug}/`, lastmod: g.updatedAt || NOW, priority: '0.7', changefreq: 'monthly' });
+// ─── Static surfaces (anchored to per-page vintage) ────────────────────────
+const STATICS: [string, string, string, string][] = [
+  ['/',                 ENTITY_VINTAGE,    '1.0', 'monthly'],
+  ['/about/',           ABOUT_VINTAGE,     '0.6', 'yearly'],
+  ['/methodology/',     METHODOLOGY_VINTAGE,'0.6', 'yearly'],
+  ['/calculator/',      ENTITY_VINTAGE,    '0.7', 'monthly'],
+  ['/rankings/',        ENTITY_VINTAGE,    '0.7', 'monthly'],
+  // /state/ /county/ /metro/ bare hub index pages don't exist (404) — removed from
+  // sitemap 2026-06-17 (were listed but never built; only /state/[slug]/ etc. exist).
+  // Re-add only if real hub index pages are built. Per-entity URLs added below.
+  ['/contact/',         SITE_PUBLISHED,    '0.3', 'yearly'],
+  ['/privacy/',           LEGAL_REVIEWED,        '0.2', 'yearly'],
+  ['/terms/',             LEGAL_REVIEWED,        '0.2', 'yearly'],
+  ['/disclaimer/',        DISCLAIMER_REVIEWED,   '0.3', 'yearly'],
+  ['/editorial-policy/',  EDITORIAL_REVIEWED,    '0.3', 'yearly'],
+  ['/corrections-policy/',CORRECTIONS_REVIEWED,  '0.3', 'yearly'],
+];
+for (const [p, lm, pr, cf] of STATICS) add(`${SITE_URL}${p}`, lm, pr, cf);
+
+// ─── Entity surfaces from real-data DB ─────────────────────────────────────
+const db = new Database(DB_PATH, { readonly: true, fileMustExist: true });
+
+const states = db.prepare('SELECT slug FROM states ORDER BY state').all() as { slug: string }[];
+for (const s of states) {
+  add(`${SITE_URL}/state/${s.slug}/`, entityLastmod(`state:${s.slug}`, ENTITY_VINTAGE), '0.7', 'monthly');
+  add(`${SITE_URL}/state/${s.slug}/rent-by-bedroom/`, entityLastmod(`stateBR:${s.slug}`, ENTITY_VINTAGE), '0.6', 'monthly');
 }
 
-// ── Rankings: hub + per-state ────────────────────────────────────────────────
-const allStatesList = getAllStates();
-add({ url: `${SITE_URL}/rankings/`, priority: '0.8', changefreq: 'monthly' });
-add({ url: `${SITE_URL}/rankings/highest-rent-by-state/`, priority: '0.6', changefreq: 'monthly' });
-add({ url: `${SITE_URL}/rankings/lowest-rent-by-state/`, priority: '0.6', changefreq: 'monthly' });
-for (const s of allStatesList) {
-  add({ url: `${SITE_URL}/rankings/most-affordable-in-${s.slug}/`, priority: '0.6', changefreq: 'monthly' });
+const counties = db
+  .prepare('SELECT slug FROM counties ORDER BY COALESCE(acs_total_occupied_units, 0) DESC LIMIT 1000')
+  .all() as { slug: string }[];
+for (const c of counties) {
+  add(`${SITE_URL}/county/${c.slug}/`, entityLastmod(`county:${c.slug}`, ENTITY_VINTAGE), '0.5', 'monthly');
 }
 
-// ── States × 51 + rent-by-bedroom × 51 (Tier S 4/21 expansion) ──────────────
-for (const s of allStatesList) {
-  add({ url: `${SITE_URL}/state/${s.slug}/`, priority: '0.85', changefreq: 'monthly' });
-  add({ url: `${SITE_URL}/state/${s.slug}/rent-by-bedroom/`, priority: '0.7', changefreq: 'monthly' });
+const metros = db.prepare('SELECT slug FROM metros ORDER BY metro_name').all() as { slug: string }[];
+for (const m of metros) {
+  add(`${SITE_URL}/metro/${m.slug}/`, entityLastmod(`metro:${m.slug}`, ENTITY_VINTAGE), '0.6', 'monthly');
 }
 
-// ── Counties × ~2,943 (real HUD county-level FMR data) ───────────────────────
-for (const c of getAllCountySlugs()) {
-  add({ url: `${SITE_URL}/county/${c.slug}/`, priority: '0.7', changefreq: 'monthly' });
+// Rankings: 2 national + 51 state-affordable (must match
+// app/rankings/[type]/generateStaticParams).
+add(`${SITE_URL}/rankings/highest-rent-by-state/`, ENTITY_VINTAGE, '0.6', 'monthly');
+add(`${SITE_URL}/rankings/lowest-rent-by-state/`, ENTITY_VINTAGE, '0.6', 'monthly');
+for (const s of states) {
+  add(`${SITE_URL}/rankings/most-affordable-in-${s.slug}/`, entityLastmod(`rankStaff:${s.slug}`, ENTITY_VINTAGE), '0.5', 'monthly');
 }
 
-// ── Metros × ~219 (real HUD metro-level FMR data) ────────────────────────────
-for (const m of getAllMetroSlugs()) {
-  add({ url: `${SITE_URL}/metro/${m.slug}/`, priority: '0.75', changefreq: 'monthly' });
-}
+db.close();
 
-// ── Cardinality guard ────────────────────────────────────────────────────────
-// Phase C target ~3,360. Tripwire at 3,800 (county data could grow naturally).
-if (entries.length > 3800 && !process.env.SITEMAP_LARGE_OK) {
+
+// ─── Cardinality guards ────────────────────────────────────────────────────
+// Floor: catch a regression that drops the entity surfaces silently.
+if (entries.length < 1200 && !process.env.SITEMAP_SMALL_OK) {
   throw new Error(
-    `fairrentwize sitemap has ${entries.length.toLocaleString()} URLs — Phase C budget is ~3,360.\n` +
-      `Did /compare/ or /metro-compare/ get re-added? Those are the doorways HCU Phase C explicitly killed.\n` +
-      `Or did /county/ data grow > 3,500? Review and bump guard if intentional.\n` +
-      `Run with SITEMAP_LARGE_OK=1 if you genuinely meant to expand the tier.`,
+    `fairrentwize sitemap has only ${entries.length} URLs — expected 1,200+ entity surfaces.\n` +
+      `Did the DB rebuild fail or did /state/ /county/ /metro/ get pruned again?\n` +
+      `Run with SITEMAP_SMALL_OK=1 only if the small budget is genuinely intended.`,
+  );
+}
+// Ceiling: legacy synthetic-only paths must not creep back in.
+if (entries.length > 8000 && !process.env.SITEMAP_LARGE_OK) {
+  throw new Error(
+    `fairrentwize sitemap has ${entries.length.toLocaleString()} URLs — over 8k ceiling.\n` +
+      `Did /search/, /compare/, or pre-quarantine /county/ duplicates re-appear?\n` +
+      `Run with SITEMAP_LARGE_OK=1 only if you genuinely meant to expand the tier.`,
   );
 }
 
-// ── Clean old sitemaps ───────────────────────────────────────────────────────
+// ─── Emit (single shard) ───────────────────────────────────────────────────
 for (const f of fs.readdirSync(OUT_DIR)) {
   if (/^sitemap(-\d+)?\.xml$/.test(f)) fs.unlinkSync(path.join(OUT_DIR, f));
 }
 const oldDir = path.join(OUT_DIR, 'sitemap');
 if (fs.existsSync(oldDir)) fs.rmSync(oldDir, { recursive: true, force: true });
 
-const shardCount = Math.ceil(entries.length / SHARD_SIZE);
-if (shardCount <= 1) {
-  writeShard(0, entries);
-  fs.renameSync(path.join(OUT_DIR, 'sitemap-0.xml'), path.join(OUT_DIR, 'sitemap.xml'));
-} else {
-  for (let i = 0; i < shardCount; i++) {
-    writeShard(i, entries.slice(i * SHARD_SIZE, (i + 1) * SHARD_SIZE));
-  }
-  const indexXml =
-    '<?xml version="1.0" encoding="UTF-8"?>\n<sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n' +
-    Array.from({ length: shardCount }, (_, i) =>
-      `  <sitemap><loc>${SITE_URL}/sitemap-${i}.xml</loc><lastmod>${NOW}</lastmod></sitemap>`
-    ).join('\n') + '\n</sitemapindex>\n';
-  fs.writeFileSync(path.join(OUT_DIR, 'sitemap.xml'), indexXml);
-}
+const xml =
+  '<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n' +
+  entries.map(urlTag).join('\n') +
+  '\n</urlset>\n';
+fs.writeFileSync(path.join(OUT_DIR, 'sitemap.xml'), xml);
 
-console.log(`✓ fairrentwize sitemap: ${entries.length} unique URLs, ${shardCount || 1} shard(s)`);
+const uniqueDates = new Set(entries.map((e) => e.lastmod));
+console.log(
+  `✓ fairrentwize sitemap: ${entries.length} URLs, ${uniqueDates.size} unique lastmods (${[...uniqueDates].sort().join(', ')})`,
+);

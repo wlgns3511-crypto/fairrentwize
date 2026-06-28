@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import { LEGAL_REVIEWED } from '@/lib/authorship';
 
 export const metadata: Metadata = {
   title: 'Terms of Service',
@@ -12,7 +13,7 @@ export default function TermsPage() {
     <>
       <h1 className="text-3xl font-bold mb-4">Terms of Service</h1>
       <div className="prose prose-slate max-w-none text-sm">
-        <p>Last updated: January 2026</p>
+        <p>Last reviewed: <time dateTime={LEGAL_REVIEWED}>{LEGAL_REVIEWED}</time></p>
         <h2>Use of Data</h2>
         <p>FairRentWize provides Fair Market Rent data for informational purposes only. This data should not be the sole basis for rental pricing, housing, or financial decisions.</p>
         <h2>Accuracy</h2>

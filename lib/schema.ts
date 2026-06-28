@@ -1,9 +1,22 @@
 import type { County, Metro, StateRow } from './db';
 import { formatCurrency, formatPercent, getDataYear } from './format';
-import { PUBLISHER, EDITORIAL_TEAM } from './authorship';
+import {
+  PUBLISHER,
+  EDITORIAL_TEAM,
+  SOURCE_AUTHORITIES,
+  ENTITY_VINTAGE,
+} from './authorship';
 
 const SITE_NAME = 'FairRentWize';
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://fairrentwize.com';
+
+const SOURCE_ORGANIZATIONS = SOURCE_AUTHORITIES.map((s) => ({
+  '@type': 'Organization' as const,
+  name: s.name,
+  url: s.url,
+}));
+
+const SOURCE_BASED_ON = SOURCE_AUTHORITIES.map((s) => s.url);
 
 export function breadcrumbSchema(items: { name: string; url: string }[]) {
   return {
@@ -110,9 +123,136 @@ export function articleSchema(post: { title: string; description: string; slug: 
     dateModified: post.updatedAt ?? post.publishedAt,
     author: { '@type': 'Organization', name: EDITORIAL_TEAM.name, url: EDITORIAL_TEAM.url },
     publisher: { '@type': 'Organization', name: PUBLISHER.name, url: PUBLISHER.url },
+    reviewedBy: { '@type': 'Organization', name: EDITORIAL_TEAM.name, url: EDITORIAL_TEAM.url },
+    sourceOrganization: SOURCE_ORGANIZATIONS,
+    isBasedOn: SOURCE_BASED_ON,
     mainEntityOfPage: url,
     ...(post.category && { articleSection: post.category }),
   };
+}
+
+interface RentEntitySchemaInput {
+  name: string;
+  description: string;
+  url: string;
+  spatialName: string;
+}
+
+function rentEntityDataset({ name, description, url, spatialName }: RentEntitySchemaInput) {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'Dataset',
+    name,
+    description,
+    url,
+    license: 'https://creativecommons.org/publicdomain/zero/1.0/',
+    // creator = the organization that produced the underlying data (HUD),
+    // not the website that publishes the page. schema.org/Dataset spec.
+    creator: { '@type': 'Organization', name: SOURCE_AUTHORITIES[0].name, url: SOURCE_AUTHORITIES[0].url },
+    publisher: { '@type': 'Organization', name: PUBLISHER.name, url: PUBLISHER.url },
+    reviewedBy: { '@type': 'Organization', name: EDITORIAL_TEAM.name, url: EDITORIAL_TEAM.url },
+    sourceOrganization: SOURCE_ORGANIZATIONS,
+    isBasedOn: SOURCE_BASED_ON,
+    spatialCoverage: { '@type': 'Place', name: spatialName },
+    temporalCoverage: '2024-10-01/..',
+    dateModified: ENTITY_VINTAGE,
+    variableMeasured: [
+      'HUD Fair Market Rent (studio, 1BR, 2BR, 3BR, 4BR)',
+      'ACS median gross rent',
+      'ACS rent-burdened share',
+      'NLIHC housing wage (2BR)',
+    ],
+    additionalProperty: [
+      { '@type': 'PropertyValue', name: 'backedRowCount', value: 51 },
+    ],
+  };
+}
+
+/**
+ * Generic Dataset JSON-LD builder with per-call creator override + custom
+ * variableMeasured. Used for per-lever inline dataset surfaces on entity pages
+ * (Trap #105 contract: creator override surfaces NLIHC / HUD / Census per
+ * lever rather than defaulting to SOURCE_AUTHORITIES[0]).
+ */
+export function datasetSchema(opts: {
+  title: string;
+  description: string;
+  url: string;
+  reviewedAt: string;
+  spatialName: string;
+  variableMeasured: string[];
+  creator?: { name: string; url: string };
+  backedRowCount?: number;
+}) {
+  const creatorOrg = opts.creator ?? SOURCE_AUTHORITIES[0];
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'Dataset',
+    name: opts.title,
+    description: opts.description,
+    url: opts.url.startsWith('http') ? opts.url : `${SITE_URL}${opts.url}`,
+    license: 'https://creativecommons.org/publicdomain/zero/1.0/',
+    creator: { '@type': 'Organization', name: creatorOrg.name, url: creatorOrg.url },
+    publisher: { '@type': 'Organization', name: PUBLISHER.name, url: PUBLISHER.url },
+    reviewedBy: { '@type': 'Organization', name: EDITORIAL_TEAM.name, url: EDITORIAL_TEAM.url },
+    sourceOrganization: SOURCE_ORGANIZATIONS,
+    isBasedOn: SOURCE_BASED_ON,
+    spatialCoverage: { '@type': 'Place', name: opts.spatialName },
+    temporalCoverage: '2024-10-01/..',
+    dateModified: opts.reviewedAt,
+    variableMeasured: opts.variableMeasured,
+    additionalProperty: [
+      { '@type': 'PropertyValue', name: 'backedRowCount', value: opts.backedRowCount ?? 51 },
+    ],
+  };
+}
+
+function rentEntityArticle({ name, description, url }: { name: string; description: string; url: string }) {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'Article',
+    headline: name,
+    description,
+    url,
+    datePublished: '2026-04-29',
+    dateModified: ENTITY_VINTAGE,
+    author: { '@type': 'Organization', name: EDITORIAL_TEAM.name, url: EDITORIAL_TEAM.url },
+    publisher: { '@type': 'Organization', name: PUBLISHER.name, url: PUBLISHER.url },
+    reviewedBy: { '@type': 'Organization', name: EDITORIAL_TEAM.name, url: EDITORIAL_TEAM.url },
+    sourceOrganization: SOURCE_ORGANIZATIONS,
+    isBasedOn: SOURCE_BASED_ON,
+    mainEntityOfPage: url,
+  };
+}
+
+export function statePageJsonLd(state: StateRow) {
+  const url = `${SITE_URL}/state/${state.slug}/`;
+  const name = `${state.state} HUD Fair Market Rents and Renter Affordability`;
+  const description = `${state.state} 2-bedroom HUD Fair Market Rent (FY 2025), Census ACS 5-Year median gross rent and rent-burden share, and NLIHC Out of Reach 2025 housing wage.`;
+  return [
+    rentEntityDataset({ name, description, url, spatialName: state.state }),
+    rentEntityArticle({ name, description, url }),
+  ];
+}
+
+export function countyPageJsonLd(county: County, stateName: string) {
+  const url = `${SITE_URL}/county/${county.slug}/`;
+  const name = `${county.county_name}, ${county.state_abbr} HUD Fair Market Rent and ACS Rent Data`;
+  const description = `${county.county_name}, ${stateName} fair market rent (HUD FY 2025) by bedroom size plus ACS 2019-2023 5-Year median gross rent and rent-burden share.`;
+  return [
+    rentEntityDataset({ name, description, url, spatialName: `${county.county_name}, ${stateName}` }),
+    rentEntityArticle({ name, description, url }),
+  ];
+}
+
+export function metroPageJsonLd(metro: Metro) {
+  const url = `${SITE_URL}/metro/${metro.slug}/`;
+  const name = `${metro.metro_name} Metro Area HUD Fair Market Rents`;
+  const description = `${metro.metro_name} CBSA fair market rent (HUD FY 2025) by bedroom size and ACS 2019-2023 5-Year median gross rent.`;
+  return [
+    rentEntityDataset({ name, description, url, spatialName: metro.metro_name }),
+    rentEntityArticle({ name, description, url }),
+  ];
 }
 
 export function generateStateFAQs(state: StateRow): { question: string; answer: string }[] {

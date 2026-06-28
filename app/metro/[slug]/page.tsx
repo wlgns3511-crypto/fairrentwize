@@ -1,13 +1,17 @@
 import { getAllMetroSlugs, getMetroBySlug, getStateByAbbr, getTopMetrosByRent, type Metro } from '@/lib/db';
 import { buildDbPageRobots, buildTrustUpdatedLabel, getDataVintageLabel, getDbPageGate, getReviewedAt, getReviewedBy, METHODOLOGY_URL } from '@/lib/db-page';
 import { formatCurrency, getDataYear } from '@/lib/format';
-import { breadcrumbSchema, faqSchema, generateMetroFAQs } from '@/lib/schema';
+import { breadcrumbSchema, faqSchema, generateMetroFAQs, metroPageJsonLd } from '@/lib/schema';
 import { AdSlot } from '@/components/AdSlot';
 import { AuthorBox } from '@/components/AuthorBox';
+import { ENTITY_VINTAGE } from '@/lib/authorship';
 import { FreshnessTag } from '@/components/FreshnessTag';
 import { AnswerHero } from '@/components/upgrades/AnswerHero';
 import { TrustBlock } from '@/components/upgrades/TrustBlock';
 import { DecisionNext } from '@/components/upgrades/DecisionNext';
+import { classifyRentBurdenTier } from '@/lib/rent-burden-tier';
+import { decodeMetroCrosswalk, trimEntityForTitle, fairRentMultiCreatorDatasetSchema } from '@/lib/crosswalk-rent';
+import { CrosswalkBridge } from '@/components/upgrades/CrosswalkBridge';
 import { notFound } from 'next/navigation';
 import type { Metadata } from 'next';
 
@@ -38,14 +42,27 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
   const metro = getMetroBySlug(slug);
   if (!metro) return {};
-  const year = getDataYear();
   const description = buildMetroTopAnswer(metro);
   const gate = getDbPageGate({
     alternativeLinkCount: 4,
     topAnswer: description,
   });
+  // P1 verdict-in-title — uses parent state's median for the burden frame
+  // (CBSAs span multiple counties, so state aggregate is the consistent
+  // income denominator across the metro index).
+  const state = getStateByAbbr(metro.state_abbr);
+  const crosswalk = decodeMetroCrosswalk({
+    metroName: metro.metro_name,
+    stateAbbr: metro.state_abbr,
+    fmr2br: metro.fmr_2br,
+    stateMedianHouseholdIncome: state?.acs_median_household_income ?? null,
+  });
+  // Use title.absolute to bypass layout template "%s | FairRentWize" suffix.
+  const title = crosswalk
+    ? { absolute: `${trimEntityForTitle(metro.metro_name)} ${crosswalk.composedScore}/100 — ${crosswalk.verdictShort}` }
+    : `${metro.metro_name} Fair Market Rent ${getDataYear()} - Rental Costs by Bedroom`;
   return {
-    title: `${metro.metro_name} Fair Market Rent ${year} - Rental Costs by Bedroom`,
+    title,
     description,
     alternates: { canonical: `/metro/${slug}/` },
     openGraph: { url: `/metro/${slug}/` },
@@ -81,11 +98,33 @@ export default async function MetroPage({ params }: Props) {
     { label: '3 Bedroom', value: metro.fmr_3br },
     { label: '4 Bedroom', value: metro.fmr_4br },
   ];
+
+  const burdenTier = classifyRentBurdenTier({
+    fmr2br: metro.fmr_2br,
+    medianHouseholdIncome: stateMedianIncome,
+    geographyName: metro.metro_name,
+    geographyKind: 'metro',
+  });
+
+  // Phase 7 P0 wrapper — multi-creator schema + cross-walk bridge consume this.
+  const crosswalk = decodeMetroCrosswalk({
+    metroName: metro.metro_name,
+    stateAbbr: metro.state_abbr,
+    fmr2br: metro.fmr_2br,
+    stateMedianHouseholdIncome: stateMedianIncome,
+  });
   const validValues = bedroomData.map(d => d.value).filter((v): v is number => v !== null);
   const maxRent = validValues.length > 0 ? Math.max(...validValues) : 1;
 
   return (
     <>
+      {metroPageJsonLd(metro).map((node, i) => (
+        <script
+          key={`metro-jsonld-${i}`}
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(node) }}
+        />
+      ))}
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema([
         { name: 'Home', url: '/' },
         { name: state?.state || metro.state_abbr, url: `/state/${state?.slug || ''}/` },
@@ -129,6 +168,48 @@ export default async function MetroPage({ params }: Props) {
         methodologyUrl={METHODOLOGY_URL}
       />
 
+      {/* Phase 7 P4 multi-creator dataset schema — HUD + Census + NLIHC + Congress */}
+      {crosswalk && (
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify(
+              fairRentMultiCreatorDatasetSchema({
+                name: `FairRent Crosswalk — ${metro.metro_name}`,
+                description: crosswalk.decoderNotes,
+                url: `/metro/${slug}/`,
+                spatialName: metro.metro_name,
+                reviewedAt: ENTITY_VINTAGE,
+                composedScore: crosswalk.composedScore,
+                verdict: crosswalk.verdictShort,
+              }),
+            ),
+          }}
+        />
+      )}
+
+      {/* RentBurdenTier — metro composing HUD CBSA FMR × parent-state ACS B19013 */}
+      {burdenTier.confidence !== 'insufficient-data' && state && (
+        <section
+          className="mb-6 rounded-xl border border-emerald-200 bg-emerald-50/60 p-5"
+          data-upgrade="rent-burden-tier"
+        >
+          <div className="flex flex-wrap items-baseline justify-between gap-2 mb-2">
+            <h2 className="text-lg font-bold text-emerald-900">
+              {metro.metro_name} RentBurdenTier: <span className="font-mono">Tier {burdenTier.tier}</span> &mdash; {burdenTier.label}
+            </h2>
+            <span className="text-sm font-semibold text-emerald-700">
+              {burdenTier.burdenPct.toFixed(1)}% of {state.state} median income
+            </span>
+          </div>
+          <p className="text-sm leading-7 text-slate-700">{burdenTier.rationale}</p>
+          <p className="mt-3 text-xs text-slate-600">
+            Metro tier uses CBSA 2BR FMR against the parent-state ACS B19013 median household income (CBSAs span multiple counties, so the state aggregate is used for cross-metro consistency). Cutoffs: A &lt;18% &middot; B 18&ndash;22% &middot; C 22&ndash;26% &middot; D 26&ndash;30% &middot; E &ge;30% (HUD federal cost-burden threshold, 24 CFR 5.628 / 42 USC 1437a).{' '}
+            How RentBurdenTier is computed &rarr;
+          </p>
+        </section>
+      )}
+
       <TrustBlock
         sources={[
           { name: "HUD Fair Market Rents", url: `https://www.huduser.gov/portal/datasets/fmr.html` },
@@ -140,6 +221,13 @@ export default async function MetroPage({ params }: Props) {
         updated={buildTrustUpdatedLabel()}
         reviewedBy={getReviewedBy()}
         methodologyUrl={METHODOLOGY_URL}
+      />
+
+      {/* Phase 7 P5 cross-walk bridge — county-FIPS join cohort */}
+      <CrosswalkBridge
+        entityName={metro.metro_name}
+        entitySlug={slug}
+        entityKind="metro"
       />
 
       {/* Overview Cards */}
@@ -315,7 +403,7 @@ export default async function MetroPage({ params }: Props) {
         ]}
       />
 
-      <AuthorBox />
+      <AuthorBox vintage={ENTITY_VINTAGE} source={`${metro.metro_name} CBSA: HUD FY2025 FMR + Census ACS 5-Year median gross rent (CBSA roll-up).`} />
 
       {/* High-CPC footer */}
       <div className="bg-blue-50 rounded-lg p-6 text-sm">

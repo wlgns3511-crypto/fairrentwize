@@ -26,7 +26,7 @@ export function FreshnessTag({
       <span>Last updated: <time dateTime={iso}>{month} {day}, {year}</time></span>
       {reviewedBy && <>
         <span className="text-slate-300">·</span>
-        <span>Data verified by: {reviewedBy}</span>
+        <span>Reviewed by the {reviewedBy}</span>
       </>}
       {dataVintage && <>
         <span className="text-slate-300">·</span>

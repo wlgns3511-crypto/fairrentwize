@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import { LEGAL_REVIEWED } from '@/lib/authorship';
 
 export const metadata: Metadata = {
   title: 'Privacy Policy',
@@ -12,7 +13,7 @@ export default function PrivacyPage() {
     <>
       <h1 className="text-3xl font-bold mb-4">Privacy Policy</h1>
       <div className="prose prose-slate max-w-none text-sm">
-        <p>Last updated: January 2026</p>
+        <p>Last reviewed: <time dateTime={LEGAL_REVIEWED}>{LEGAL_REVIEWED}</time></p>
         <h2>Information We Collect</h2>
         <p>FairRentWize does not collect personal information. We use Google Analytics to understand website traffic patterns and Google AdSense to display advertisements. These services may use cookies.</p>
         <h2>Cookies</h2>

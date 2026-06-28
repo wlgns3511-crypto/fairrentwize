@@ -307,48 +307,6 @@ export const fleetSites: Record<string, FleetSite> = {
     topic: "DMV fees, wait times, REAL ID, and offices for every US state.",
     clusters: ["risk", "moveLocation", "tools"],
   },
-  catbreedpeek: {
-    domain: "catbreedpeek.com",
-    label: "CatBreedPeek",
-    topic: "77 cat breed profiles with health, temperament and care ratings.",
-    clusters: ["household"],
-  },
-  vetcostpeek: {
-    domain: "vetcostpeek.com",
-    label: "VetCostPeek",
-    topic: "Veterinary procedure costs by state — 98 procedures compared.",
-    clusters: ["household", "affordability"],
-  },
-  funeralcostpeek: {
-    domain: "funeralcostpeek.com",
-    label: "FuneralCostPeek",
-    topic: "Funeral and cremation costs by state — burial, casket, services.",
-    clusters: ["household", "affordability"],
-  },
-  childcarepeek: {
-    domain: "childcarepeek.com",
-    label: "ChildCarePeek",
-    topic: "Childcare costs by state and city — daycare, nanny, preschool.",
-    clusters: ["household", "affordability"],
-  },
-  divorcelawpeek: {
-    domain: "divorcelawpeek.com",
-    label: "DivorceLawPeek",
-    topic: "Divorce law guide by state — fees, custody, property division.",
-    clusters: ["risk"],
-  },
-  lawyercostpeek: {
-    domain: "lawyercostpeek.com",
-    label: "LawyerCostPeek",
-    topic: "Attorney fees and legal costs by state and specialty.",
-    clusters: ["affordability", "risk"],
-  },
-  carinsurancepeek: {
-    domain: "carinsurancepeek.com",
-    label: "CarInsurancePeek",
-    topic: "Car insurance rates by state, age, vehicle and coverage type.",
-    clusters: ["affordability", "risk"],
-  },
 };
 
 const defaultTones: DecisionNextTone[] = ["indigo", "emerald", "amber"];

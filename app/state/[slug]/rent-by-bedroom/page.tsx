@@ -2,7 +2,9 @@ import { notFound } from 'next/navigation';
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import { getAllStates, getStateBySlug, getCountiesByState, type County, type StateRow } from '@/lib/db';
+import { classifyRentBurdenTier } from '@/lib/rent-burden-tier';
 import { buildDbPageRobots, getDbPageGate, getReviewedAt, getReviewedBy, getDataVintageLabel, METHODOLOGY_URL, buildTrustUpdatedLabel } from '@/lib/db-page';
+import { STATE_VINTAGE } from '@/lib/authorship';
 import { formatCurrency, getDataYear } from '@/lib/format';
 import { breadcrumbSchema, faqSchema } from '@/lib/schema';
 import { AdSlot } from '@/components/AdSlot';
@@ -147,6 +149,13 @@ export default async function RentByBedroomPage({ params }: Props) {
     : 0;
   const affordableVsBr2 = br2Stats && affordable1br > 0 ? affordable1br - br2Stats.p50 : 0;
 
+  const burdenTier = classifyRentBurdenTier({
+    fmr2br: state.fmr_2br,
+    medianHouseholdIncome: state.acs_median_household_income,
+    geographyName: state.state,
+    geographyKind: 'state',
+  });
+
   // Peer states by average 2BR rent (NLIHC state aggregate)
   const allStates = getAllStates();
   const peers = state.fmr_2br !== null
@@ -198,7 +207,7 @@ export default async function RentByBedroomPage({ params }: Props) {
   return (
     <>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema(crumbs)) }} />
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema(faqs)) }} />
+      {(faqs?.length ?? 0) > 0 && <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema(faqs)) }} />}
 
       <nav className="text-sm text-slate-500 mb-4">
         <Link href="/" className="hover:text-indigo-600">Home</Link> &raquo;{' '}
@@ -222,6 +231,28 @@ export default async function RentByBedroomPage({ params }: Props) {
       <EditorNote
         note={`Percentiles below are computed across the ${counties.length} ${state.state} counties in HUD's FY ${year} FMR release. Each county counts equally — this gives small rural counties the same weight as Los Angeles or Santa Clara, which is deliberate because HUD publishes one FMR per area regardless of population.`}
       />
+
+      {/* RentBurdenTier — anchor for the bedroom dimension below */}
+      {burdenTier.confidence !== 'insufficient-data' && (
+        <section
+          className="mb-6 rounded-xl border border-emerald-200 bg-emerald-50/60 p-5"
+          data-upgrade="rent-burden-tier"
+        >
+          <div className="flex flex-wrap items-baseline justify-between gap-2 mb-2">
+            <h2 className="text-lg font-bold text-emerald-900">
+              {state.state} RentBurdenTier (state-level 2BR anchor): <span className="font-mono">Tier {burdenTier.tier}</span> &mdash; {burdenTier.label}
+            </h2>
+            <span className="text-sm font-semibold text-emerald-700">
+              {burdenTier.burdenPct.toFixed(1)}% of median income at 2BR
+            </span>
+          </div>
+          <p className="text-sm leading-7 text-slate-700">{burdenTier.rationale}</p>
+          <p className="mt-3 text-xs text-slate-600">
+            The tier above is anchored to the 2-bedroom reference unit. Studio and 1BR rents typically drop the burden one to two tiers; 3BR and 4BR can push it higher. Cutoffs: A &lt;18% &middot; B 18&ndash;22% &middot; C 22&ndash;26% &middot; D 26&ndash;30% &middot; E &ge;30% (HUD federal cost-burden threshold, 24 CFR 5.628 / 42 USC 1437a).{' '}
+            How RentBurdenTier is computed &rarr;
+          </p>
+        </section>
+      )}
 
       {/* Spotlight cards */}
       <div className="grid sm:grid-cols-3 gap-3 my-6">
@@ -456,7 +487,7 @@ export default async function RentByBedroomPage({ params }: Props) {
       />
 
       <AdSlot id="bottom" />
-      <AuthorBox />
+      <AuthorBox vintage={STATE_VINTAGE} source={`${state.state} rent-by-bedroom: HUD FY2025 FMR fanout (studio–4BR) + ACS 2019-2023 5-Year median gross rent.`} />
       <CrossSiteLinks current="fairrentwize" />
     </>
   );

@@ -6,7 +6,7 @@ export default function robots(): MetadataRoute.Robots {
       {
         userAgent: '*',
         allow: '/',
-        disallow: ['/embed/', '/api/', '/_next/'],
+        disallow: ['/embed/', '/api/', '/_next/', '/search/', '/search'],
       },
       { userAgent: 'AhrefsBot', disallow: ['/'] },
       { userAgent: 'SemrushBot', disallow: ['/'] },

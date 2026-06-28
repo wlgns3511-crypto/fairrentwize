@@ -148,9 +148,7 @@ export default function RankingsIndex() {
             <span className="text-slate-500"> per-state FMR, tenant rights, rent burden</span>
           </li>
           <li>
-            <Link href="/guide/" className="text-indigo-700 hover:underline font-medium">
-              Rental guides →
-            </Link>
+            Rental guides →
             <span className="text-slate-500"> HUD FMR explained, tenant law, negotiation tips</span>
           </li>
         </ul>

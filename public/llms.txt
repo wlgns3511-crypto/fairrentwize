@@ -1,0 +1,28 @@
+# FairRentWize
+
+> US Fair Market Rents & Rental Affordability Data
+
+Explore HUD Fair Market Rents for 3,000+ US counties and 400 metro areas. Compare rental costs, calculate affordability, and find rent burden data by location.
+
+## Core pages
+- [Methodology and data sources](https://fairrentwize.com/methodology/): how every figure is derived, with primary-source citations
+- [Rankings](https://fairrentwize.com/rankings/): county ranked by the key metric
+- [About and editorial standards](https://fairrentwize.com/about/): authorship and review policy
+
+## Key county
+- [Alabama](https://fairrentwize.com/state/alabama/)
+- [Rent By Bedroom](https://fairrentwize.com/state/alabama/rent-by-bedroom/)
+- [Alaska](https://fairrentwize.com/state/alaska/)
+- [Rent By Bedroom](https://fairrentwize.com/state/alaska/rent-by-bedroom/)
+- [Arizona](https://fairrentwize.com/state/arizona/)
+- [Rent By Bedroom](https://fairrentwize.com/state/arizona/rent-by-bedroom/)
+- [Arkansas](https://fairrentwize.com/state/arkansas/)
+- [Rent By Bedroom](https://fairrentwize.com/state/arkansas/rent-by-bedroom/)
+- [California](https://fairrentwize.com/state/california/)
+- [Rent By Bedroom](https://fairrentwize.com/state/california/rent-by-bedroom/)
+- [Colorado](https://fairrentwize.com/state/colorado/)
+- [Rent By Bedroom](https://fairrentwize.com/state/colorado/rent-by-bedroom/)
+
+## Data
+- Primary sources: U.S. Department of Housing and Urban Development, U.S. Census Bureau, National Low Income Housing Coalition
+- All figures are derived from these primary sources; see /methodology/ for derivation and vintage.

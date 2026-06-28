@@ -24,6 +24,8 @@ import { CrosswalkBridge } from '@/components/upgrades/CrosswalkBridge';
 import { decodeFmrMarketGap } from '@/lib/fmr-market-gap';
 import { FmrMarketGapBlock } from '@/components/upgrades/FmrMarketGapBlock';
 import { ENTITY_VINTAGE as STATE_VINTAGE_FOR_COUNTY } from '@/lib/authorship';
+import { calculateProprietaryMetrics } from '@/lib/proprietary-metrics';
+import { ProprietaryMetricsBlock } from '@/components/upgrades/ProprietaryMetricsBlock';
 
 interface Props { params: Promise<{ slug: string }> }
 
@@ -80,11 +82,25 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const verdictTitle = crosswalk
     ? `${trimEntityForTitle(`${county.county_name}, ${county.state_abbr}`)} ${crosswalk.composedScore}/100 — ${crosswalk.verdictShort}`
     : `${county.county_name}, ${county.state_abbr} Fair Market Rent ${year}${range}`;
+  const burden = classifyRentBurdenTier({
+    fmr2br: county.fmr_2br,
+    medianHouseholdIncome: county.acs_median_household_income,
+    geographyName: `${county.county_name}, ${county.state_abbr}`,
+    geographyKind: 'county',
+  });
+  const metrics = calculateProprietaryMetrics(
+    burden.confidence !== 'insufficient-data' ? burden.burdenPct : null,
+    county.state_abbr,
+    county.county_name,
+    slug
+  );
+  const prefixDescription = `[Rent Affordability: ${metrics.rentBurdenScore}/100, Grade: ${metrics.overallGrade}] ${description}`;
+
   return {
     title: crosswalk ? { absolute: verdictTitle } : verdictTitle,
-    description,
+    description: prefixDescription,
     alternates: { canonical: `/county/${slug}/` },
-    openGraph: { title: verdictTitle, description, url: `/county/${slug}/` },
+    openGraph: { title: verdictTitle, description: prefixDescription, url: `/county/${slug}/` },
     robots: buildDbPageRobots(gate.pass),
   };
 }
@@ -149,8 +165,15 @@ export default async function CountyPage({ params }: Props) {
           ? 'HUD FMR'
           : 'Census ACS 2023 5-Year';
 
+  const metrics = calculateProprietaryMetrics(
+    burdenTier.confidence !== 'insufficient-data' ? burdenTier.burdenPct : null,
+    county.state_abbr,
+    county.county_name,
+    slug
+  );
+
   return (
-    <>
+    <article data-toc-root>
       {countyPageJsonLd(county, state?.state || county.state_abbr).map((node, i) => (
         <script
           key={`county-jsonld-${i}`}
@@ -228,6 +251,16 @@ export default async function CountyPage({ params }: Props) {
             How RentBurdenTier is computed &rarr;
           </p>
         </section>
+      )}
+
+      {burdenTier.confidence !== 'insufficient-data' && (
+        <ProprietaryMetricsBlock
+          rentBurdenScore={metrics.rentBurdenScore}
+          wageAdequacyScore={metrics.wageAdequacyScore}
+          marketAlignmentScore={metrics.marketAlignmentScore}
+          overallGrade={metrics.overallGrade}
+          commentary={metrics.commentary}
+        />
       )}
 
       {/* Phase 7 P5 cross-walk bridge — county-FIPS join cohort */}
@@ -427,6 +460,6 @@ export default async function CountyPage({ params }: Props) {
       </div>
 
       <AuthorBox vintage={ENTITY_VINTAGE} source={`${county.county_name}, ${county.state_abbr}: HUD FY2025 FMR (${county.hud_source_kind ?? 'NCNTY'} record) + ACS 2019-2023 5-Year median gross rent + rent burden share.`} />
-    </>
+    </article>
   );
 }

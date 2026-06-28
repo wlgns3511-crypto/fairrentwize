@@ -21,7 +21,7 @@ export function formatNumber(num: number | null): string {
 }
 
 export function getDataYear(): number {
-  return 2026;
+  return 2025;
 }
 
 export function slugify(text: string): string {
