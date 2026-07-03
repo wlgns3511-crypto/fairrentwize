@@ -98,8 +98,12 @@ for (const s of states) {
   add(`${SITE_URL}/state/${s.slug}/rent-by-bedroom/`, entityLastmod(`stateBR:${s.slug}`, ENTITY_VINTAGE), '0.6', 'monthly');
 }
 
+// All counties — pages prerender the full set via getAllCountySlugs()
+// (no cap), so the sitemap must announce the same inventory. A 2026-06-28
+// commit added LIMIT 1000 here (sitemap only), silently unlisting 2,021
+// live counties; reverted 2026-07-03.
 const counties = db
-  .prepare('SELECT slug FROM counties ORDER BY COALESCE(acs_total_occupied_units, 0) DESC LIMIT 1000')
+  .prepare('SELECT slug FROM counties ORDER BY COALESCE(acs_total_occupied_units, 0) DESC')
   .all() as { slug: string }[];
 for (const c of counties) {
   add(`${SITE_URL}/county/${c.slug}/`, entityLastmod(`county:${c.slug}`, ENTITY_VINTAGE), '0.5', 'monthly');
