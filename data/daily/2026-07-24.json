@@ -1,0 +1,124 @@
+{
+  "date": "2026-07-24",
+  "kind": "spotlight",
+  "title": "Today’s rent profile data: Stark County Oh",
+  "description": "2 readings from the FairRentWize dataset for 2026-07-24: record in focus: stark county oh; where to go next. Every figure below is computed from the stored records, and each link opens the record it came from.",
+  "intro": "2 readings from the FairRentWize dataset for 2026-07-24: record in focus: stark county oh; where to go next. Every figure below is computed from the stored records, and each link opens the record it came from.",
+  "items": [
+    {
+      "label": "Stark County Oh",
+      "value": "Reference page",
+      "href": "/county/stark-county-oh/"
+    },
+    {
+      "label": "Stark County Nd",
+      "value": "Reference page",
+      "href": "/county/stark-county-nd/"
+    },
+    {
+      "label": "Stark County Il",
+      "value": "Reference page",
+      "href": "/county/stark-county-il/"
+    },
+    {
+      "label": "Stanton County Ne",
+      "value": "Reference page",
+      "href": "/county/stanton-county-ne/"
+    },
+    {
+      "label": "Stanton County Ks",
+      "value": "Reference page",
+      "href": "/county/stanton-county-ks/"
+    },
+    {
+      "label": "Stanly County Nc",
+      "value": "Reference page",
+      "href": "/county/stanly-county-nc/"
+    },
+    {
+      "label": "Stanley County Sd",
+      "value": "Reference page",
+      "href": "/county/stanley-county-sd/"
+    },
+    {
+      "label": "Stanislaus County Ca",
+      "value": "Reference page",
+      "href": "/county/stanislaus-county-ca/"
+    },
+    {
+      "label": "Stafford County Va",
+      "value": "Reference page",
+      "href": "/county/stafford-county-va/"
+    }
+  ],
+  "links": [
+    {
+      "label": "View Stark County Oh",
+      "href": "/county/stark-county-oh/"
+    }
+  ],
+  "sections": [
+    {
+      "kind": "spotlight",
+      "heading": "Record in focus: Stark County Oh",
+      "body": "Stark County Oh records a reference value in the current FairRentWize data. The linked record holds the full field list and the source note behind the figure.",
+      "items": [
+        {
+          "label": "Stark County Oh",
+          "value": "Reference page",
+          "href": "/county/stark-county-oh/"
+        }
+      ]
+    },
+    {
+      "kind": "route",
+      "heading": "Where to go next",
+      "body": "A short path through FairRentWize for anyone starting today. These are entry points into the detailed pages, not a substitute for them.",
+      "items": [
+        {
+          "label": "Stark County Nd",
+          "value": "Reference page",
+          "href": "/county/stark-county-nd/"
+        },
+        {
+          "label": "Stark County Il",
+          "value": "Reference page",
+          "href": "/county/stark-county-il/"
+        },
+        {
+          "label": "Stanton County Ne",
+          "value": "Reference page",
+          "href": "/county/stanton-county-ne/"
+        },
+        {
+          "label": "Stanton County Ks",
+          "value": "Reference page",
+          "href": "/county/stanton-county-ks/"
+        },
+        {
+          "label": "Stanly County Nc",
+          "value": "Reference page",
+          "href": "/county/stanly-county-nc/"
+        },
+        {
+          "label": "Stanley County Sd",
+          "value": "Reference page",
+          "href": "/county/stanley-county-sd/"
+        },
+        {
+          "label": "Stanislaus County Ca",
+          "value": "Reference page",
+          "href": "/county/stanislaus-county-ca/"
+        },
+        {
+          "label": "Stafford County Va",
+          "value": "Reference page",
+          "href": "/county/stafford-county-va/"
+        }
+      ]
+    }
+  ],
+  "source": "HUD Fair Market Rents and Census ACS",
+  "dataDate": "2026-04-29",
+  "fingerprint": "2193fc1d"
+}

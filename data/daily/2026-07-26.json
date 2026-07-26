@@ -1,0 +1,124 @@
+{
+  "date": "2026-07-26",
+  "kind": "spotlight",
+  "title": "Today’s rent profile data: Knox County Oh",
+  "description": "2 readings from the FairRentWize dataset for 2026-07-26: record in focus: knox county oh; where to go next. Every figure below is computed from the stored records, and each link opens the record it came from.",
+  "intro": "2 readings from the FairRentWize dataset for 2026-07-26: record in focus: knox county oh; where to go next. Every figure below is computed from the stored records, and each link opens the record it came from.",
+  "items": [
+    {
+      "label": "Knox County Oh",
+      "value": "Reference page",
+      "href": "/county/knox-county-oh/"
+    },
+    {
+      "label": "Kodiak Island County Ak",
+      "value": "Reference page",
+      "href": "/county/kodiak-island-county-ak/"
+    },
+    {
+      "label": "Knox County Tx",
+      "value": "Reference page",
+      "href": "/county/knox-county-tx/"
+    },
+    {
+      "label": "Knox County Tn",
+      "value": "Reference page",
+      "href": "/county/knox-county-tn/"
+    },
+    {
+      "label": "Knox County Oh",
+      "value": "Reference page",
+      "href": "/county/knox-county-oh/"
+    },
+    {
+      "label": "Knox County Ne",
+      "value": "Reference page",
+      "href": "/county/knox-county-ne/"
+    },
+    {
+      "label": "Knox County Mo",
+      "value": "Reference page",
+      "href": "/county/knox-county-mo/"
+    },
+    {
+      "label": "Knox County Me",
+      "value": "Reference page",
+      "href": "/county/knox-county-me/"
+    },
+    {
+      "label": "Knox County Ky",
+      "value": "Reference page",
+      "href": "/county/knox-county-ky/"
+    }
+  ],
+  "links": [
+    {
+      "label": "View Knox County Oh",
+      "href": "/county/knox-county-oh/"
+    }
+  ],
+  "sections": [
+    {
+      "kind": "spotlight",
+      "heading": "Record in focus: Knox County Oh",
+      "body": "Knox County Oh records a reference value in the current FairRentWize data. The linked record holds the full field list and the source note behind the figure.",
+      "items": [
+        {
+          "label": "Knox County Oh",
+          "value": "Reference page",
+          "href": "/county/knox-county-oh/"
+        }
+      ]
+    },
+    {
+      "kind": "route",
+      "heading": "Where to go next",
+      "body": "A short path through FairRentWize for anyone starting today. These are entry points into the detailed pages, not a substitute for them.",
+      "items": [
+        {
+          "label": "Kodiak Island County Ak",
+          "value": "Reference page",
+          "href": "/county/kodiak-island-county-ak/"
+        },
+        {
+          "label": "Knox County Tx",
+          "value": "Reference page",
+          "href": "/county/knox-county-tx/"
+        },
+        {
+          "label": "Knox County Tn",
+          "value": "Reference page",
+          "href": "/county/knox-county-tn/"
+        },
+        {
+          "label": "Knox County Oh",
+          "value": "Reference page",
+          "href": "/county/knox-county-oh/"
+        },
+        {
+          "label": "Knox County Ne",
+          "value": "Reference page",
+          "href": "/county/knox-county-ne/"
+        },
+        {
+          "label": "Knox County Mo",
+          "value": "Reference page",
+          "href": "/county/knox-county-mo/"
+        },
+        {
+          "label": "Knox County Me",
+          "value": "Reference page",
+          "href": "/county/knox-county-me/"
+        },
+        {
+          "label": "Knox County Ky",
+          "value": "Reference page",
+          "href": "/county/knox-county-ky/"
+        }
+      ]
+    }
+  ],
+  "source": "HUD Fair Market Rents and Census ACS",
+  "dataDate": "2026-04-29",
+  "fingerprint": "2a206a30"
+}

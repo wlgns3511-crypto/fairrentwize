@@ -1,0 +1,239 @@
+{
+  "date": "2026-07-23",
+  "kind": "comparison",
+  "title": "rockland-county-ny vs riverside-county-ca: a quick FairRentWize comparison",
+  "description": "4 readings from the FairRentWize dataset for 2026-07-23: rockland-county-ny vs riverside-county-ca; ranked by fmr studio; record in focus: norfolk-county-ma; where to go next. Every figure below is computed from the stored records, and each link opens the record it came from.",
+  "intro": "4 readings from the FairRentWize dataset for 2026-07-23: rockland-county-ny vs riverside-county-ca; ranked by fmr studio; record in focus: norfolk-county-ma; where to go next. Every figure below is computed from the stored records, and each link opens the record it came from.",
+  "items": [
+    {
+      "label": "rockland-county-ny",
+      "value": "Fmr Studio: 2,529",
+      "href": "/county/rockland-county-ny/",
+      "metric": 2529,
+      "metricLabel": "fmr_studio",
+      "verdict": "Ranks #10 of 200 by fmr studio · top 5% · 57% above the median (1,612)."
+    },
+    {
+      "label": "riverside-county-ca",
+      "value": "Fmr Studio: 1,692",
+      "href": "/county/riverside-county-ca/",
+      "metric": 1692,
+      "metricLabel": "fmr_studio",
+      "verdict": "Ranks #76 of 200 by fmr studio · 5% above the median (1,612)."
+    },
+    {
+      "label": "rockland-county-ny",
+      "value": "Fmr Studio: 2,529",
+      "href": "/county/rockland-county-ny/",
+      "metric": 2529,
+      "metricLabel": "fmr_studio",
+      "verdict": "Ranks #10 of 200 by fmr studio · top 5% · 57% above the median (1,612)."
+    },
+    {
+      "label": "westchester-county-ny",
+      "value": "Fmr Studio: 2,529",
+      "href": "/county/westchester-county-ny/",
+      "metric": 2529,
+      "metricLabel": "fmr_studio",
+      "verdict": "Ranks #11 of 200 by fmr studio · top 6% · 57% above the median (1,612)."
+    },
+    {
+      "label": "san-francisco-county-ca",
+      "value": "Fmr Studio: 2,485",
+      "href": "/county/san-francisco-county-ca/",
+      "metric": 2485,
+      "metricLabel": "fmr_studio",
+      "verdict": "Ranks #12 of 200 by fmr studio · top 6% · 54% above the median (1,612)."
+    },
+    {
+      "label": "san-mateo-county-ca",
+      "value": "Fmr Studio: 2,485",
+      "href": "/county/san-mateo-county-ca/",
+      "metric": 2485,
+      "metricLabel": "fmr_studio",
+      "verdict": "Ranks #13 of 200 by fmr studio · top 7% · 54% above the median (1,612)."
+    },
+    {
+      "label": "marin-county-ca",
+      "value": "Fmr Studio: 2,485",
+      "href": "/county/marin-county-ca/",
+      "metric": 2485,
+      "metricLabel": "fmr_studio",
+      "verdict": "Ranks #14 of 200 by fmr studio · top 7% · 54% above the median (1,612)."
+    },
+    {
+      "label": "norfolk-county-ma",
+      "value": "Fmr Studio: 2,359",
+      "href": "/county/norfolk-county-ma/",
+      "metric": 2359,
+      "metricLabel": "fmr_studio",
+      "verdict": "Ranks #18 of 200 by fmr studio · top 9% · 46% above the median (1,612)."
+    },
+    {
+      "label": "fulton-county-ga",
+      "value": "Fmr Studio: 1,585",
+      "href": "/county/fulton-county-ga/",
+      "metric": 1585,
+      "metricLabel": "fmr_studio"
+    },
+    {
+      "label": "forsyth-county-ga",
+      "value": "Fmr Studio: 1,585",
+      "href": "/county/forsyth-county-ga/",
+      "metric": 1585,
+      "metricLabel": "fmr_studio"
+    },
+    {
+      "label": "fayette-county-ga",
+      "value": "Fmr Studio: 1,585",
+      "href": "/county/fayette-county-ga/",
+      "metric": 1585,
+      "metricLabel": "fmr_studio"
+    },
+    {
+      "label": "douglas-county-ga",
+      "value": "Fmr Studio: 1,585",
+      "href": "/county/douglas-county-ga/",
+      "metric": 1585,
+      "metricLabel": "fmr_studio"
+    }
+  ],
+  "links": [
+    {
+      "label": "View rockland-county-ny",
+      "href": "/county/rockland-county-ny/"
+    },
+    {
+      "label": "View riverside-county-ca",
+      "href": "/county/riverside-county-ca/"
+    }
+  ],
+  "sections": [
+    {
+      "kind": "comparison",
+      "heading": "rockland-county-ny vs riverside-county-ca",
+      "body": "rockland-county-ny (Fmr Studio: 2,529) against riverside-county-ca (Fmr Studio: 1,692). rockland-county-ny is 837 fmr studio higher, a 49.5% gap.",
+      "items": [
+        {
+          "label": "rockland-county-ny",
+          "value": "Fmr Studio: 2,529",
+          "href": "/county/rockland-county-ny/",
+          "metric": 2529,
+          "metricLabel": "fmr_studio",
+          "verdict": "Ranks #10 of 200 by fmr studio · top 5% · 57% above the median (1,612)."
+        },
+        {
+          "label": "riverside-county-ca",
+          "value": "Fmr Studio: 1,692",
+          "href": "/county/riverside-county-ca/",
+          "metric": 1692,
+          "metricLabel": "fmr_studio",
+          "verdict": "Ranks #76 of 200 by fmr studio · 5% above the median (1,612)."
+        }
+      ],
+      "takeaway": "Both sit against a dataset median of 1,612 fmr studio."
+    },
+    {
+      "kind": "ranking",
+      "heading": "Ranked by fmr studio",
+      "body": "Positions 10–14 of 200 records carrying a fmr studio figure. Ordering is computed from the stored values, not editorial preference.",
+      "items": [
+        {
+          "label": "rockland-county-ny",
+          "value": "Fmr Studio: 2,529",
+          "href": "/county/rockland-county-ny/",
+          "metric": 2529,
+          "metricLabel": "fmr_studio",
+          "verdict": "Ranks #10 of 200 by fmr studio · top 5% · 57% above the median (1,612)."
+        },
+        {
+          "label": "westchester-county-ny",
+          "value": "Fmr Studio: 2,529",
+          "href": "/county/westchester-county-ny/",
+          "metric": 2529,
+          "metricLabel": "fmr_studio",
+          "verdict": "Ranks #11 of 200 by fmr studio · top 6% · 57% above the median (1,612)."
+        },
+        {
+          "label": "san-francisco-county-ca",
+          "value": "Fmr Studio: 2,485",
+          "href": "/county/san-francisco-county-ca/",
+          "metric": 2485,
+          "metricLabel": "fmr_studio",
+          "verdict": "Ranks #12 of 200 by fmr studio · top 6% · 54% above the median (1,612)."
+        },
+        {
+          "label": "san-mateo-county-ca",
+          "value": "Fmr Studio: 2,485",
+          "href": "/county/san-mateo-county-ca/",
+          "metric": 2485,
+          "metricLabel": "fmr_studio",
+          "verdict": "Ranks #13 of 200 by fmr studio · top 7% · 54% above the median (1,612)."
+        },
+        {
+          "label": "marin-county-ca",
+          "value": "Fmr Studio: 2,485",
+          "href": "/county/marin-county-ca/",
+          "metric": 2485,
+          "metricLabel": "fmr_studio",
+          "verdict": "Ranks #14 of 200 by fmr studio · top 7% · 54% above the median (1,612)."
+        }
+      ],
+      "takeaway": "Dataset median: 1,612. Highest on file: 3,179 (santa-cruz-county-ca)."
+    },
+    {
+      "kind": "spotlight",
+      "heading": "Record in focus: norfolk-county-ma",
+      "body": "norfolk-county-ma records fmr studio of 2,359 in the current FairRentWize data. The linked record holds the full field list and the source note behind the figure.",
+      "items": [
+        {
+          "label": "norfolk-county-ma",
+          "value": "Fmr Studio: 2,359",
+          "href": "/county/norfolk-county-ma/",
+          "metric": 2359,
+          "metricLabel": "fmr_studio",
+          "verdict": "Ranks #18 of 200 by fmr studio · top 9% · 46% above the median (1,612)."
+        }
+      ],
+      "takeaway": "Ranks #18 of 200 by fmr studio · top 9% · 46% above the median (1,612)."
+    },
+    {
+      "kind": "route",
+      "heading": "Where to go next",
+      "body": "A short path through FairRentWize for anyone starting today. These are entry points into the detailed pages, not a substitute for them.",
+      "items": [
+        {
+          "label": "fulton-county-ga",
+          "value": "Fmr Studio: 1,585",
+          "href": "/county/fulton-county-ga/",
+          "metric": 1585,
+          "metricLabel": "fmr_studio"
+        },
+        {
+          "label": "forsyth-county-ga",
+          "value": "Fmr Studio: 1,585",
+          "href": "/county/forsyth-county-ga/",
+          "metric": 1585,
+          "metricLabel": "fmr_studio"
+        },
+        {
+          "label": "fayette-county-ga",
+          "value": "Fmr Studio: 1,585",
+          "href": "/county/fayette-county-ga/",
+          "metric": 1585,
+          "metricLabel": "fmr_studio"
+        },
+        {
+          "label": "douglas-county-ga",
+          "value": "Fmr Studio: 1,585",
+          "href": "/county/douglas-county-ga/",
+          "metric": 1585,
+          "metricLabel": "fmr_studio"
+        }
+      ]
+    }
+  ],
+  "source": "HUD Fair Market Rents and Census ACS",
+  "dataDate": "2026-04-29",
+  "fingerprint": "228bdb18"
+}

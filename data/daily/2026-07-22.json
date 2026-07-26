@@ -1,0 +1,239 @@
+{
+  "date": "2026-07-22",
+  "kind": "comparison",
+  "title": "mercer-county-nj vs calvert-county-md: a quick FairRentWize comparison",
+  "description": "4 readings from the FairRentWize dataset for 2026-07-22: mercer-county-nj vs calvert-county-md; ranked by fmr studio; record in focus: fulton-county-ga; where to go next. Every figure below is computed from the stored records, and each link opens the record it came from.",
+  "intro": "4 readings from the FairRentWize dataset for 2026-07-22: mercer-county-nj vs calvert-county-md; ranked by fmr studio; record in focus: fulton-county-ga; where to go next. Every figure below is computed from the stored records, and each link opens the record it came from.",
+  "items": [
+    {
+      "label": "mercer-county-nj",
+      "value": "Fmr Studio: 1,344",
+      "href": "/county/mercer-county-nj/",
+      "metric": 1344,
+      "metricLabel": "fmr_studio",
+      "verdict": "Ranks #191 of 200 by fmr studio · bottom 6% · 17% below the median (1,612)."
+    },
+    {
+      "label": "calvert-county-md",
+      "value": "Fmr Studio: 1,811",
+      "href": "/county/calvert-county-md/",
+      "metric": 1811,
+      "metricLabel": "fmr_studio",
+      "verdict": "Ranks #57 of 200 by fmr studio · 12% above the median (1,612)."
+    },
+    {
+      "label": "westchester-county-ny",
+      "value": "Fmr Studio: 2,529",
+      "href": "/county/westchester-county-ny/",
+      "metric": 2529,
+      "metricLabel": "fmr_studio",
+      "verdict": "Ranks #11 of 200 by fmr studio · top 6% · 57% above the median (1,612)."
+    },
+    {
+      "label": "san-francisco-county-ca",
+      "value": "Fmr Studio: 2,485",
+      "href": "/county/san-francisco-county-ca/",
+      "metric": 2485,
+      "metricLabel": "fmr_studio",
+      "verdict": "Ranks #12 of 200 by fmr studio · top 6% · 54% above the median (1,612)."
+    },
+    {
+      "label": "san-mateo-county-ca",
+      "value": "Fmr Studio: 2,485",
+      "href": "/county/san-mateo-county-ca/",
+      "metric": 2485,
+      "metricLabel": "fmr_studio",
+      "verdict": "Ranks #13 of 200 by fmr studio · top 7% · 54% above the median (1,612)."
+    },
+    {
+      "label": "marin-county-ca",
+      "value": "Fmr Studio: 2,485",
+      "href": "/county/marin-county-ca/",
+      "metric": 2485,
+      "metricLabel": "fmr_studio",
+      "verdict": "Ranks #14 of 200 by fmr studio · top 7% · 54% above the median (1,612)."
+    },
+    {
+      "label": "santa-barbara-county-ca",
+      "value": "Fmr Studio: 2,459",
+      "href": "/county/santa-barbara-county-ca/",
+      "metric": 2459,
+      "metricLabel": "fmr_studio",
+      "verdict": "Ranks #15 of 200 by fmr studio · top 8% · 53% above the median (1,612)."
+    },
+    {
+      "label": "fulton-county-ga",
+      "value": "Fmr Studio: 1,585",
+      "href": "/county/fulton-county-ga/",
+      "metric": 1585,
+      "metricLabel": "fmr_studio",
+      "verdict": "Ranks #122 of 200 by fmr studio · 2% below the median (1,612)."
+    },
+    {
+      "label": "norfolk-county-ma",
+      "value": "Fmr Studio: 2,359",
+      "href": "/county/norfolk-county-ma/",
+      "metric": 2359,
+      "metricLabel": "fmr_studio"
+    },
+    {
+      "label": "san-diego-county-ca",
+      "value": "Fmr Studio: 2,288",
+      "href": "/county/san-diego-county-ca/",
+      "metric": 2288,
+      "metricLabel": "fmr_studio"
+    },
+    {
+      "label": "santa-barbara-county-ca",
+      "value": "Fmr Studio: 2,459",
+      "href": "/county/santa-barbara-county-ca/",
+      "metric": 2459,
+      "metricLabel": "fmr_studio"
+    },
+    {
+      "label": "nantucket-county-ma",
+      "value": "Fmr Studio: 2,409",
+      "href": "/county/nantucket-county-ma/",
+      "metric": 2409,
+      "metricLabel": "fmr_studio"
+    }
+  ],
+  "links": [
+    {
+      "label": "View mercer-county-nj",
+      "href": "/county/mercer-county-nj/"
+    },
+    {
+      "label": "View calvert-county-md",
+      "href": "/county/calvert-county-md/"
+    }
+  ],
+  "sections": [
+    {
+      "kind": "comparison",
+      "heading": "mercer-county-nj vs calvert-county-md",
+      "body": "mercer-county-nj (Fmr Studio: 1,344) against calvert-county-md (Fmr Studio: 1,811). mercer-county-nj is 467 fmr studio lower, a 25.8% gap.",
+      "items": [
+        {
+          "label": "mercer-county-nj",
+          "value": "Fmr Studio: 1,344",
+          "href": "/county/mercer-county-nj/",
+          "metric": 1344,
+          "metricLabel": "fmr_studio",
+          "verdict": "Ranks #191 of 200 by fmr studio · bottom 6% · 17% below the median (1,612)."
+        },
+        {
+          "label": "calvert-county-md",
+          "value": "Fmr Studio: 1,811",
+          "href": "/county/calvert-county-md/",
+          "metric": 1811,
+          "metricLabel": "fmr_studio",
+          "verdict": "Ranks #57 of 200 by fmr studio · 12% above the median (1,612)."
+        }
+      ],
+      "takeaway": "Both sit against a dataset median of 1,612 fmr studio."
+    },
+    {
+      "kind": "ranking",
+      "heading": "Ranked by fmr studio",
+      "body": "Positions 11–15 of 200 records carrying a fmr studio figure. Ordering is computed from the stored values, not editorial preference.",
+      "items": [
+        {
+          "label": "westchester-county-ny",
+          "value": "Fmr Studio: 2,529",
+          "href": "/county/westchester-county-ny/",
+          "metric": 2529,
+          "metricLabel": "fmr_studio",
+          "verdict": "Ranks #11 of 200 by fmr studio · top 6% · 57% above the median (1,612)."
+        },
+        {
+          "label": "san-francisco-county-ca",
+          "value": "Fmr Studio: 2,485",
+          "href": "/county/san-francisco-county-ca/",
+          "metric": 2485,
+          "metricLabel": "fmr_studio",
+          "verdict": "Ranks #12 of 200 by fmr studio · top 6% · 54% above the median (1,612)."
+        },
+        {
+          "label": "san-mateo-county-ca",
+          "value": "Fmr Studio: 2,485",
+          "href": "/county/san-mateo-county-ca/",
+          "metric": 2485,
+          "metricLabel": "fmr_studio",
+          "verdict": "Ranks #13 of 200 by fmr studio · top 7% · 54% above the median (1,612)."
+        },
+        {
+          "label": "marin-county-ca",
+          "value": "Fmr Studio: 2,485",
+          "href": "/county/marin-county-ca/",
+          "metric": 2485,
+          "metricLabel": "fmr_studio",
+          "verdict": "Ranks #14 of 200 by fmr studio · top 7% · 54% above the median (1,612)."
+        },
+        {
+          "label": "santa-barbara-county-ca",
+          "value": "Fmr Studio: 2,459",
+          "href": "/county/santa-barbara-county-ca/",
+          "metric": 2459,
+          "metricLabel": "fmr_studio",
+          "verdict": "Ranks #15 of 200 by fmr studio · top 8% · 53% above the median (1,612)."
+        }
+      ],
+      "takeaway": "Dataset median: 1,612. Highest on file: 3,179 (santa-cruz-county-ca)."
+    },
+    {
+      "kind": "spotlight",
+      "heading": "Record in focus: fulton-county-ga",
+      "body": "fulton-county-ga records fmr studio of 1,585 in the current FairRentWize data. The linked record holds the full field list and the source note behind the figure.",
+      "items": [
+        {
+          "label": "fulton-county-ga",
+          "value": "Fmr Studio: 1,585",
+          "href": "/county/fulton-county-ga/",
+          "metric": 1585,
+          "metricLabel": "fmr_studio",
+          "verdict": "Ranks #122 of 200 by fmr studio · 2% below the median (1,612)."
+        }
+      ],
+      "takeaway": "Ranks #122 of 200 by fmr studio · 2% below the median (1,612)."
+    },
+    {
+      "kind": "route",
+      "heading": "Where to go next",
+      "body": "A short path through FairRentWize for anyone starting today. These are entry points into the detailed pages, not a substitute for them.",
+      "items": [
+        {
+          "label": "norfolk-county-ma",
+          "value": "Fmr Studio: 2,359",
+          "href": "/county/norfolk-county-ma/",
+          "metric": 2359,
+          "metricLabel": "fmr_studio"
+        },
+        {
+          "label": "san-diego-county-ca",
+          "value": "Fmr Studio: 2,288",
+          "href": "/county/san-diego-county-ca/",
+          "metric": 2288,
+          "metricLabel": "fmr_studio"
+        },
+        {
+          "label": "santa-barbara-county-ca",
+          "value": "Fmr Studio: 2,459",
+          "href": "/county/santa-barbara-county-ca/",
+          "metric": 2459,
+          "metricLabel": "fmr_studio"
+        },
+        {
+          "label": "nantucket-county-ma",
+          "value": "Fmr Studio: 2,409",
+          "href": "/county/nantucket-county-ma/",
+          "metric": 2409,
+          "metricLabel": "fmr_studio"
+        }
+      ]
+    }
+  ],
+  "source": "HUD Fair Market Rents and Census ACS",
+  "dataDate": "2026-04-29",
+  "fingerprint": "eb01df2b"
+}

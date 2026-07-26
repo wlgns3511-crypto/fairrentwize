@@ -1,0 +1,124 @@
+{
+  "date": "2026-07-25",
+  "kind": "spotlight",
+  "title": "Today’s rent profile data: Bryan County Ga",
+  "description": "2 readings from the FairRentWize dataset for 2026-07-25: record in focus: bryan county ga; where to go next. Every figure below is computed from the stored records, and each link opens the record it came from.",
+  "intro": "2 readings from the FairRentWize dataset for 2026-07-25: record in focus: bryan county ga; where to go next. Every figure below is computed from the stored records, and each link opens the record it came from.",
+  "items": [
+    {
+      "label": "Bryan County Ga",
+      "value": "Reference page",
+      "href": "/county/bryan-county-ga/"
+    },
+    {
+      "label": "Bristol County Ma",
+      "value": "Reference page",
+      "href": "/county/bristol-county-ma/"
+    },
+    {
+      "label": "Bryan County Ga",
+      "value": "Reference page",
+      "href": "/county/bryan-county-ga/"
+    },
+    {
+      "label": "Brunswick County Va",
+      "value": "Reference page",
+      "href": "/county/brunswick-county-va/"
+    },
+    {
+      "label": "Brunswick County Nc",
+      "value": "Reference page",
+      "href": "/county/brunswick-county-nc/"
+    },
+    {
+      "label": "Brule County Sd",
+      "value": "Reference page",
+      "href": "/county/brule-county-sd/"
+    },
+    {
+      "label": "Brown County Wi",
+      "value": "Reference page",
+      "href": "/county/brown-county-wi/"
+    },
+    {
+      "label": "Brown County Tx",
+      "value": "Reference page",
+      "href": "/county/brown-county-tx/"
+    },
+    {
+      "label": "Brown County Sd",
+      "value": "Reference page",
+      "href": "/county/brown-county-sd/"
+    }
+  ],
+  "links": [
+    {
+      "label": "View Bryan County Ga",
+      "href": "/county/bryan-county-ga/"
+    }
+  ],
+  "sections": [
+    {
+      "kind": "spotlight",
+      "heading": "Record in focus: Bryan County Ga",
+      "body": "Bryan County Ga records a reference value in the current FairRentWize data. The linked record holds the full field list and the source note behind the figure.",
+      "items": [
+        {
+          "label": "Bryan County Ga",
+          "value": "Reference page",
+          "href": "/county/bryan-county-ga/"
+        }
+      ]
+    },
+    {
+      "kind": "route",
+      "heading": "Where to go next",
+      "body": "A short path through FairRentWize for anyone starting today. These are entry points into the detailed pages, not a substitute for them.",
+      "items": [
+        {
+          "label": "Bristol County Ma",
+          "value": "Reference page",
+          "href": "/county/bristol-county-ma/"
+        },
+        {
+          "label": "Bryan County Ga",
+          "value": "Reference page",
+          "href": "/county/bryan-county-ga/"
+        },
+        {
+          "label": "Brunswick County Va",
+          "value": "Reference page",
+          "href": "/county/brunswick-county-va/"
+        },
+        {
+          "label": "Brunswick County Nc",
+          "value": "Reference page",
+          "href": "/county/brunswick-county-nc/"
+        },
+        {
+          "label": "Brule County Sd",
+          "value": "Reference page",
+          "href": "/county/brule-county-sd/"
+        },
+        {
+          "label": "Brown County Wi",
+          "value": "Reference page",
+          "href": "/county/brown-county-wi/"
+        },
+        {
+          "label": "Brown County Tx",
+          "value": "Reference page",
+          "href": "/county/brown-county-tx/"
+        },
+        {
+          "label": "Brown County Sd",
+          "value": "Reference page",
+          "href": "/county/brown-county-sd/"
+        }
+      ]
+    }
+  ],
+  "source": "HUD Fair Market Rents and Census ACS",
+  "dataDate": "2026-04-29",
+  "fingerprint": "a0dc5d86"
+}
